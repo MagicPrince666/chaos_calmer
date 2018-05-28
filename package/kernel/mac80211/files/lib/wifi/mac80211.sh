@@ -110,18 +110,19 @@ detect_mac80211() {
 		cat <<EOF
 config wifi-device  radio$devidx
 	option type     mac80211
+	# option country	CN
 	option channel  ${channel}
 	option hwmode	11${mode_band}
 $dev_id
 $ht_capab
 	# REMOVE THIS LINE TO ENABLE WIFI:
-	option disabled 1
+	option disabled 0
 
 config wifi-iface
 	option device   radio$devidx
 	option network  lan
 	option mode     ap
-	option ssid     OpenWrt
+	option ssid     OpenWrt-XAG$(cat /sys/class/net/eth0/address|awk -F ":" '{print $5""$6}'| tr a-z A-Z)
 	option encryption none
 
 EOF
