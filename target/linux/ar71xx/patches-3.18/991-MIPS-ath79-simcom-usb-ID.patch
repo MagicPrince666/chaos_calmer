@@ -1,0 +1,37 @@
+Index: linux-3.18.98/drivers/usb/serial/option.c
+===================================================================
+--- linux-3.18.98.orig/drivers/usb/serial/option.c
++++ linux-3.18.98/drivers/usb/serial/option.c
+@@ -531,6 +531,10 @@ static void option_instat_callback(struc
+ #define VIATELECOM_VENDOR_ID			0x15eb
+ #define VIATELECOM_PRODUCT_CDS7			0x0001
+ 
++/* SIMCOM 7600 CE */
++#define SIMCOM_SIM7600_VID 0x1E0E 
++#define SIMCOM_SIM7600_PID 0x9001
++
+ /* some devices interfaces need special handling due to a number of reasons */
+ enum option_blacklist_reason {
+ 		OPTION_BLACKLIST_NONE = 0,
+@@ -684,6 +688,11 @@ static const struct option_blacklist_inf
+ 	.reserved = BIT(4) | BIT(5),
+ };
+ 
++//for SIM7600 modem for NDIS
++static const struct option_blacklist_info simcom_sim7600_blacklist = {
++.reserved = BIT(5), 
++};
++
+ static const struct usb_device_id option_ids[] = {
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
+@@ -736,6 +745,9 @@ static const struct usb_device_id option
+ 		.driver_info = (kernel_ulong_t) &net_intf1_blacklist },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(HUAWEI_VENDOR_ID, HUAWEI_PRODUCT_K4605, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t) &huawei_cdc12_blacklist },
++	//for SIM7600 modem for NDIS
++	{ USB_DEVICE(SIMCOM_SIM7600_VID, SIMCOM_SIM7600_PID),
++		.driver_info = (kernel_ulong_t)& simcom_sim7600_blacklist },
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(HUAWEI_VENDOR_ID, 0xff, 0xff, 0xff) },
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(HUAWEI_VENDOR_ID, 0xff, 0x01, 0x01) },
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(HUAWEI_VENDOR_ID, 0xff, 0x01, 0x02) },
