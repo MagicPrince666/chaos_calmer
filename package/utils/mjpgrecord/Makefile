@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mjpg_rec
-PKG_VERSION:=1.0
+PKG_VERSION:=XAG-huangliquan-1.0
 PKG_BUILD_DIR:= $(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
