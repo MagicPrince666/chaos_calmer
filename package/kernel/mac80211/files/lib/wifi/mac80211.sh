@@ -110,7 +110,7 @@ detect_mac80211() {
 		cat <<EOF
 config wifi-device  radio$devidx
 	option type     mac80211
-	# option country	CN
+	option country	CN
 	option channel  ${channel}
 	option hwmode	11${mode_band}
 $dev_id
