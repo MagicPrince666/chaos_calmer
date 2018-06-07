@@ -88,8 +88,8 @@ detect_mac80211() {
 		vht_cap=$(iw phy "$dev" info | grep -c 'VHT Capabilities')
 		cap_5ghz=$(iw phy "$dev" info | grep -c "Band 2")
 		[ "$vht_cap" -gt 0 -a "$cap_5ghz" -gt 0 ] && {
-			mode_band="a";
-			channel="36"
+			mode_band="b";
+			channel="165"
 			htmode="VHT80"
 		}
 
@@ -122,7 +122,7 @@ config wifi-iface
 	option device   radio$devidx
 	option network  lan
 	option mode     ap
-	option ssid     OpenWrt-XAG$(cat /sys/class/net/eth0/address|awk -F ":" '{print $4$5$6}'| tr a-z A-Z)
+	option ssid     XAG-$(cat /sys/class/net/eth0/address|awk -F ":" '{print $4$5$6}'| tr a-z A-Z)
 	option encryption none
 
 EOF
