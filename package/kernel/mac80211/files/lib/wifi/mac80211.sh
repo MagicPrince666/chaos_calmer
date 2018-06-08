@@ -81,6 +81,7 @@ detect_mac80211() {
 		channel="11"
 		htmode=""
 		ht_capab=""
+		txpower="23"
 
 		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
 		iw phy "$dev" info | grep -q '2412 MHz' || { mode_band="a"; channel="36"; }
@@ -88,7 +89,7 @@ detect_mac80211() {
 		vht_cap=$(iw phy "$dev" info | grep -c 'VHT Capabilities')
 		cap_5ghz=$(iw phy "$dev" info | grep -c "Band 2")
 		[ "$vht_cap" -gt 0 -a "$cap_5ghz" -gt 0 ] && {
-			mode_band="b";
+			mode_band="a";
 			channel="165"
 			htmode="VHT80"
 		}
@@ -113,6 +114,7 @@ config wifi-device  radio$devidx
 	option country	CN
 	option channel  ${channel}
 	option hwmode	11${mode_band}
+	option txpower  ${txpower}
 $dev_id
 $ht_capab
 	# REMOVE THIS LINE TO ENABLE WIFI:

@@ -127,5 +127,5 @@ static void __init wpj342_setup(void)
 	/* GMAC1 is not connected */
 }
 
-MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "XAG AR9342",
-	     wpj342_setup);
+//MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "XAG AR9342",wpj342_setup);
+MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "Compex WPJ342",wpj342_setup);
