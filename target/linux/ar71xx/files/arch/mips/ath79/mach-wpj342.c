@@ -23,6 +23,7 @@
 #include <linux/platform_device.h>
 #include <linux/ath9k_platform.h>
 #include <linux/ar8216_platform.h>
+#include <linux/platform_data/phy-at803x.h>
 
 #include <asm/mach-ath79/ar71xx_regs.h>
 
@@ -39,7 +40,9 @@
 #include "dev-wmac.h"
 #include "machtypes.h"
 
-#define WPJ342_GPIO_LED_STATUS	11
+#define PHY_AR8035
+
+#define WPJ342_GPIO_LED_STATUS		11
 #define WPJ342_GPIO_LED_SIG1		14
 #define WPJ342_GPIO_LED_SIG2		13
 #define WPJ342_GPIO_LED_SIG3		12
@@ -54,6 +57,29 @@
 #define WPJ342_MAC0_OFFSET		0x10
 #define WPJ342_MAC1_OFFSET		0x18
 #define WPJ342_WMAC_CALDATA_OFFSET	0x1000
+
+
+
+#ifdef PHY_AR8035
+
+static struct at803x_platform_data mi124_ar8035_data = {
+	         .enable_rgmii_tx_delay = 1, 
+};
+
+static struct at803x_platform_data mi124_ar8035_data = {
+        .enable_rgmii_rx_delay = 1,
+        .fixup_rgmii_tx_delay = 1,
+};
+
+static struct mdio_board_info mi124_mdio0_info[] = {
+        {
+                .bus_id = "ag71xx-mdio.0",
+                .phy_addr = 4,
+                .platform_data = &mi124_ar8035_data,
+        },
+};
+
+#endif
 
 static struct gpio_led wpj342_leds_gpio[] __initdata = {
 	{
@@ -94,6 +120,8 @@ static struct gpio_keys_button wpj342_gpio_keys[] __initdata = {
 	},
 };
 
+
+
 static void __init wpj342_setup(void)
 {
 	u8 *art = (u8 *) KSEG1ADDR(0x1fff0000);
@@ -110,6 +138,24 @@ static void __init wpj342_setup(void)
 	ath79_register_wmac(art + WPJ342_WMAC_CALDATA_OFFSET, NULL);
 	ath79_register_pci();
 
+#ifdef PHY_AR8035
+
+		ath79_register_mdio(0, 0x0);
+
+        mdiobus_register_board_info(mi124_mdio0_info, ARRAY_SIZE(mi124_mdio0_info));
+
+        ath79_setup_ar934x_eth_cfg(AR934X_ETH_CFG_RGMII_GMAC0);
+
+        /* GMAC0 is connected to an AR8035 Gigabit PHY */
+        ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
+        ath79_eth0_data.phy_mask = BIT(2);
+        ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
+        ath79_eth0_pll_data.pll_1000 = 0x0e000000;
+        ath79_eth0_pll_data.pll_100 = 0x0101;
+        ath79_eth0_pll_data.pll_10 = 0x1313;
+
+#else
+
 	ath79_setup_ar934x_eth_cfg(AR934X_ETH_CFG_MII_GMAC0);
 
 	ath79_register_mdio(0, 0x0);
@@ -122,10 +168,12 @@ static void __init wpj342_setup(void)
 	ath79_eth0_data.phy_mask = BIT(0);
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_pll_data.pll_1000 = 0x06000000;
-	ath79_register_eth(0);
+	
+#endif
 
+	ath79_register_eth(0);
 	/* GMAC1 is not connected */
 }
 
-//MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "XAG AR9342",wpj342_setup);
-MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "Compex WPJ342",wpj342_setup);
+MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "XAG AR9342",wpj342_setup);
+//MIPS_MACHINE(ATH79_MACH_WPJ342, "WPJ342", "Compex WPJ342",wpj342_setup);
