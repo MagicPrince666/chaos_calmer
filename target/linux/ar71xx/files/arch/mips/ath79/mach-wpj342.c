@@ -62,9 +62,6 @@
 
 #ifdef PHY_AR8035
 
-static struct at803x_platform_data mi124_ar8035_data = {
-	         .enable_rgmii_tx_delay = 1, 
-};
 
 static struct at803x_platform_data mi124_ar8035_data = {
         .enable_rgmii_rx_delay = 1,
@@ -165,7 +162,7 @@ static void __init wpj342_setup(void)
 
 	/* GMAC0 is connected to an AR8236 switch */
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_MII;
-	ath79_eth0_data.phy_mask = BIT(0);
+	ath79_eth0_data.phy_mask = BIT(4);
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_pll_data.pll_1000 = 0x06000000;
 	
