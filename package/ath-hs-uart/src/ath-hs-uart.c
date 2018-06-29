@@ -23,6 +23,9 @@
 #include "934x.h"
 #include "atheros.h"
 
+#define AR934X_HS_UART1_TX				13
+#define AR934X_HS_UART1_RX				14
+
 typedef struct {
 	struct tty_driver	*tty;
 	char			buf[1024];
@@ -100,23 +103,23 @@ void ath_hs_uart_init(void)
 
 	// GPIO Settings for HS_UART
 	// Enabling UART1_TD as output on GPIO10
-	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION2);
-	data = (data & ~GPIO_OUT_FUNCTION2_ENABLE_GPIO_10_MASK) |
-		GPIO_OUT_FUNCTION2_ENABLE_GPIO_10_SET(0x4f);
-	ath_reg_wr(ATH_GPIO_OUT_FUNCTION2, data);
-
 	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
-	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_12_MASK) |
-		GPIO_OUT_FUNCTION3_ENABLE_GPIO_12_SET(0x50);
+	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_13_MASK) |
+		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_13(GPIO_OUT_UART1_TD);
 	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
+
+	// data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
+	// data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_12_MASK) |
+	// 	GPIO_OUT_FUNCTION3_ENABLE_GPIO_12_SET(0x50);
+	// ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
 
 	// Enabling UART1_TD, UART1_RTS as outputs on GPIO10,12
 	data = ath_reg_rd(ATH_GPIO_OE);
-	data = (data & 0xffffebff) | 0xa00;
+	data = data | BIT(AR934X_HS_UART1_TX);
 	ath_reg_wr(ATH_GPIO_OE, data);
 
 	// Enabling UART1_RD,UART1_CTS as inputs on GPIO 9, 11
-	ath_reg_wr(ATH_GPIO_IN_ENABLE9, 0xb090000);
+	ath_reg_wr(ATH_GPIO_IN_ENABLE9, AR934X_HS_UART1_RX<<16);
 
 	// GPIO_IN_ENABLE9
 	// CLOCK Settings

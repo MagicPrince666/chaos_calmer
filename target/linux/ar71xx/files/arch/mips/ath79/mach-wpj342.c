@@ -43,17 +43,13 @@
 #include "machtypes.h"
 
 #define WPJ342_GPIO_LED_STATUS		11
-#define WPJ342_GPIO_LED_SIG1		14
-#define WPJ342_GPIO_LED_SIG2		13
-#define WPJ342_GPIO_LED_SIG3		12
-#define WPJ342_GPIO_LED_SIG4		11
+#define WPJ342_GPIO_LED_SIG1		11
+#define WPJ342_GPIO_LED_SIG2		12
+
 //#define WPJ342_GPIO_BUZZER			15
 #define WPJ342_GPIO_BUZZER			-1
 
-#define WPJ342_UART1_TX				16
-#define WPJ342_UART1_RX				15
-
-#define WPJ342_GPIO_BTN_RESET		17
+#define WPJ342_GPIO_BTN_RESET		16
 
 #define WPJ342_KEYS_POLL_INTERVAL	20 /* msecs */
 #define WPJ342_KEYS_DEBOUNCE_INTERVAL	(3 * WPJ342_KEYS_POLL_INTERVAL)
@@ -76,21 +72,6 @@ static struct gpio_led wpj342_leds_gpio[] __initdata = {
 		.gpio		= WPJ342_GPIO_LED_SIG2,
 		.active_low	= 1,
 	},
-	{
-		.name		= "wpj342:green:sig3",
-		.gpio		= WPJ342_GPIO_LED_SIG3,
-		.active_low	= 1,
-	},
-	{
-		.name		= "wpj342:green:sig4",
-		.gpio		= WPJ342_GPIO_LED_SIG4,
-		.active_low	= 1,
-	},
-	{
-		.name		= "wpj342:buzzer",
-		.gpio		= WPJ342_GPIO_BUZZER,
-		.active_low	= 0,
-	}
 };
 
 static struct gpio_keys_button wpj342_gpio_keys[] __initdata = {
