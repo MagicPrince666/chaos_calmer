@@ -33,6 +33,12 @@
 
 #include "ar934x_hs_uart.h"
 
+#define UART1_GPIO_CONF
+#include "934x.h"
+#include "atheros.h"
+#define AR934X_HS_UART1_TX				13
+#define AR934X_HS_UART1_RX				14
+
 #undef CONFIG_SERIAL_AR934X_HS_CONSOLE
 #define CONFIG_SERIAL_AR934X_NR_UARTS	1
 
@@ -484,7 +490,7 @@ static void ar934x_hs_uart_shutdown(struct uart_port *port)
 
 static const char *ar934x_hs_uart_type(struct uart_port *port)
 {
-	return (port->type == PORT_AR933X) ? "AR934X UART" : NULL;
+	return (port->type == PORT_AR933X) ? "AR934X High Speed UART" : NULL;
 }
 
 static void ar934x_hs_uart_release_port(struct uart_port *port)
@@ -806,11 +812,89 @@ static struct platform_device ar934x_hs_uart_device = {
 	},
 };
 
+static void ar934x_hs_uart_gpio(void)
+{
+#ifdef UART1_GPIO_CONF
+
+	//uint32_t serial_inited;
+	u_int32_t data, serial_clk, clk_step, clk_scale;
+
+	/*
+	 * Formula to calculate clk_step and clk_scale
+	 * temp = (((long)serial_clk)*1310)/131072;
+	 * clk_scale = (temp / (baud_rate));
+	 * temp = (131072*((long)baud_rate));
+	 * clk_step = (temp / (serial_clk)) * (clk_scale + 1);
+	 */
+
+	// UART1 Out of Reset
+	ath_reg_wr(ATH_RESET,
+		ath_reg_rd(ATH_RESET) & ~RST_RESET_UART1_RESET_MASK);
+
+	// Set UART to operate on 100 MHz
+	ath_reg_rmw_set(SWITCH_CLOCK_SPARE_ADDRESS,
+		SWITCH_CLOCK_SPARE_UART1_CLK_SEL_SET(1));
+
+	serial_clk = 100 * 1000 * 1000;
+
+	//clk_scale = ((serial_clk / 128k) * 1310) / baudrate
+	clk_scale = ((serial_clk >> 17) * 1310) / ATH_HS_UART_BAUD;
+
+	//clk_step = ((128k * 115200 * (clk_scale + 1)) / serial_clk)
+	// Splitting 128K as 128 * 1024
+	clk_step = ((128 * (ATH_HS_UART_BAUD / 100) * (clk_scale + 1)) << 10)
+			/ (serial_clk / 100);
+
+	ath_reg_wr(ATH_HS_UART_INT_EN, 0x1);
+
+/*
+	//disable jtag that you can use gpio0-3
+	data = ath_reg_rd(ATH_GPIO_FUNCTIONS);
+	data |= ATH_GPIO_FUNCTION_JTAG_DISABLE;
+	ath_reg_wr(ATH_GPIO_FUNCTIONS, data);
+*/
+
+	// GPIO Settings for HS_UART
+	// Enabling UART1_TD as output on GPIO11
+	// data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION2);
+	// data = (data & ~GPIO_OUT_FUNCTION2_ENABLE_GPIO_11_MASK) |
+	// 	ATH_GPIO_OUT_FUNCTION2_ENABLE_GPIO_11(GPIO_OUT_UART1_TD);
+	// ath_reg_wr(ATH_GPIO_OUT_FUNCTION2, data);
+
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
+	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_13_MASK) |
+		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_13(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
+
+	// Enabling UART1_TD as outputs on GPIO11
+	data = ath_reg_rd(ATH_GPIO_OE);
+	data = data | BIT(AR934X_HS_UART1_TX);
+	ath_reg_wr(ATH_GPIO_OE, data);
+	
+
+	// Enabling UART1_RD as inputs on GPIO12
+	ath_reg_wr(ATH_GPIO_IN_ENABLE9, AR934X_HS_UART1_RX<<16);
+
+	// GPIO_IN_ENABLE9
+	// CLOCK Settings
+	data = ath_reg_rd(ATH_HS_UART_CLK);
+	data = (data & 0xff000000) | clk_step | (clk_scale << 16);
+	ath_reg_wr(ATH_HS_UART_CLK, data);
+
+	ath_reg_wr(ATH_HS_UART_CS, 0x2188);
+	printk("init ar934x high speed uart1 gpio\n");
+	/* unsigned long uart_clk_rate; */
+	// dprintk("%s() : init ...\n", __func__);
+
+#endif
+}
+
 static int __init ar934x_hs_uart_init(void)
 {
 	int ret;
 	/* unsigned long uart_clk_rate; */
 	// dprintk("%s() : init ...\n", __func__);
+	ar934x_hs_uart_gpio();
 
 	if (ar934x_hs_uart_console_enabled()) {
 		dprintk("%s() : is console\n", __func__);
