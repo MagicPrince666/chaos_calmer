@@ -28,7 +28,7 @@ endef
 $(eval $(call Profile,WPE72))
 
 define Profile/WPJ342
-	NAME:=Compex WPJ342
+	NAME:=XAG AR9342
 endef
 
 define Profile/WPJ342/Description

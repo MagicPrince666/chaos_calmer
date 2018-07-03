@@ -887,6 +887,9 @@ ar71xx_board_detect() {
 	*WPJ342)
 		name="wpj342"
 		;;
+	*"XAG AR9342")
+		name="wpj342"
+		;;
 	*WPJ344)
 		name="wpj344"
 		;;

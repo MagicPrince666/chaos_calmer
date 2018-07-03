@@ -12,7 +12,7 @@ export CROSS_CC
 all: default
 
 default:
-	make ARCH=$(ARC) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
+	make ARCH=$(ARC) PB42=1 CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
 
 clean:
 	cd modules && make clean

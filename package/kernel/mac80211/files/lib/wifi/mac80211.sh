@@ -124,7 +124,7 @@ config wifi-iface
 	option device   radio$devidx
 	option network  lan
 	option mode     ap
-	option ssid     XAG-openwrt
+	option ssid     XAG-$(cat /sys/class/net/eth0/address|awk -F ":" '{print $4$5$6}'| tr a-z A-Z)
 	option encryption none
 
 EOF
