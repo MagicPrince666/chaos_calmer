@@ -3,6 +3,7 @@ PWD	:= $(shell pwd)
 ROOTDIR := $(PWD)/modules
 ARC 	:=mips 
 CROSS_CC :=$(TARGET_CROSS)
+
 export KDIR
 export ROOTDIR
 export CROSS_CC
