@@ -36,8 +36,9 @@ EXTRA_CFLAGS += -DOCTEON
 endif
 
 obj-m := art.o
-art-objs := dk_flash.o dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
+art-objs := dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
 
 clean:
 	rm -rf *.o *.ko .*.cmd *mod.c .tmp_versions
+
 

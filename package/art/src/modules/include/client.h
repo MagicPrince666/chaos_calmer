@@ -5,6 +5,7 @@
 #include "dk_ioctl.h"
 #include "dk_event.h"
 
+#define DK_DEBUG 1
 #define MAX_CLIENTS_SUPPORTED 8
 #define INVALID_CLIENT -1
 #define DK_MAJOR_NUMBER 63

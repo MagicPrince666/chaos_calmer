@@ -4,7 +4,7 @@ ROOTDIR := $(PWD)/modules
 
 # Default architecture is MIPS
 ARC 	:=mips 
-CROSS_CC :=mips-linux-uclibc-
+CROSS_CC :=$(TARGET_CROSS)
 
 ifeq ($(POWERPC),1)
 ARC     :=powerpc

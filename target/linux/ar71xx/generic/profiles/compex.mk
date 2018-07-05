@@ -28,11 +28,11 @@ endef
 $(eval $(call Profile,WPE72))
 
 define Profile/WPJ342
-	NAME:=XAG AR9342
+	NAME:=XAG XLinkHS
 endef
 
 define Profile/WPJ342/Description
-	Package set optimized for the XAG AR9342 board.
+	Package set optimized for the XAG XLinkHS board.
 endef
 
 $(eval $(call Profile,WPJ342))

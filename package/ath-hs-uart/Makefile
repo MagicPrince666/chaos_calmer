@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=ath-hs-uart
-PKG_RELEASE:=1
+PKG_RELEASE:=XAG-HS-UART-1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -19,7 +19,7 @@ define KernelPackage/ath-hs-uart
   DEPENDS:=
   FILES:=$(PKG_BUILD_DIR)/ar934x_hs_uart.ko
   KCONFIG:=
-  AUTOLOAD:=$(call AutoProbe,ath-hs-uart)
+  AUTOLOAD:=$(call AutoProbe,ar934x_hs_uart)
 endef
 
 define KernelPackage/ath-hs-uart/description

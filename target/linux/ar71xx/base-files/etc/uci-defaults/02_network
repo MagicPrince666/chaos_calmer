@@ -396,8 +396,6 @@ wpe72)
 wpj342)
 	ucidef_set_interfaces_lan_wan "eth0"
 	ucidef_add_switch "switch0" "1" "1"
-	ucidef_add_switch_vlan "switch0" "1" "0t 2 3 4 5"
-	ucidef_add_switch_vlan "switch0" "2" "0t 1"
 	;;
 	
 wpj344)
