@@ -22,7 +22,7 @@ struct ar934x_uart_platform_data {
 #define AR934X_HS_UART_BASE        		AR934X_UART1_BASE
 
 #define AR934X_HS_UART_REGS_SIZE		20
-#define AR934X_HS_UART_FIFO_SIZE		4
+#define AR934X_HS_UART_FIFO_SIZE		16
 
 #define AR934X_HS_UART_DATA_REG			0x00
 #define AR934X_HS_UART_CS_REG			0x04

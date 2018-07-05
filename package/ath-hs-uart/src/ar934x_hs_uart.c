@@ -33,11 +33,6 @@
 
 #include "ar934x_hs_uart.h"
 
-#define UART1_GPIO_CONF
-#include "934x.h"
-#include "atheros.h"
-#define AR934X_HS_UART1_TX				13
-#define AR934X_HS_UART1_RX				14
 
 #undef CONFIG_SERIAL_AR934X_HS_CONSOLE
 #define CONFIG_SERIAL_AR934X_NR_UARTS	1
@@ -53,6 +48,13 @@
 #define AR934X_HS_UART_MAX_BAUD		30000000
 
 #define AR934X_HS_DUMMY_STATUS_RD	0x01
+
+#include "934x.h"
+#include "atheros.h"
+#define AR934X_HS_UART1_TX				13
+#define AR934X_HS_UART1_RX				14
+//#define AR934X_HS_UART1_RTS				15
+//#define AR934X_HS_UART1_CTS				17
 
 #define dprintk(args...) \
     do { \
@@ -72,22 +74,18 @@ struct ar934x_hs_uart_port {
 
 static inline bool ar934x_hs_uart_console_enabled(void)
 {
-	return config_enabled(CONFIG_SERIAL_AR934X_HS_CONSOLE);
+	return IS_ENABLED(CONFIG_SERIAL_AR934X_HS_CONSOLE);
 }
 
 static inline unsigned int ar934x_hs_uart_read(struct ar934x_hs_uart_port *up,
 					    int offset)
 {
-	unsigned int value;
-	value = readl(up->port.membase + offset);
-	// dprintk("%s()  io 0x%08X  ->   0x%08X\n", __func__, (uint32_t) up->port.membase + offset, value);
-	return value;
+	return readl(up->port.membase + offset);
 }
 
 static inline void ar934x_hs_uart_write(struct ar934x_hs_uart_port *up,
 				     int offset, unsigned int value)
 {
-	// dprintk("%s() io 0x%08X value 0x%08X\n", __func__, (uint32_t) up->port.membase + offset, value);
 	writel(value, up->port.membase + offset);
 }
 
@@ -136,7 +134,6 @@ static inline void ar934x_hs_uart_putc(struct ar934x_hs_uart_port *up, int ch)
 
 	rdata = ch & AR934X_HS_UART_DATA_TX_RX_MASK;
 	rdata |= AR934X_HS_UART_DATA_TX_CSR;
-	// dprintk("%s() write 0x%08X value 0x%08X\n", __func__, rdata, AR934X_HS_UART_DATA_REG);
 	ar934x_hs_uart_write(up, AR934X_HS_UART_DATA_REG, rdata);
 }
 
@@ -164,21 +161,27 @@ static void ar934x_hs_uart_set_mctrl(struct uart_port *port, unsigned int mctrl)
 
 static void ar934x_hs_uart_start_tx(struct uart_port *port)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	// (struct ar934x_hs_uart_port *) port;
 
 	ar934x_hs_uart_start_tx_interrupt(up);
 }
 
 static void ar934x_hs_uart_stop_tx(struct uart_port *port)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 
 	ar934x_hs_uart_stop_tx_interrupt(up);
 }
 
 static void ar934x_hs_uart_stop_rx(struct uart_port *port)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up =
+		container_of(port, struct ar934x_hs_uart_port, port);
+	// (struct ar934x_hs_uart_port *) port;
 
 	up->ier &= ~AR934X_HS_UART_INT_RX_VALID;
 	ar934x_hs_uart_write(up, AR934X_HS_UART_INT_EN_REG, up->ier);
@@ -186,7 +189,9 @@ static void ar934x_hs_uart_stop_rx(struct uart_port *port)
 
 static void ar934x_hs_uart_break_ctl(struct uart_port *port, int break_state)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 	unsigned long flags;
 
 	spin_lock_irqsave(&up->port.lock, flags);
@@ -260,7 +265,9 @@ static void ar934x_hs_uart_set_termios(struct uart_port *port,
 				    struct ktermios *new,
 				    struct ktermios *old)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 	unsigned int cs;
 	unsigned long flags;
 	unsigned int baud, scale, step;
@@ -359,7 +366,6 @@ static void ar934x_hs_uart_rx_chars(struct ar934x_hs_uart_port *up)
 		if (uart_handle_sysrq_char(&up->port, ch))
 			continue;
 		if ((up->port.ignore_status_mask & AR934X_HS_DUMMY_STATUS_RD) == 0)
-			// dprintk("%s() send to tty %02X\n", __func__, ch);
 			tty_insert_flip_char(port, ch, TTY_NORMAL);
 	} while (max_count-- > 0);
 
@@ -373,10 +379,8 @@ static void ar934x_hs_uart_tx_chars(struct ar934x_hs_uart_port *up)
 	struct circ_buf *xmit = &up->port.state->xmit;
 	int count;
 
-	// dprintk("%s() check tx_stopped\n", __func__);
 	if (uart_tx_stopped(&up->port))
 		return;
-	// dprintk("%s() tx running\n", __func__);
 
 	count = up->port.fifosize;
 	do {
@@ -414,8 +418,6 @@ static irqreturn_t ar934x_hs_uart_interrupt(int irq, void *dev_id)
 	struct ar934x_hs_uart_port *up = dev_id;
 	unsigned int status;
 
-	// dprintk("  HS Uart int\n");
-
 	status = ar934x_hs_uart_read(up, AR934X_HS_UART_CS_REG);
 	if ((status & AR934X_HS_UART_CS_HOST_INT) == 0)
 		return IRQ_NONE;
@@ -445,7 +447,9 @@ static irqreturn_t ar934x_hs_uart_interrupt(int irq, void *dev_id)
 
 static int ar934x_hs_uart_startup(struct uart_port *port)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 	unsigned long flags;
 	int ret;
 
@@ -455,6 +459,9 @@ static int ar934x_hs_uart_startup(struct uart_port *port)
 		return ret;
 
 	spin_lock_irqsave(&up->port.lock, flags);
+
+	// Set UART to operate on 100 MHz
+	//ath_reg_rmw_set(SWITCH_CLOCK_SPARE_ADDRESS,SWITCH_CLOCK_SPARE_UART1_CLK_SEL_SET(1));
 
 	/* Enable HOST interrupts */
 	ar934x_hs_uart_rmw_set(up, AR934X_HS_UART_CS_REG,
@@ -475,7 +482,9 @@ static int ar934x_hs_uart_startup(struct uart_port *port)
 
 static void ar934x_hs_uart_shutdown(struct uart_port *port)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 
 	/* Disable all interrupts */
 	up->ier = 0;
@@ -515,7 +524,9 @@ static void ar934x_hs_uart_config_port(struct uart_port *port, int flags)
 static int ar934x_hs_uart_verify_port(struct uart_port *port,
 				   struct serial_struct *ser)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 
 	if (ser->type != PORT_UNKNOWN &&
 	    ser->type != PORT_AR933X)
@@ -569,7 +580,9 @@ static void ar934x_hs_uart_wait_xmitr(struct ar934x_hs_uart_port *up)
 
 static void ar934x_hs_uart_console_putchar(struct uart_port *port, int ch)
 {
-	struct ar934x_hs_uart_port *up = (struct ar934x_hs_uart_port *) port;
+	struct ar934x_hs_uart_port *up = 
+		container_of(port, struct ar934x_hs_uart_port, port);
+	//(struct ar934x_hs_uart_port *) port;
 
 	ar934x_hs_uart_wait_xmitr(up);
 	ar934x_hs_uart_putc(up, ch);
@@ -637,7 +650,7 @@ static int ar934x_hs_uart_console_setup(struct console *co, char *options)
 }
 
 static struct console ar934x_hs_uart_console = {
-	.name		= "ttyATH",
+	.name		= "ttyHS",
 	.write		= ar934x_hs_uart_console_write,
 	.device		= uart_console_device,
 	.setup		= ar934x_hs_uart_console_setup,
@@ -658,7 +671,7 @@ static void ar934x_hs_uart_add_console_port(struct ar934x_hs_uart_port *up)
 static struct uart_driver ar934x_hs_uart_driver = {
 	.owner		= THIS_MODULE,
 	.driver_name	= DRIVER_NAME,
-	.dev_name	= "ttyATH",
+	.dev_name	= "ttyHS",
 	.nr		= CONFIG_SERIAL_AR933X_NR_UARTS,
 	.cons		= NULL, /* filled in runtime */
 };
@@ -675,7 +688,7 @@ static int ar934x_hs_uart_probe(struct platform_device *pdev)
 	int ret;
 
 	np = pdev->dev.of_node;
-	if (config_enabled(CONFIG_OF) && np) {
+	if (IS_ENABLED(CONFIG_OF) && np) {
 		id = of_alias_get_id(np, "serial");
 		if (id < 0) {
 			dev_err(&pdev->dev, "unable to get alias id, err=%d\n",
@@ -688,7 +701,7 @@ static int ar934x_hs_uart_probe(struct platform_device *pdev)
 			id = 0;
 	}
 
-	if (id > CONFIG_SERIAL_AR933X_NR_UARTS)
+	if (id >= CONFIG_SERIAL_AR933X_NR_UARTS)
 		return -EINVAL;
 
 	irq_res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
@@ -814,38 +827,15 @@ static struct platform_device ar934x_hs_uart_device = {
 
 static void ar934x_hs_uart_gpio(void)
 {
-#ifdef UART1_GPIO_CONF
-
-	//uint32_t serial_inited;
-	u_int32_t data, serial_clk, clk_step, clk_scale;
-
-	/*
-	 * Formula to calculate clk_step and clk_scale
-	 * temp = (((long)serial_clk)*1310)/131072;
-	 * clk_scale = (temp / (baud_rate));
-	 * temp = (131072*((long)baud_rate));
-	 * clk_step = (temp / (serial_clk)) * (clk_scale + 1);
-	 */
-
+	u_int32_t data;
 	// UART1 Out of Reset
-	ath_reg_wr(ATH_RESET,
-		ath_reg_rd(ATH_RESET) & ~RST_RESET_UART1_RESET_MASK);
+	//ath_reg_wr(ATH_RESET,ath_reg_rd(ATH_RESET) & ~RST_RESET_UART1_RESET_MASK);
 
 	// Set UART to operate on 100 MHz
-	ath_reg_rmw_set(SWITCH_CLOCK_SPARE_ADDRESS,
-		SWITCH_CLOCK_SPARE_UART1_CLK_SEL_SET(1));
-
-	serial_clk = 100 * 1000 * 1000;
-
-	//clk_scale = ((serial_clk / 128k) * 1310) / baudrate
-	clk_scale = ((serial_clk >> 17) * 1310) / ATH_HS_UART_BAUD;
-
-	//clk_step = ((128k * 115200 * (clk_scale + 1)) / serial_clk)
-	// Splitting 128K as 128 * 1024
-	clk_step = ((128 * (ATH_HS_UART_BAUD / 100) * (clk_scale + 1)) << 10)
-			/ (serial_clk / 100);
-
-	ath_reg_wr(ATH_HS_UART_INT_EN, 0x1);
+	//ath_reg_rmw_set(SWITCH_CLOCK_SPARE_ADDRESS,SWITCH_CLOCK_SPARE_UART1_CLK_SEL_SET(1));
+	data = ath_reg_rd(SWITCH_CLOCK_SPARE_ADDRESS);
+	data &= ~(1<<7);
+	ath_reg_wr(SWITCH_CLOCK_SPARE_ADDRESS, data);
 
 /*
 	//disable jtag that you can use gpio0-3
@@ -854,50 +844,62 @@ static void ar934x_hs_uart_gpio(void)
 	ath_reg_wr(ATH_GPIO_FUNCTIONS, data);
 */
 
+	// Enabling UART1_TD as outputs on GPIO11
+	data = ath_reg_rd(ATH_GPIO_OE);
+	data = (data & (~BIT(AR934X_HS_UART1_TX))) | BIT(AR934X_HS_UART1_RX);
+	ath_reg_wr(ATH_GPIO_OE, data);
+
 	// GPIO Settings for HS_UART
 	// Enabling UART1_TD as output on GPIO11
-	// data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION2);
-	// data = (data & ~GPIO_OUT_FUNCTION2_ENABLE_GPIO_11_MASK) |
-	// 	ATH_GPIO_OUT_FUNCTION2_ENABLE_GPIO_11(GPIO_OUT_UART1_TD);
-	// ath_reg_wr(ATH_GPIO_OUT_FUNCTION2, data);
-
+#if AR934X_HS_UART1_TX == 17
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION4);
+	data = (data & ~GPIO_OUT_FUNCTION4_ENABLE_GPIO_17_MASK) |
+		ATH_GPIO_OUT_FUNCTION4_ENABLE_GPIO_17(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION4, data);
+#elif AR934X_HS_UART1_TX == 16
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION4);
+	data = (data & ~GPIO_OUT_FUNCTION4_ENABLE_GPIO_16_MASK) |
+		ATH_GPIO_OUT_FUNCTION4_ENABLE_GPIO_15(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION4, data);
+#elif AR934X_HS_UART1_TX == 15
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
+	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_15_MASK) |
+		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_15(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
+#elif AR934X_HS_UART1_TX == 14
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
+	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_14_MASK) |
+		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_14(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
+#elif AR934X_HS_UART1_TX == 13
 	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
 	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_13_MASK) |
 		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_13(GPIO_OUT_UART1_TD);
 	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
-
-	// Enabling UART1_TD as outputs on GPIO11
-	data = ath_reg_rd(ATH_GPIO_OE);
-	data = data | BIT(AR934X_HS_UART1_TX);
-	ath_reg_wr(ATH_GPIO_OE, data);
-	
+#elif AR934X_HS_UART1_TX == 12
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION3);
+	data = (data & ~GPIO_OUT_FUNCTION3_ENABLE_GPIO_12_MASK) |
+		ATH_GPIO_OUT_FUNCTION3_ENABLE_GPIO_12(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION3, data);
+#elif AR934X_HS_UART1_TX == 11
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION2);
+	data = (data & ~GPIO_OUT_FUNCTION2_ENABLE_GPIO_11_MASK) |
+		ATH_GPIO_OUT_FUNCTION2_ENABLE_GPIO_11(GPIO_OUT_UART1_TD);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION2, data);
+#endif
 
 	// Enabling UART1_RD as inputs on GPIO12
 	ath_reg_wr(ATH_GPIO_IN_ENABLE9, AR934X_HS_UART1_RX<<16);
-
-	// GPIO_IN_ENABLE9
-	// CLOCK Settings
-	data = ath_reg_rd(ATH_HS_UART_CLK);
-	data = (data & 0xff000000) | clk_step | (clk_scale << 16);
-	ath_reg_wr(ATH_HS_UART_CLK, data);
-
-	ath_reg_wr(ATH_HS_UART_CS, 0x2188);
-	printk("init ar934x high speed uart1 gpio\n");
-	/* unsigned long uart_clk_rate; */
-	// dprintk("%s() : init ...\n", __func__);
-
-#endif
 }
 
 static int __init ar934x_hs_uart_init(void)
 {
 	int ret;
-	/* unsigned long uart_clk_rate; */
-	// dprintk("%s() : init ...\n", __func__);
-	ar934x_hs_uart_gpio();
 
+	ar934x_hs_uart_gpio();
+	
 	if (ar934x_hs_uart_console_enabled()) {
-		dprintk("%s() : is console\n", __func__);
+		//dprintk("%s() : is console\n", __func__);
 		ar934x_hs_uart_driver.cons = &ar934x_hs_uart_console;
 	};
 
@@ -916,7 +918,7 @@ static int __init ar934x_hs_uart_init(void)
 err_unregister_uart_driver:
 	uart_unregister_driver(&ar934x_hs_uart_driver);
 err_out:
-	dprintk("%s() : exit with error\n", __func__);
+	//dprintk("%s() : exit with error\n", __func__);
 	return ret;
 }
 
