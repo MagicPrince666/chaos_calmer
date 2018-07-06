@@ -1,4 +1,4 @@
-KDIR	:= $(LINUX_KARCH)
+KDIR	:= $(KERNELPATH)
 #KDIR	:= /Volumes/WPJ342/chaos_calmer/build_dir/target-mips_34kc_uClibc-0.9.33.2/linux-ar71xx_generic/linux-3.18.98
 PWD	:= $(shell pwd)
 ROOTDIR := $(PWD)/modules
@@ -8,10 +8,6 @@ ARC 	:=mips
 CROSS_CC :=$(TARGET_CROSS)
 #CROSS_CC :=/Volumes/WPJ342/chaos_calmer/staging_dir/toolchain-mips_34kc_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-uclibc-
 
-ifeq ($(POWERPC),1)
-ARC     :=powerpc
-CROSS_CC :=powerpc-none-linux-gnuspe-
-endif
 
 export KDIR
 export ROOTDIR
@@ -21,7 +17,7 @@ all: default
 
 default:
 	@echo Making generic AP art module build. This build target is used for 3rd party AP processor. 
-	make ARCH=$(ARC) AP83=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
+	make ARCH=$(ARC) PB42=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
 
 hydra:
 	@echo Making art module for Atheros hydra based design.

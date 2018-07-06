@@ -31,7 +31,11 @@ static INT32 dk_pci_probe
 )
 {
 	INT32 error;
+#if (CFG_64BIT == 1)
+	resource_size_t baseaddr[MAX_BARS]; 
+#else
 	A_UINT_PTR baseaddr[MAX_BARS];
+#endif
 	UINT32 len[MAX_BARS];
 	UINT32 irq;
 #ifndef PYTHON_EMU
@@ -94,7 +98,11 @@ static INT32 dk_pci_probe
 
     for (iIndex=0; iIndex<MAX_BARS; iIndex++) {
 	  baseaddr[iIndex] = pci_resource_start(dev,iIndex);
+#if (CFG_64BIT == 1)
+	printk(KERN_ERR" Base Phsycal address :0x%llx\n", baseaddr[iIndex]); 
+#else
 	printk(KERN_ERR" Base Phsycal address :0x%08lx\n", baseaddr[iIndex]);
+#endif
 	  len[iIndex] = pci_resource_len(dev,iIndex);
       if (len[iIndex] == 0) break;
     }
@@ -109,7 +117,9 @@ static INT32 dk_pci_probe
 
 #ifndef PYTHON_EMU	
     for (iIndex=0; iIndex<numBars; iIndex++) {
+#if (CFG_64BIT != 1)
 	   pci_write_config_dword(dev,PCI_BASE_ADDRESS_0 + (iIndex *4), baseaddr[iIndex]);
+#endif
 	   pci_write_config_byte(dev,PCI_INTERRUPT_LINE, irq);
     }
 #endif
@@ -210,7 +220,11 @@ static VOID dk_pci_resume
 #endif
 }
 
+#if (CFG_64BIT == 1)
+static struct pci_device_id dk_id_tbl[] = {
+#else
 static struct pci_device_id __devinitdata dk_id_tbl[] = {
+#endif
 	{ATHEROS_VENDOR_ID, 0x0011, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"MAUI"},
 	{ATHEROS_VENDOR_ID, 0x0012, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"OAHU"},
 	{ATHEROS_VENDOR_ID, 0x0013, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"VENICE"},
@@ -334,7 +348,9 @@ INT32 bus_dev_init
 	 * be hotplugged without aware of the kernel
 	 */
 #ifndef PYTHON_EMU	
+#if (CFG_64BIT != 1)
 	pci_write_config_dword(dev,PCI_BASE_ADDRESS_0, baseaddr);
+#endif
 	pci_write_config_byte(dev,PCI_INTERRUPT_LINE, irq);
 #endif
 

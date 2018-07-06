@@ -3,6 +3,7 @@ IX_CFLAGS += -I$(ROOTDIR)
 
 ifeq ($(PB42),1)
 EXTRA_CFLAGS += -DOWL_PB42
+EXTRA_CFLAGS += -DCFG_64BIT=1
 endif
 
 ifeq ($(PYTHON_EMU),1)
@@ -36,9 +37,8 @@ EXTRA_CFLAGS += -DOCTEON
 endif
 
 obj-m := art.o
-art-objs := dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
+art-objs := dk_flash.o dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
 
 clean:
-	rm -rf *.o *.ko .*.cmd *mod.c .tmp_versions
-
+	rm -rf *.o *.ko .*.cmd *mod.c *.symvers *.order .tmp_versions
 

@@ -1,4 +1,4 @@
-config QCA_ART
-	tristate "atheros art"
+config QCA_ART_4_49_844
+	tristate "atheros art2_ver_4_9_844"
 	help
-	  atheros ar9342 art wireless adjust
+	  atheros ar9342 art2_ver_4_9_844 wireless adjust

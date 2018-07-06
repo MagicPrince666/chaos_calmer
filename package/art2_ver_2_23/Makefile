@@ -9,26 +9,26 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 
-PKG_NAME:=qca-art-4.9
-PKG_RELEASE:=XAG-qca-art-4.9
+PKG_NAME:=qca-art2_2_23
+PKG_RELEASE:=XAG-qca-art2_2_23
 
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/qca-art-4.9
+define KernelPackage/qca-art2_2_23
   SUBMENU:=Other modules
-  TITLE:=athreos art driver
+  TITLE:=athreos art2_ver_2_23 driver
   FILES:=$(PKG_BUILD_DIR)/modules/art.ko
   KCONFIG:=
   #AUTOLOAD:=$(call AutoProbe,art)
   DEPENDS:=
 endef
 
-define KernelPackage/qca-art-4.9/description
- kernel modules to generate art events
+define KernelPackage/qca-art2_2_23/description
+ kernel modules to generate art2_ver_2_23 events
 endef
 
 EXTRA_KCONFIG:= \
-	CONFIG_QCA_ART_4_49_844=m
+	CONFIG_QCA_ART_2_23=m
 
 EXTRA_CFLAGS:= \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=m,%,$(filter %=m,$(EXTRA_KCONFIG)))) \
@@ -53,4 +53,4 @@ define Build/Compile
 		modules
 endef
 
-$(eval $(call KernelPackage,qca-art-4.9))
+$(eval $(call KernelPackage,qca-art2_2_23))

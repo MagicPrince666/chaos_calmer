@@ -9,26 +9,26 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 
-PKG_NAME:=qca-art
-PKG_RELEASE:=XAG-qca-art-1.0
+PKG_NAME:=qca-art_lsdk
+PKG_RELEASE:=XAG-qca-art_lsdk
 
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/qca-art
+define KernelPackage/qca-art_lsdk
   SUBMENU:=Other modules
-  TITLE:=athreos art driver
+  TITLE:=athreos art_ver_lsdk driver
   FILES:=$(PKG_BUILD_DIR)/modules/art.ko
   KCONFIG:=
-  #AUTOLOAD:=$(call AutoProbe,qca-art)
+  #AUTOLOAD:=$(call AutoProbe,art)
   DEPENDS:=
 endef
 
-define KernelPackage/qca-art/description
- kernel modules to generate art events
+define KernelPackage/qca-art_lsdk/description
+ kernel modules to generate art2_lsdk events
 endef
 
 EXTRA_KCONFIG:= \
-	CONFIG_QCA_ART=m
+	CONFIG_QCA_ART_LSDK=m
 
 EXTRA_CFLAGS:= \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=m,%,$(filter %=m,$(EXTRA_KCONFIG)))) \
@@ -53,4 +53,4 @@ define Build/Compile
 		modules
 endef
 
-$(eval $(call KernelPackage,qca-art))
+$(eval $(call KernelPackage,qca-art_lsdk))

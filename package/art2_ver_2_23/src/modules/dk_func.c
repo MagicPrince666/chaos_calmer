@@ -413,13 +413,20 @@ static int dk_ioctl
 }
 
 
+static long dk_ioctl_new(struct file *file, unsigned int cmd, unsigned long arg) { 
+	struct inode *inode = file->f_path.dentry->d_inode; 
+	long ret; 
+	//ret = dk_ioctl(file, cmd, arg);
+	ret = dk_ioctl(inode, file, cmd, arg);
+	return ret; 
+}  
+
 static struct file_operations dk_fops = {
 	owner:	THIS_MODULE,
 	open:	dk_open,
 	release: dk_release,
 	mmap:	dk_mmap,
-	//ioctl  : dk_ioctl
-	compat_ioctl  : dk_ioctl
+	unlocked_ioctl: dk_ioctl_new
 };
 
 INT32  dk_dev_init(void) {

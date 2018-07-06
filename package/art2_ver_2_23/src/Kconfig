@@ -1,0 +1,4 @@
+config QCA_ART_2_23
+	tristate "atheros art2_ver_2_23"
+	help
+	  atheros ar9342 qca-art2_ver_2_23 wireless adjust
