@@ -61,18 +61,18 @@
 
 #define WPJ342_ART_SIZE		0x8000
 
-static struct gpio_led wpj342_leds_gpio[] __initdata = {
-	{
-		.name		= "wpj342:red:sig1",
-		.gpio		= WPJ342_GPIO_LED_SIG1,
-		.active_low	= 1,
-	},
-	{
-		.name		= "wpj342:yellow:sig2",
-		.gpio		= WPJ342_GPIO_LED_SIG2,
-		.active_low	= 1,
-	},
-};
+// static struct gpio_led wpj342_leds_gpio[] __initdata = {
+// 	{
+// 		.name		= "wpj342:red:sig1",
+// 		.gpio		= WPJ342_GPIO_LED_SIG1,
+// 		.active_low	= 1,
+// 	},
+// 	{
+// 		.name		= "wpj342:yellow:sig2",
+// 		.gpio		= WPJ342_GPIO_LED_SIG2,
+// 		.active_low	= 1,
+// 	},
+// };
 
 static struct gpio_keys_button wpj342_gpio_keys[] __initdata = {
 	{
@@ -140,8 +140,7 @@ static void __init wpj342_setup(void)
 	u8 *mac = (u8 *) KSEG1ADDR(0x1f02e000);
 
 	ath79_register_m25p80(NULL);
-	ath79_register_leds_gpio(-1, ARRAY_SIZE(wpj342_leds_gpio),
-				wpj342_leds_gpio);
+	//ath79_register_leds_gpio(-1, ARRAY_SIZE(wpj342_leds_gpio),wpj342_leds_gpio);
 
 	ath79_register_gpio_keys_polled(-1, WPJ342_KEYS_POLL_INTERVAL,
 					ARRAY_SIZE(wpj342_gpio_keys),
