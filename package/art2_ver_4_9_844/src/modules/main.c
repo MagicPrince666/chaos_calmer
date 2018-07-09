@@ -354,7 +354,7 @@ for (iIndex=0; iIndex<1; iIndex++) { // assume that only one wmac
       if (len[iIndex] == 0) break;
     }
     numBars = iIndex;
-    irq=40;
+    irq=5;
 
 #ifdef USE_PLATFORM_FRAMEWORK
     irq = get_wmac_irq(sIndex);

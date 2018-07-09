@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 
-PKG_NAME:=qca-art-4.9
-PKG_RELEASE:=XAG-qca-art-4.9
+PKG_NAME:=qca-art2_4_9
+PKG_RELEASE:=XAG-qca-art2_4_9
 
 include $(INCLUDE_DIR)/package.mk
 
-define KernelPackage/qca-art-4.9
+define KernelPackage/qca-art2_4_9
   SUBMENU:=Other modules
   TITLE:=athreos art driver
   FILES:=$(PKG_BUILD_DIR)/modules/art.ko
@@ -23,7 +23,7 @@ define KernelPackage/qca-art-4.9
   DEPENDS:=
 endef
 
-define KernelPackage/qca-art-4.9/description
+define KernelPackage/qca-art2_4_9/description
  kernel modules to generate art events
 endef
 
@@ -53,4 +53,4 @@ define Build/Compile
 		modules
 endef
 
-$(eval $(call KernelPackage,qca-art-4.9))
+$(eval $(call KernelPackage,qca-art2_4_9))

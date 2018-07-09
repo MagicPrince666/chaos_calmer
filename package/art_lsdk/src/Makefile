@@ -13,7 +13,7 @@ export KDIR
 export ROOTDIR
 export CROSS_CC
 
-all: default
+all: wasp
 
 default:
 	@echo Making generic AP art module build. This build target is used for 3rd party AP processor. 
