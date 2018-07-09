@@ -1,34 +1,0 @@
-8
-
-dir
-1424
-svn://192.168.1.12/localdisk1/wlan_oss/branches/CTC/oss_1020/apps/art2_ver2_23.1ap_src/wlan
-svn://192.168.1.12/localdisk1/wlan_oss
-
-
-
-2012-04-05T03:39:32.035593Z
-807
-
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-90f243ca-4d50-421d-a454-882c31aa771c
-
-include
-dir
-
-hal
-dir
-
