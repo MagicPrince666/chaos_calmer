@@ -13,32 +13,13 @@ export KDIR
 export ROOTDIR
 export CROSS_CC
 
+DEBUG = 0
+
 all: wasp
-
-default:
-	@echo Making generic AP art module build. This build target is used for 3rd party AP processor. 
-	make ARCH=$(ARC) PB42=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
-
-hydra:
-	@echo Making art module for Atheros hydra based design.
-	make ARCH=$(ARC) PB42=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
-
-howl:
-	@echo Making art module for Atheros howl based design.
-	make ARCH=$(ARC) AP83=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
-
-python:
-	@echo Making art module for Atheros python based design.
-	make ARCH=$(ARC) PYTHON_EMU=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
 
 wasp:
 	@echo Making art module for Atheros wasp based design.
-	make ARCH=$(ARC) AP83=1 WASP=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
+	make ARCH=$(ARC) AP83=1 WASP=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CC) -C $(KDIR) M=$(PWD)/modules modules
 
-wasp_osprey:
-	@echo Making art module for Atheros wasp-osprey DBSC based design.
-	make ARCH=$(ARC) AP83=1 WASP=1 PYTHON_EMU=1 WASP_OSPREY=1 DEBUG=$(DEBUG) CROSS_COMPILE=$(CROSS_CC) -C $(KDIR) M=$(PWD)/modules modules
-
-clean:
 clean:
 	cd modules && make clean

@@ -141,7 +141,7 @@ for (iIndex=0; iIndex<1; iIndex++) { // assume that only one wmac
       if (len[iIndex] == 0) break;
     }
     numBars = iIndex;
-    irq=40;
+    irq=5;
 if (add_client(dev,(A_UINT_PTR *)baseaddr,len,irq, numBars, sIndex,0) < 0) {
 		printk(KERN_ERR "DK:: unable to add client \n");
 #if LINUX_VERSION_CODE > 132098

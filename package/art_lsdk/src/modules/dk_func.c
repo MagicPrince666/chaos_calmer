@@ -461,9 +461,10 @@ static int dk_ioctl
 
 
 static long dk_ioctl_new(struct file *file, unsigned int cmd, unsigned long arg) { 
-struct inode *inode = file->f_path.dentry->d_inode; 
-long ret; 
-ret = dk_ioctl(inode, file, cmd, arg); return ret; 
+	struct inode *inode = file->f_path.dentry->d_inode; 
+	long ret; 
+	ret = dk_ioctl(inode, file, cmd, arg); 
+	return ret; 
 }  
 
 static struct file_operations dk_fops = {
