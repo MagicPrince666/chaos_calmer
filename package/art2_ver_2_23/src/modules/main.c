@@ -37,6 +37,8 @@
 
 extern INT32  dk_dev_init(void);
 extern void dk_dev_exit(void);
+//extern int flash_init(void);
+//extern int flash_exit(void);
 extern INT32 get_chip_id(INT32 cli_id,INT32 offset,INT32 size,INT32 *ret_val);
 int init_wmac_device(void);
 static INT32 __init dk_module_init(void) 
@@ -54,9 +56,9 @@ static INT32 __init dk_module_init(void)
 		printk("DK::Module init \n");
 #endif // DK_DEBUG
                 
-#ifndef OWL_PB42 
-        get_chip_id(0,CHIP_ID_LOCATION,4,&ap83_81); // for getting the chip rev_id; to differentiate between PB and AP
-        printk("CHIP REV ID: %x\n",ap83_81);
+#ifndef OCTEON 
+                get_chip_id(0,CHIP_ID_LOCATION,4,&ap83_81); // for getting the chip rev_id; to differentiate between PB and AP
+                printk("CHIP REV ID: %x\n",ap83_81);
 #endif
 #if  defined(PYTHON_EMU)
         addr = (UINT32 *)(MERLIN_PCI_COMMAND_REG_ADDRESS);
@@ -100,7 +102,9 @@ static INT32 __init dk_module_init(void)
                 #endif
                  
 #if !defined(OWL_PB42) && !defined(PYTHON_EMU)
+//        flash_init();
 		if (error < 0) {
+//            flash_exit();
 			cleanup_client();
 			dk_dev_exit();
 			printk("DK::Cannot locate device. Reset the machine \n");
@@ -163,6 +167,10 @@ static void __exit  dk_module_exit(void)
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
 		bus_module_exit();
 #endif
+
+//#if !defined(OWL_PB42) && !defined(PYTHON_EMU)
+//        flash_exit();
+//#endif
 		cleanup_client();
 		dk_dev_exit();
 

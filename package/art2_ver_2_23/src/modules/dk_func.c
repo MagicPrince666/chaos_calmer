@@ -9,6 +9,7 @@
 #include "dk.h"
 #include "dk_ioctl.h"
 #include "client.h"
+//#include "dk_flash.h"
 
 
 
@@ -125,6 +126,8 @@ static int dk_ioctl
 {
 		INT32 ret=-1;
 		INT32 data;
+        struct flash_op fop;
+        struct flash_op_wr fopwr;
 		struct cfg_op co;
 		INT32 cli_id;
 		INT32 i;
@@ -133,6 +136,7 @@ static int dk_ioctl
 		event_handle evt_hnd;
 		p_event_struct p_event;
 		p_atheros_dev p_client;
+        UINT8 *write_buf;
 
 		
 #ifdef DK_DEBUG
@@ -356,12 +360,63 @@ static int dk_ioctl
 				}
 				ret = copy_to_user((void *)arg,(void *)&eo,sizeof(eo));
 				break;
-            case DK_IOCTL_FLASH_READ:
+			case DK_IOCTL_FLASH_READ:
                 printk("DK:: Flash read is not supported any more from art driver\n");
                 break;
             case DK_IOCTL_FLASH_WRITE:
                 printk("DK:: Flash read is not supported any more from art driver\n");
                 break; 
+/*
+            case DK_IOCTL_FLASH_READ:
+#ifdef DK_DEBUG
+                    printk("DK::Get DK_IOCTL_FLASH_READ \n");
+#endif
+                    if (copy_from_user((void *)&fop,(void *)arg,sizeof(fop))) {
+                           printk("DK :: Copy_from_user failed\n");
+                           return -EFAULT;
+                    }
+//printk("DK FLASH_READ:: fop.fcl is 0x%x, fop.offset is 0x%x, fop.len is 0x%x\n",fop.fcl, fop.offset, fop.len);
+
+                    dk_flash_read(fop.fcl,fop.offset,fop.len,&fop.value);
+                    ret = copy_to_user((void *)arg,(void *)&fop,sizeof(fop));
+                    break;
+            case DK_IOCTL_FLASH_WRITE:
+#ifdef DK_DEBUG
+                 printk("DK::Get DK_IOCTL_FLASH_WRITE\n ");
+#endif
+                 if (copy_from_user((void *)&fopwr,(void *)arg,sizeof(fopwr))) {
+                      printk("DK:: Copy_from_user failed\n");
+                      return -EFAULT;
+                 }
+                 write_buf=(UINT8*)kmalloc(fopwr.len,GFP_KERNEL);
+                 if(NULL==write_buf){
+                     printk("DK::FWR  Unable to allocate memory Failed\n");
+                     return -EFAULT;
+                 }
+                 if (copy_from_user((void *)write_buf,(void *)fopwr.pvalue,fopwr.len)){
+                     printk("DK:: Copy_from_user failed\n");
+                     return -EFAULT;
+                 }
+
+#ifdef DK_DEBUG
+                 printk("DK::FWR:addr=%x:\n",fop.offset);
+#endif
+                 ret=dk_flash_write(fopwr.fcl,fopwr.offset,fopwr.len,write_buf);
+                 if(!ret){
+                     kfree(write_buf);
+                     printk("DK:: dk_flash_write Failed\n");
+                     return -EFAULT;
+                 }
+                 kfree(write_buf);
+#if 0
+                 ret = copy_to_user((void *)arg,(void *)&fopwr,sizeof(fopwr));
+                 if(ret){
+                       printk("DK:: Copy_to_user failed\n");
+                       return -EFAULT;
+                 }
+#endif
+                 break; 
+*/
 /*
 #ifdef OWL_PB42
             case DK_IOCTL_MAC_WRITE:
@@ -416,8 +471,7 @@ static int dk_ioctl
 static long dk_ioctl_new(struct file *file, unsigned int cmd, unsigned long arg) { 
 	struct inode *inode = file->f_path.dentry->d_inode; 
 	long ret; 
-	//ret = dk_ioctl(file, cmd, arg);
-	ret = dk_ioctl(inode, file, cmd, arg);
+	ret = dk_ioctl(inode, file, cmd, arg); 
 	return ret; 
 }  
 

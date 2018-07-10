@@ -245,6 +245,7 @@ static struct pci_device_id __devinitdata dk_id_tbl[] = {
     {ATHEROS_VENDOR_ID, 0x002e, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"KIWI_PCIE"},
     {ATHEROS_VENDOR_ID, 0x0030, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"OSPREY"},
     {ATHEROS_VENDOR_ID, 0x0033, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"PEACOCK"},
+    {ATHEROS_VENDOR_ID, 0x0032, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"POSEIDON"},
     {ATHEROS_VENDOR_ID, 0xabcd, PCI_ANY_ID, PCI_ANY_ID, 0, 0, (unsigned long)"OSPREY"},
 	{0,}
 };
