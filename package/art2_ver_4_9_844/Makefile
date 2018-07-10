@@ -30,7 +30,7 @@ endef
 EXTRA_KCONFIG:= \
 	CONFIG_QCA_ART_4_49_844=m
 
-EXTRA_CFLAGS:= \
+EXTRA_CFLAGS:= -DAP83 -DWASP \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=m,%,$(filter %=m,$(EXTRA_KCONFIG)))) \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=y,%,$(filter %=y,$(EXTRA_KCONFIG)))) \
 

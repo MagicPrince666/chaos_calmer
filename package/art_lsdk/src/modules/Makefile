@@ -36,7 +36,7 @@ ifeq ($(OCTEON),1)
 EXTRA_CFLAGS += -DOCTEON
 endif
 
-obj-m := art.o
+obj-${CONFIG_QCA_ART_LSDK} := art.o
 art-objs := dk_flash.o dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
 
 clean:
