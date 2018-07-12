@@ -55,7 +55,7 @@
 #define WPJ342_KEYS_DEBOUNCE_INTERVAL	(3 * WPJ342_KEYS_POLL_INTERVAL)
 
 #define WPJ342_MAC0_OFFSET		0x10
-#define WPJ342_MAC1_OFFSET		0x18
+//#define WPJ342_MAC1_OFFSET		0x18
 #define WPJ342_WMAC_CALDATA_OFFSET	0x1000
 #define WPJ342_PCIE_CALDATA_OFFSET	0x5000
 
@@ -152,7 +152,7 @@ static void __init wpj342_setup(void)
 
 	ath79_init_mac(ath79_eth0_data.mac_addr, mac + WPJ342_MAC0_OFFSET, 0);
 
-	ath79_register_pci();
+	//ath79_register_pci();
 
 	ath79_register_mdio(0, 0x0);
 

@@ -1047,7 +1047,8 @@ uap_pro_mtdlayout=mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,1536k(kernel)
 ubdev_mtdlayout=mtdparts=spi0.0:256k(u-boot)ro,64k(u-boot-env)ro,7488k(firmware),64k(certs),256k(cfg)ro,64k(EEPROM)ro
 whrhpg300n_mtdlayout=mtdparts=spi0.0:248k(u-boot)ro,8k(u-boot-env)ro,3712k(firmware),64k(art)ro
 wlr8100_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel),14080k(rootfs),192k(unknown)ro,64k(art)ro,384k(unknown2)ro,15488k@0x40000(firmware)
-wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,6464k(rootfs),1472k(kernel),7936k@0x30000(firmware),64k(art)ro
+#wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,6464k(rootfs),1472k(kernel),7936k@0x30000(firmware),64k(art)ro
+wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,7936k(firmware),64k(art)ro
 wpj342_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj344_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj531_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
@@ -1218,6 +1219,7 @@ Image/Build/CameoDB120/initramfs=$(call MkuImageLzma/initramfs,$(2),$(3) $(cameo
 Image/Build/CameoDB120_8M/buildkernel=$(call MkuImageLzma,$(2),$(3) $(cameo_db120_mtdlayout_8M))
 Image/Build/CameoDB120_8M=$(call Image/Build/Cameo,$(1),$(2),$(3),$(cameo_db120_mtdlayout_8M),$(4),26)
 Image/Build/CameoDB120_8M/initramfs=$(call MkuImageLzma/initramfs,$(2),$(3) $(cameo_db120_mtdlayout_8M))
+
 
 define Image/Build/CameoHornet
 	$(eval fwsize=$(call mtdpartsize,firmware,$(4)))
@@ -1947,7 +1949,8 @@ $(eval $(call SingleProfile,AthLzma,64k,MR16,mr16,MR16,ttyS0,115200,$$(mr16_mtdl
 $(eval $(call SingleProfile,AthLzma,64k,PB92,pb92,PB92,ttyS0,115200,$$(pb92_mtdlayout),KRuImage))
 $(eval $(call SingleProfile,AthLzma,64k,TUBE2H16M,tube2h-16M,TUBE2H,ttyATH0,115200,$$(alfa_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WLR8100,wlr8100,WLR8100,ttyS0,115200,$$(wlr8100_mtdlayout),KRuImage))
-$(eval $(call SingleProfile,AthLzma,64k,WPJ342_8M,wpj342-8M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_8M),RKuImage,65536))
+#$(eval $(call SingleProfile,AthLzma,64k,WPJ342_8M,wpj342-8M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_8M),RKuImage,,0x689,0x692))
+$(eval $(call SingleProfile,AthLzma,64k,WPJ342_8M,wpj342-8M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_8M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ342_16M,wpj342-16M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ344_16M,wpj344-16M,WPJ344,ttyS0,115200,$$(wpj344_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ531_16M,wpj531-16M,WPJ531,ttyS0,115200,$$(wpj531_mtdlayout_16M),KRuImage,65536))
