@@ -54,8 +54,9 @@
 #define WPJ342_KEYS_POLL_INTERVAL	20 /* msecs */
 #define WPJ342_KEYS_DEBOUNCE_INTERVAL	(3 * WPJ342_KEYS_POLL_INTERVAL)
 
-#define WPJ342_MAC0_OFFSET		0x10
-//#define WPJ342_MAC1_OFFSET		0x18
+#define WPJ342_MAC0_OFFSET		0x0
+//#define WPJ342_MAC0_OFFSET		0x10
+#define WPJ342_MAC1_OFFSET		0x6
 #define WPJ342_WMAC_CALDATA_OFFSET	0x1000
 #define WPJ342_PCIE_CALDATA_OFFSET	0x5000
 
@@ -137,7 +138,7 @@ static struct mdio_board_info mi124_mdio0_info[] = {
 static void __init wpj342_setup(void)
 {
 	u8 *art = (u8 *) KSEG1ADDR(0x1fff0000);
-	u8 *mac = (u8 *) KSEG1ADDR(0x1f02e000);
+	//u8 *mac = (u8 *) KSEG1ADDR(0x1f02e000);
 
 	ath79_register_m25p80(NULL);
 	//ath79_register_leds_gpio(-1, ARRAY_SIZE(wpj342_leds_gpio),wpj342_leds_gpio);
@@ -150,13 +151,12 @@ static void __init wpj342_setup(void)
 
 	ath79_register_wmac(art + WPJ342_WMAC_CALDATA_OFFSET, NULL);
 
-	ath79_init_mac(ath79_eth0_data.mac_addr, mac + WPJ342_MAC0_OFFSET, 0);
-
 	//ath79_register_pci();
+	mdiobus_register_board_info(mi124_mdio0_info, ARRAY_SIZE(mi124_mdio0_info));
 
 	ath79_register_mdio(0, 0x0);
 
-	mdiobus_register_board_info(mi124_mdio0_info, ARRAY_SIZE(mi124_mdio0_info));
+	ath79_init_mac(ath79_eth0_data.mac_addr, art + WPJ342_MAC0_OFFSET, 0);
 
 	ath79_setup_ar934x_eth_cfg(AR934X_ETH_CFG_RGMII_GMAC0);
 
