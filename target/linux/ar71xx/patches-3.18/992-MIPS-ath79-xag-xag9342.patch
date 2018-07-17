@@ -1,0 +1,45 @@
+Index: linux-3.18.98/arch/mips/ath79/Kconfig
+===================================================================
+--- linux-3.18.98.orig/arch/mips/ath79/Kconfig
++++ linux-3.18.98/arch/mips/ath79/Kconfig
+@@ -343,6 +343,16 @@ config ATH79_MACH_WPE72
+ 	select ATH79_DEV_USB
+ 	select MYLOADER
+ 
++config ATH79_MACH_XAG9342
++         bool "XAG XLINKHS board support"
++         select SOC_AS934X
++         select ATH79_DEV_ETH
++         select ATH79_DEV_GPIO_BUTTONS
++         select ATH79_DEV_LEDS_GPIO
++         select ATH79_DEV_M25P80
++         select ATH79_DEV_USB
++         select ATH79_DEV_WMAC
++
+ config ATH79_MACH_WPJ342
+ 	bool "Compex WPJ342 board support"
+ 	select SOC_AS934X
+Index: linux-3.18.98/arch/mips/ath79/Makefile
+===================================================================
+--- linux-3.18.98.orig/arch/mips/ath79/Makefile
++++ linux-3.18.98/arch/mips/ath79/Makefile
+@@ -164,6 +164,7 @@ obj-$(CONFIG_ATH79_MACH_WNR2000_V4)	+= m
+ obj-$(CONFIG_ATH79_MACH_WNR2200)	+= mach-wnr2200.o
+ obj-$(CONFIG_ATH79_MACH_WP543)		+= mach-wp543.o
+ obj-$(CONFIG_ATH79_MACH_WPE72)		+= mach-wpe72.o
++obj-$(CONFIG_ATH79_MACH_XAG9342) += mach-xag9342.o
+ obj-$(CONFIG_ATH79_MACH_WPJ342)	+= mach-wpj342.o
+ obj-$(CONFIG_ATH79_MACH_WPJ344)	+= mach-wpj344.o
+ obj-$(CONFIG_ATH79_MACH_WPJ531)	+= mach-wpj531.o
+Index: linux-3.18.98/arch/mips/ath79/machtypes.h
+===================================================================
+--- linux-3.18.98.orig/arch/mips/ath79/machtypes.h
++++ linux-3.18.98/arch/mips/ath79/machtypes.h
+@@ -217,6 +217,7 @@ enum ath79_mach_type {
+ 	ATH79_MACH_WPN824N,		/* NETGEAR WPN824N */
+ 	ATH79_MACH_WP543,		/* Compex WP543 */
+ 	ATH79_MACH_WPE72,		/* Compex WPE72 */
++	ATH79_MACH_XAG9342,             /* XAG XLINKHS */
+ 	ATH79_MACH_WPJ342,		/* Compex WPJ342 */
+ 	ATH79_MACH_WPJ344,		/* Compex WPJ344 */
+ 	ATH79_MACH_WPJ531,		/* Compex WPJ531 */

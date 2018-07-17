@@ -1050,6 +1050,8 @@ wlr8100_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel)
 #wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,6464k(rootfs),1472k(kernel),7936k@0x30000(firmware),64k(art)ro
 wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,7936k(firmware),64k(art)
 wpj342_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)
+xag9342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,7936k(firmware),64k(art)
+xag9342_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)
 wpj344_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj531_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj558_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
@@ -1952,6 +1954,8 @@ $(eval $(call SingleProfile,AthLzma,64k,WLR8100,wlr8100,WLR8100,ttyS0,115200,$$(
 #$(eval $(call SingleProfile,AthLzma,64k,WPJ342_8M,wpj342-8M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_8M),RKuImage,,0x689,0x692))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ342_8M,wpj342-8M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_8M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ342_16M,wpj342-16M,WPJ342,ttyS0,115200,$$(wpj342_mtdlayout_16M),KRuImage,65536))
+$(eval $(call SingleProfile,AthLzma,64k,XAG9342_8M,xag9342-8M,XAG9342,ttyS0,115200,$$(xag9342_mtdlayout_8M),KRuImage,65536))
+$(eval $(call SingleProfile,AthLzma,64k,XAG9342_16M,xag9342-16M,XAG9342,ttyS0,115200,$$(xag9342_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ344_16M,wpj344-16M,WPJ344,ttyS0,115200,$$(wpj344_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ531_16M,wpj531-16M,WPJ531,ttyS0,115200,$$(wpj531_mtdlayout_16M),KRuImage,65536))
 $(eval $(call SingleProfile,AthLzma,64k,WPJ558_16M,wpj558-16M,WPJ558,ttyS0,115200,$$(wpj558_mtdlayout_16M),KRuImage,65536))
@@ -2146,6 +2150,7 @@ $(eval $(call MultiProfile,WNR1000V2,REALWNR1000V2 WNR1000V2_VC))
 $(eval $(call MultiProfile,WP543,WP543_2M WP543_4M WP543_8M WP543_16M))
 $(eval $(call MultiProfile,WPE72,WPE72_4M WPE72_8M WPE72_16M))
 $(eval $(call MultiProfile,WPJ342,WPJ342_8M WPJ342_16M))
+$(eval $(call MultiProfile,XAG9342,XAG9342_8M XAG9342_16M))
 $(eval $(call MultiProfile,WPJ344,WPJ344_16M))
 $(eval $(call MultiProfile,WPJ531,WPJ531_16M))
 $(eval $(call MultiProfile,WPJ558,WPJ558_16M))

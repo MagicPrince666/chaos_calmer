@@ -888,7 +888,7 @@ ar71xx_board_detect() {
 		name="wpj342"
 		;;
 	*"XAG XLinkHS")
-		name="wpj342"
+		name="xag9342"
 		;;
 	*WPJ344)
 		name="wpj344"
