@@ -52,8 +52,8 @@
 #include "934x.h"
 #include "atheros.h"
 #define AR934X_HS_UART1_TX				13
-#define AR934X_HS_UART1_RX				14
-//#define AR934X_HS_UART1_RTS				15
+#define AR934X_HS_UART1_RX				15
+//#define AR934X_HS_UART1_RTS				14
 //#define AR934X_HS_UART1_CTS				17
 
 #define dprintk(args...) \
