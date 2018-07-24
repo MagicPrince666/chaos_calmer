@@ -83,6 +83,9 @@ detect_mac80211() {
 		ht_capab=""
 		txpower="0"
 
+		ssid="XAG-$(hexdump -e '6/1 "%02X"' -n 6 /dev/mtd5)"
+		key="$(echo -n ${ssid}|md5sum|cut -d ' ' -f1)"
+
 		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
 		iw phy "$dev" info | grep -q '2412 MHz' || { mode_band="a"; channel="149"; }
 
@@ -124,9 +127,10 @@ config wifi-iface
 	option device   radio$devidx
 	option network  lan
 	option mode     ap
-	# option ssid     XAG-XLINKHS
-	option ssid     XAG-$(cat /sys/class/net/eth0/address|awk -F ":" '{print $4$5$6}'| tr a-z A-Z)
-	option encryption none
+	option ssid     ${ssid}
+	#option ssid     XAG-$(cat /sys/class/net/eth0/address|awk -F ":" '{print $4$5$6}'| tr a-z A-Z)
+	option encryption psk-mixed+ccmp
+	option key 		${key:0:8}
 
 EOF
 	devidx=$(($devidx + 1))

@@ -206,9 +206,11 @@ $(eval $(call KernelPackage,usb-phy-twl6030))
 define KernelPackage/usb-gadget
   TITLE:=USB Gadget support
   KCONFIG:=CONFIG_USB_GADGET
+  HIDDEN:=1
   FILES:=\
 	$(LINUX_DIR)/drivers/usb/gadget/udc/udc-core.ko
-  AUTOLOAD:=$(call AutoLoad,45,udc-core)
+  AUTOLOAD:=$(call AutoLoad,21,udc-core,1)
+  #AUTOLOAD:=$(call AutoLoad,45,udc-core)
   DEPENDS:=@USB_GADGET_SUPPORT
   $(call AddDepends/usb)
 endef
@@ -234,8 +236,41 @@ endef
 
 $(eval $(call KernelPackage,usb-lib-composite))
 
+define KernelPackage/usb-gadget-hid
+  TITLE:=USB HID Gadget Support
+  KCONFIG:=CONFIG_USB_G_HID
+  DEPENDS:=+kmod-usb-gadget +kmod-usb-lib-composite
+  FILES:= \
+	  $(LINUX_DIR)/drivers/usb/gadget/legacy/g_hid.ko \
+	  $(LINUX_DIR)/drivers/usb/gadget/function/usb_f_hid.ko
+  AUTOLOAD:=$(call AutoLoad,52,usb_f_hid)
+  $(call AddDepends/usb)
+endef
 
-define KernelPackage/usb-eth-gadget
+define KernelPackage/usb-gadget-hid/description
+  Kernel support for USB HID Gadget.
+endef
+
+$(eval $(call KernelPackage,usb-gadget-hid))
+
+define KernelPackage/usb-gadget-ehci-debug
+  TITLE:=USB EHCI debug port Gadget support
+  KCONFIG:=\
+	CONFIG_USB_G_DBGP \
+	CONFIG_USB_G_DBGP_SERIAL=y \
+	CONFIG_USB_G_DBGP_PRINTK=n
+  DEPENDS:=+kmod-usb-gadget +kmod-usb-lib-composite +kmod-usb-gadget-serial
+  FILES:=$(LINUX_DIR)/drivers/usb/gadget/legacy/g_dbgp.ko
+  $(call AddDepends/usb)
+endef
+
+define KernelPackage/usb-gadget-ehci-debug/description
+  Kernel support for USB EHCI debug port Gadget.
+endef
+
+$(eval $(call KernelPackage,usb-gadget-ehci-debug))
+
+define KernelPackage/usb-gadget-eth
   TITLE:=USB Ethernet Gadget support
   KCONFIG:= \
 	CONFIG_USB_ETH \
@@ -248,18 +283,18 @@ define KernelPackage/usb-eth-gadget
 	$(LINUX_DIR)/drivers/usb/gadget/function/usb_f_ecm_subset.ko \
 	$(LINUX_DIR)/drivers/usb/gadget/function/usb_f_rndis.ko \
 	$(LINUX_DIR)/drivers/usb/gadget/legacy/g_ether.ko
-  AUTOLOAD:=$(call AutoLoad,52,usb_f_ecm g_ether)
+  AUTOLOAD:=$(call AutoLoad,52,usb_f_ecm usb_f_rndis g_ether)
   $(call AddDepends/usb)
 endef
 
-define KernelPackage/usb-eth-gadget/description
+define KernelPackage/usb-gadget-eth/description
  Kernel support for USB Ethernet Gadget
 endef
 
-$(eval $(call KernelPackage,usb-eth-gadget))
+$(eval $(call KernelPackage,usb-gadget-eth))
 
 
-define KernelPackage/usb-serial-gadget
+define KernelPackage/usb-gadget-serial
   TITLE:=USB Serial Gadget support
   KCONFIG:=CONFIG_USB_G_SERIAL
   DEPENDS:=+kmod-usb-gadget +kmod-usb-lib-composite
@@ -269,16 +304,32 @@ define KernelPackage/usb-serial-gadget
 	$(LINUX_DIR)/drivers/usb/gadget/function/usb_f_obex.ko \
 	$(LINUX_DIR)/drivers/usb/gadget/function/usb_f_serial.ko \
 	$(LINUX_DIR)/drivers/usb/gadget/legacy/g_serial.ko
-  AUTOLOAD:=$(call AutoLoad,52,usb_f_acm g_serial)
+  AUTOLOAD:=$(call AutoLoad,52,usb_f_acm)
   $(call AddDepends/usb)
 endef
 
-define KernelPackage/usb-serial-gadget/description
+define KernelPackage/usb-gadget-serial/description
   Kernel support for USB Serial Gadget.
 endef
 
-$(eval $(call KernelPackage,usb-serial-gadget))
+$(eval $(call KernelPackage,usb-gadget-serial))
 
+define KernelPackage/usb-gadget-mass-storage
+  TITLE:=USB Mass Storage support
+  KCONFIG:=CONFIG_USB_MASS_STORAGE
+  DEPENDS:=+kmod-usb-gadget +kmod-usb-lib-composite
+  FILES:= \
+	$(LINUX_DIR)/drivers/usb/gadget/function/usb_f_mass_storage.ko \
+	$(LINUX_DIR)/drivers/usb/gadget/legacy/g_mass_storage.ko
+  AUTOLOAD:=$(call AutoLoad,52,usb_f_mass_storage)
+  $(call AddDepends/usb)
+endef
+
+define KernelPackage/usb-gadget-mass-storage/description
+  Kernel support for USB Gadget Mass Storage
+endef
+
+$(eval $(call KernelPackage,usb-gadget-mass-storage))
 
 define KernelPackage/usb-uhci
   TITLE:=Support for UHCI controllers
