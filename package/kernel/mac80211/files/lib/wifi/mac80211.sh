@@ -81,10 +81,12 @@ detect_mac80211() {
 		channel="11"
 		htmode=""
 		ht_capab=""
-		txpower="0"
+		txpower="4"
+		country="US"
 
 		ssid="XAG-$(hexdump -e '6/1 "%02X"' -n 6 /dev/mtd5)"
-		key="$(echo -n ${ssid}|md5sum|cut -d ' ' -f1)"
+		#key="$(echo -n ${ssid}|md5sum|cut -d ' ' -f1)"
+		key="12345678"
 
 		iw phy "$dev" info | grep -q 'Capabilities:' && htmode=HT20
 		iw phy "$dev" info | grep -q '2412 MHz' || { mode_band="a"; channel="149"; }
