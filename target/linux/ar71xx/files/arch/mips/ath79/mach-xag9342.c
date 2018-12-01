@@ -53,77 +53,13 @@
 #define XAG9342_KEYS_DEBOUNCE_INTERVAL	(3 * XAG9342_KEYS_POLL_INTERVAL)
 
 #define XAG9342_MAC0_OFFSET		0x0
-//#define WPJ342_MAC0_OFFSET		0x10
+
 
 #define XAG9342_WMAC_CALDATA_OFFSET	0x1000
 #define XAG9342_PCIE_CALDATA_OFFSET	0x5000
 
 #define XAG9342_ART_SIZE		0x8000
-/*
-#define ATH_PCI_EP_BASE_OFF 	0x18127000
-#define ATH_USB_WINDOW			0x1000000
-static struct resource ath_usb_ehci_resources[] = {
-	[0] = {
-		.start = AR934X_EHCI_BASE,
-		//.end = AR934X_EHCI_BASE + AR934X_EHCI_SIZE - 1,
-		.end = AR934X_EHCI_BASE + ATH_USB_WINDOW - 1,
-		.flags = IORESOURCE_MEM,
-	},
-	[1] = {
-		.start = ATH79_CPU_IRQ(3),
-		.end = ATH79_CPU_IRQ(3),
-		.flags = IORESOURCE_IRQ,
-	},
-};
 
-
-//  (PCI EP controller)
- 
-static struct resource ath_pci_ep_resources[] = {
-	[0] = {
-		.start	= ATH_PCI_EP_BASE_OFF,
-		.end	= ATH_PCI_EP_BASE_OFF + 0xdff - 1,
-		.flags	= IORESOURCE_MEM,
-	},
-	[1] = {
-		.start	= ATH79_CPU_IRQ(3),
-		.end	= ATH79_CPU_IRQ(3),
-		.flags	= IORESOURCE_IRQ,
-	},
-};
-static u64 pci_ep_dmamask = ~(u32)0;
-static struct platform_device ath_pci_ep_device = {
-	.name				= "ath-pciep",
-	.id				= 0,
-	.dev = {
-		.dma_mask		= &pci_ep_dmamask,
-		.coherent_dma_mask	= 0xffffffff,
-	},
-	.num_resources			= ARRAY_SIZE(ath_pci_ep_resources),
-	.resource			= ath_pci_ep_resources,
-};
-
-
-//  The dmamask must be set for EHCI to work
- 
-static u64 ehci_dmamask = ~(u32) 0;
-static struct platform_device ath_usb_ehci_device = {
-	.name = "ath-ehci",
-	.id = 0,
-	.dev = {
-		.dma_mask = &ehci_dmamask,
-		.coherent_dma_mask = 0xffffffff,
-		},
-	.num_resources = ARRAY_SIZE(ath_usb_ehci_resources),
-	.resource = ath_usb_ehci_resources,
-};
-
-static struct platform_device *ath_platform_devices[] __initdata = {
-	&ath_usb_ehci_device,
-	&ath_pci_ep_device
-};
-
-*/
 
 static struct gpio_led xag9342_leds_gpio[] __initdata = {
 	{
@@ -156,10 +92,8 @@ static struct gpio_keys_button xag9342_gpio_keys[] __initdata = {
 
 
 static struct at803x_platform_data mi124_ar8035_data = {
-		.disable_smarteee = 0,
-		.enable_rgmii_rx_delay = 1,
 		.enable_rgmii_tx_delay = 0,
-		.fixup_rgmii_tx_delay = 1,
+		.enable_rgmii_rx_delay = 1,
 };
 
 static struct mdio_board_info mi124_mdio0_info[] = {
@@ -176,8 +110,7 @@ static void __init xag9342_setup(void)
 	u8 *art = (u8 *) KSEG1ADDR(0x1fff0000);
 
 	ath79_register_m25p80(NULL);
-	ath79_register_leds_gpio(-1, ARRAY_SIZE(xag9342_leds_gpio),
-				xag9342_leds_gpio);
+	ath79_register_leds_gpio(-1, ARRAY_SIZE(xag9342_leds_gpio),xag9342_leds_gpio);
 
 	ath79_register_gpio_keys_polled(-1, XAG9342_KEYS_POLL_INTERVAL,
 					ARRAY_SIZE(xag9342_gpio_keys),
@@ -204,7 +137,7 @@ static void __init xag9342_setup(void)
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_pll_data.pll_1000 = 0x0e000000;
 	ath79_eth0_pll_data.pll_100 = 0x0101;
-	ath79_eth0_pll_data.pll_10 = 0x00001313;
+	ath79_eth0_pll_data.pll_10 = 0x1313;
 	ath79_register_eth(0);
 
 }

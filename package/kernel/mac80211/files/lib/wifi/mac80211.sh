@@ -82,7 +82,6 @@ detect_mac80211() {
 		htmode=""
 		ht_capab=""
 		txpower="4"
-		country="US"
 
 		ssid="XAG-$(hexdump -e '6/1 "%02X"' -n 6 /dev/mtd5)"
 		#key="$(echo -n ${ssid}|md5sum|cut -d ' ' -f1)"
