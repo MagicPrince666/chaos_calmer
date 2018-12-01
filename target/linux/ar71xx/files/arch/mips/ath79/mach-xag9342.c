@@ -43,8 +43,8 @@
 #include "machtypes.h"
 
 #define XAG9342_GPIO_LED_STATUS		11
-#define XAG9342_GPIO_LED_SIG1		11
-#define XAG9342_GPIO_LED_SIG2		12
+#define XAG9342_GPIO_LED_SIG1		12
+#define XAG9342_GPIO_LED_SIG2		14
 
 
 #define XAG9342_GPIO_BTN_RESET		16
@@ -59,18 +59,18 @@
 
 #define XAG9342_ART_SIZE		0x8000
 
-// static struct gpio_led xag9342_leds_gpio[] __initdata = {
-// 	{
-// 		.name		= "xag9342:red:sig1",
-// 		.gpio		= XAG9342_GPIO_LED_SIG1,
-// 		.active_low	= 1,
-// 	},
-// 	{
-// 		.name		= "xag9342:yellow:sig2",
-// 		.gpio		= XAG9342_GPIO_LED_SIG2,
-// 		.active_low	= 1,
-// 	},
-// };
+static struct gpio_led xag9342_leds_gpio[] __initdata = {
+{
+ 		.name		= "xag9342:red:sig1",
+ 		.gpio		= XAG9342_GPIO_LED_SIG1,
+ 		.active_low	= 1,
+ 	},
+ 	{
+ 		.name		= "xag9342:yellow:sig2",
+ 		.gpio		= XAG9342_GPIO_LED_SIG2,
+ 		.active_low	= 1,
+ 	},
+};
 
 static struct gpio_keys_button xag9342_gpio_keys[] __initdata = {
 	{
@@ -92,7 +92,7 @@ static struct at803x_platform_data mi124_ar8035_data = {
 static struct mdio_board_info mi124_mdio0_info[] = {
         {
                 .bus_id = "ar71xx-mdio.0",
-                .phy_addr = 4,
+                .phy_addr = 0,
                 .platform_data = &mi124_ar8035_data,
         },
 };
@@ -102,7 +102,7 @@ static void __init xag9342_setup(void)
 	u8 *art = (u8 *) KSEG1ADDR(0x1fff0000);
 
 	ath79_register_m25p80(NULL);
-	//ath79_register_leds_gpio(-1, ARRAY_SIZE(xag9342_leds_gpio),xag9342_leds_gpio);
+	ath79_register_leds_gpio(-1, ARRAY_SIZE(xag9342_leds_gpio),xag9342_leds_gpio);
 
 	ath79_register_gpio_keys_polled(-1, XAG9342_KEYS_POLL_INTERVAL,
 					ARRAY_SIZE(xag9342_gpio_keys),
@@ -123,7 +123,7 @@ static void __init xag9342_setup(void)
 
 	/* GMAC0 is connected to an AR8035 Gigabit PHY */
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
-	ath79_eth0_data.phy_mask = BIT(4);
+	ath79_eth0_data.phy_mask = BIT(0);
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_pll_data.pll_1000 = 0x0e000000;
 	ath79_eth0_pll_data.pll_100 = 0x0101;

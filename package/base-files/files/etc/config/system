@@ -1,5 +1,5 @@
 config system
-	option hostname	XAG-XLinkHS
+	option hostname	xag-xlinkhs
 	option timezone	UTC
 
 config timeserver ntp
