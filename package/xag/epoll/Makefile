@@ -10,6 +10,7 @@ define Package/epoll
 	SECTION:=base
 	CATEGORY:=Utilities
 	TITLE:=uart epoll firmware
+	SUBMENU:=XAG
 	DEPENDS:= +libpthread +libstdcpp
 endef
 

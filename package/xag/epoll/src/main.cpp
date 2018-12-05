@@ -23,9 +23,11 @@ static void sigint_handler(int sig)
 
 void * uart_send (void *arg) 
 {
+	const char str[]="hello!,I'm uart1\r\n";
+
     while(run)
     {
-        //write(serial.fd[0], "hello!,I'm uart1\n",17);	
+        write(serial.fd[0], str,sizeof(str));	
         //write(serial.fd[1], "hello!,I'm uart2\n",17);	
         sleep(1);
     }
@@ -51,7 +53,7 @@ void * uart_rev (void *arg)
 
 	close(serial.epid);
 	close(serial.fd[0]);
-	close(serial.fd[1]);
+	// close(serial.fd[1]);
 	//if(serial.pipe_fd > 0)//退出管道
 	//	close(serial.pipe_fd);
     pthread_exit(NULL);
@@ -64,22 +66,22 @@ int main(int argc,char **argv)
 
 	signal(SIGINT, sigint_handler);//信号处理
 
-	serial.fd[0] = serial.openSerial((char *)"/dev/ttyS1");
-	serial.fd[1] = serial.openSerial((char *)"/dev/ttyS2");
+	serial.fd[0] = serial.openSerial("/dev/ttyHS0");
+	// serial.fd[1] = serial.openSerial((char *)"/dev/ttyS2");
 	
 	if(serial.fd[0] < 0)
 	{
 		printf("open com1 fail!\n");
 		return 0;
 	}
-	if(serial.fd[1] < 0)
-	{
-		printf("open com2 fail!\n");
-		return 0;
-	}
+	// if(serial.fd[1] < 0)
+	// {
+	// 	printf("open com2 fail!\n");
+	// 	return 0;
+	// }
 	
 	tcflush(serial.fd[0],TCIOFLUSH);//清空串口输入输出缓存
-	tcflush(serial.fd[1],TCIOFLUSH);//清空串口输入输出缓存
+	// tcflush(serial.fd[1],TCIOFLUSH);//清空串口输入输出缓存
 
 	if (pthread_create(&pthread_id[0], NULL, uart_send, NULL))
 		cout << "Create uart_send error!" << endl;

@@ -14,12 +14,13 @@ PKG_RELEASE:=XAG-HS-UART-1
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/ath-hs-uart
-  SUBMENU:=Other modules
+  SUBMENU:=XAG_KERNELMODULES
   TITLE:=Atheros 934X High Speed Uart
   DEPENDS:=
   FILES:=$(PKG_BUILD_DIR)/ar934x_hs_uart.ko
   KCONFIG:=
-  AUTOLOAD:=$(call AutoProbe,ar934x_hs_uart)
+  #AUTOLOAD:=$(call AutoProbe,ar934x_hs_uart)
+  AUTOLOAD:=$(call AutoLoad,30,ar934x_hs_uart)
 endef
 
 define KernelPackage/ath-hs-uart/description

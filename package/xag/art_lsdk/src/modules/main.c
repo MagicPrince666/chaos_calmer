@@ -104,7 +104,7 @@ static INT32 __init dk_module_init(void)
 #if !defined(OWL_PB42) && !defined(PYTHON_EMU)
         flash_init();
 		if (error < 0) {
-                        flash_exit();
+            flash_exit();
 			cleanup_client();
 			dk_dev_exit();
 			printk("DK::Cannot locate device. Reset the machine \n");

@@ -1,0 +1,24 @@
+#
+# Copyright (c) 2014 Qualcomm Atheros, Inc. 
+# All Rights Reserved. 
+# Qualcomm Atheros Confidential and Proprietary. 
+#
+
+export MAKE=make
+export ARCH=arm
+export TOOLCHAIN=none
+export TOOLPREFIX=arm-openwrt-linux-uclibcgnueabi-
+export TOOLARCH=arm
+export KERNELVER=2.6.31
+export KERNELTARGET=none
+export KERNELARCH=arm
+
+#
+#In ART source, the flag is TOOL_PREFIX
+#
+export TOOL_PREFIX=arm-openwrt-linux-uclibcgnueabi-
+export CROSS_CC=arm-openwrt-linux-uclibcgnueabi-
+
+export OUTPUT_DIR=nartbuild_$(ART_HOST_CPU)
+export CFLAGS = -D__LINUX_ARM_ARCH__ -DAKRONITE_ART -DAH_SUPPORT_OSPREY -DAH_BYTE_ORDER=AH_LITTLE_ENDIAN -DLinux -DLINUX -DSOC_LINUX -DMDK_AP -DSOC_AP \
+		-DART_BUILD -DREMOVE_PKT_LOG -DAH_SUPPORT_WRITE_EEPROM -DATH_SUPPORT_TxBF -DATH_SUPPORT_PAPRD -DDYNAMIC_DEVICE_DLL -Os

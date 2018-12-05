@@ -15,7 +15,8 @@ PKG_RELEASE:=XAG-qca-art_lsdk
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/qca-art_lsdk
-  SUBMENU:=Other modules
+  #SUBMENU:=Other modules
+  SUBMENU:=XAG_KERNELMODULES
   TITLE:=athreos art_ver_lsdk driver
   FILES:=$(PKG_BUILD_DIR)/modules/art.ko
   KCONFIG:=

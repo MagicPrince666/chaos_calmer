@@ -10,6 +10,7 @@ define Package/rtsp_server
 	SECTION:=base
 	CATEGORY:=Utilities
 	TITLE:=rtsp server
+	SUBMENU:=XAG
 	DEPENDS:= +librt +libm +libdl +libstdcpp +libpthread
 endef
 
@@ -23,8 +24,8 @@ define Build/Prepare
 endef
 
 define Package/rtsp_server/install
-	$(INSTALL_DIR) $(1)/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rtsp_server $(1)/bin/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rtsp_server $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,rtsp_server))

@@ -1,0 +1,24 @@
+#
+# Copyright (c) 2014 Qualcomm Atheros, Inc. 
+# All Rights Reserved. 
+# Qualcomm Atheros Confidential and Proprietary. 
+#
+
+export MAKE=make
+export ARCH=mips
+export TOOLCHAIN=none
+export TOOLPREFIX=mips-linux-uclibc-
+export TOOLARCH=mips
+export KERNELVER=2.6.31
+export KERNELTARGET=none
+export KERNELARCH=mips
+
+#
+#In ART source, the flag is TOOL_PREFIX
+#
+export TOOL_PREFIX=mips-linux-uclibc-
+export CROSS_CC=mips-linux-uclibc- 
+
+export OUTPUT_DIR=nartbuild
+export CFLAGS = -D__LINUX_MIPS32_ARCH__ -DAH_SUPPORT_OSPREY -DAH_BYTE_ORDER=AH_BIG_ENDIAN -DLinux -DLINUX -DSOC_LINUX -DARCH_BIG_ENDIAN -DMDK_AP -DSOC_AP \
+		-DART_BUILD -DREMOVE_PKT_LOG -DAH_SUPPORT_WRITE_EEPROM -DATH_SUPPORT_TxBF -DATH_SUPPORT_PAPRD -DDYNAMIC_DEVICE_DLL -Os

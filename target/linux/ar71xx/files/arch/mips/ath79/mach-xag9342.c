@@ -92,15 +92,16 @@ static struct gpio_keys_button xag9342_gpio_keys[] __initdata = {
 
 
 static struct at803x_platform_data mi124_ar8035_data = {
-		.enable_rgmii_tx_delay = 0,
+		.disable_smarteee = 0,
 		.enable_rgmii_rx_delay = 1,
+		.enable_rgmii_tx_delay = 0,
+		.fixup_rgmii_tx_delay = 1,
 };
 
 static struct mdio_board_info mi124_mdio0_info[] = {
         {
                 .bus_id = "ar71xx-mdio.0",
                 .phy_addr = 0,
-                //.mdio_addr = 0,
                 .platform_data = &mi124_ar8035_data,
         },
 };
@@ -126,16 +127,16 @@ static void __init xag9342_setup(void)
 	ath79_setup_ar934x_eth_cfg(AR934X_ETH_CFG_RGMII_GMAC0 |
 			   AR934X_ETH_CFG_RXD_DELAY | AR934X_ETH_CFG_RDV_DELAY);
 
-	ath79_register_mdio(1, 0x0);
+	//ath79_register_mdio(1, 0x0);
 	ath79_register_mdio(0, 0x0);
 
 	mdiobus_register_board_info(mi124_mdio0_info, ARRAY_SIZE(mi124_mdio0_info));
 
 	/* GMAC0 is connected to an AR8035 Gigabit PHY */
+	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
 	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
 	ath79_eth0_data.phy_mask = BIT(0);
-	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
-	ath79_eth0_pll_data.pll_1000 = 0x0e000000;
+	ath79_eth0_pll_data.pll_1000 = 0x03000000;
 	ath79_eth0_pll_data.pll_100 = 0x0101;
 	ath79_eth0_pll_data.pll_10 = 0x1313;
 	ath79_register_eth(0);

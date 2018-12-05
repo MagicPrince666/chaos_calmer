@@ -15,7 +15,8 @@ PKG_RELEASE:=XAG-qca-art2_4_9
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/qca-art2_4_9
-  SUBMENU:=Other modules
+  #SUBMENU:=Other modules
+  SUBMENU:=XAG_KERNELMODULES
   TITLE:=athreos art driver
   FILES:=$(PKG_BUILD_DIR)/modules/art.ko
   KCONFIG:=

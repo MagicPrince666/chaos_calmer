@@ -94,7 +94,7 @@ detect_mac80211() {
 		cap_5ghz=$(iw phy "$dev" info | grep -c "Band 2")
 		[ "$vht_cap" -gt 0 -a "$cap_5ghz" -gt 0 ] && {
 			mode_band="a";
-			channel="165"
+			channel="149"
 			htmode="VHT80"
 		}
 

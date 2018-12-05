@@ -1,4 +1,6 @@
 # Put your custom commands here that should be executed once
 # the system init finished. By default this file does nothing.
 
+#iptables -I INPUT -s 192.168.1.0/24 -j ACCEPT
+
 exit 0

@@ -5,7 +5,7 @@
 // struct epoll_event event;
 // struct epoll_event events[6];//事件集合
 
-int Serial::openSerial(char *cSerialName)
+int Serial::openSerial(const char *cSerialName)
 {
     int iFd;
 
@@ -62,13 +62,13 @@ int Serial::EpollInit(int *cfd)
 	// if(Add_new(cfd[1]))
 	// 	printf("set uart2 epoll error!\n");
 
-	event.events = EPOLLET | EPOLLIN;
-	event.data.fd = cfd[1];
-	if (epoll_ctl(epid, EPOLL_CTL_ADD, cfd[1], &event) != 0) {//将串口2读事件添加到epoll的事件队列中
-		printf("set uart2 epoll error!\n");
-		return 0;
-	}
-	printf("set uart2 epoll ok!\n");
+	// event.events = EPOLLET | EPOLLIN;
+	// event.data.fd = cfd[1];
+	// if (epoll_ctl(epid, EPOLL_CTL_ADD, cfd[1], &event) != 0) {//将串口2读事件添加到epoll的事件队列中
+	// 	printf("set uart2 epoll error!\n");
+	// 	return 0;
+	// }
+	// printf("set uart2 epoll ok!\n");
 	
 	return 1;
 }
@@ -123,23 +123,23 @@ int Serial::ComRead(char * ReadBuff,const int ReadLen)
 							if( len == ReadLen)
 							return len;		
 						}
-						else if(rfd == fd[1])
-						{
-							tcdrain(fd[1]);//等待所有输出都被传输
-							//tcflush(fd[1],TCIOFLUSH);//刷清未决输入和/或输出
-							ReadBuff[len] = 0;
-							printf("uart2: %s\n",ReadBuff);
+						// else if(rfd == fd[1])
+						// {
+						// 	tcdrain(fd[1]);//等待所有输出都被传输
+						// 	//tcflush(fd[1],TCIOFLUSH);//刷清未决输入和/或输出
+						// 	ReadBuff[len] = 0;
+						// 	printf("uart2: %s\n",ReadBuff);
 
-							//write(pipe_fd, ReadBuff, len);//写入管道
+						// 	//write(pipe_fd, ReadBuff, len);//写入管道
 							
-							if(len != ReadLen) //如何保证每次都读到这些字节又不阻塞！ 
-							{
-								bzero(ReadBuff,128);
-							}
+						// 	if(len != ReadLen) //如何保证每次都读到这些字节又不阻塞！ 
+						// 	{
+						// 		bzero(ReadBuff,128);
+						// 	}
 							
-							if( len == ReadLen)
-							return len;		
-						}			
+						// 	if( len == ReadLen)
+						// 	return len;		
+						// }			
 					}
 				}
 			break;

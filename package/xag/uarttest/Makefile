@@ -10,6 +10,7 @@ define Package/uart_test
 	SECTION:=base
 	CATEGORY:=Utilities
 	TITLE:=uart firmware
+	SUBMENU:=XAG
 	DEPENDS:= +libpthread +libstdcpp
 endef
 

@@ -825,6 +825,10 @@ static struct platform_device ar934x_hs_uart_device = {
 	},
 };
 
+
+#define DEFAULT_LS_UART0_TX				10
+#define DEFAULT_LS_UART0_RX				9
+
 static void ar934x_hs_uart_gpio(void)
 {
 	u_int32_t data;
@@ -890,6 +894,22 @@ static void ar934x_hs_uart_gpio(void)
 
 	// Enabling UART1_RD as inputs on GPIO12
 	ath_reg_wr(ATH_GPIO_IN_ENABLE9, AR934X_HS_UART1_RX<<16);
+
+//set uart to default
+	data = ath_reg_rd(ATH_GPIO_OE);
+	data = (data & (~BIT(DEFAULT_LS_UART0_TX))) | BIT(DEFAULT_LS_UART0_RX);
+	ath_reg_wr(ATH_GPIO_OE,data);
+
+	//set AR934X_LS_UART0_TX to TX
+	data = ath_reg_rd(ATH_GPIO_OUT_FUNCTION2);
+	data = (data & ~GPIO_OUT_FUNCTION2_ENABLE_GPIO_10_MASK) |
+		ATH_GPIO_OUT_FUNCTION2_ENABLE_GPIO_10(GPIO_OUT_UART0_SOUT);
+	ath_reg_wr(ATH_GPIO_OUT_FUNCTION2, data);
+
+
+	data = ath_reg_rd(ATH_GPIO_IN_ENABLE0);
+	data = (data&0x00FF) | DEFAULT_LS_UART0_RX << 8;
+	ath_reg_wr(ATH_GPIO_IN_ENABLE0, data);
 }
 
 static int __init ar934x_hs_uart_init(void)

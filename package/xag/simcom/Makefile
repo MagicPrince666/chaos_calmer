@@ -19,7 +19,7 @@ PKG_RELEASE:=1
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/$(PKG_NAME)
-  SUBMENU:=$(USB_MENU)
+  SUBMENU:=XAG_KERNELMODULES
   TITLE:=SIMCOM 7600 WWAN driver
   FILES:=$(PKG_BUILD_DIR)/simcom_wwan.ko
   KCONFIG:=

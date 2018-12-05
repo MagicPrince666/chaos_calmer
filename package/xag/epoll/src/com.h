@@ -32,7 +32,7 @@ public:
 
     int ComRead(char * ReadBuff,const int ReadLen);//com口读数据
     int EpollInit(int *cfd);
-    int openSerial(char *cSerialName);
+    int openSerial(const char *cSerialName);
 
 private:  
     struct epoll_event event;

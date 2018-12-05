@@ -1,0 +1,4 @@
+config QCA_ART_LSDK
+	tristate "atheros art2_ver_lsdk_10_2_8"
+	help
+	  atheros ar9342 art2_ver_lsdk_10_2_8 wireless adjust

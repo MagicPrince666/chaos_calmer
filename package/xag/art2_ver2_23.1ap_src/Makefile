@@ -10,6 +10,7 @@ define Package/nart_firmwave
 	SECTION:=base
 	CATEGORY:=Utilities
 	TITLE:=nart firmwave
+	SUBMENU:=XAG
 	DEPENDS:= +libm
 endef
 
