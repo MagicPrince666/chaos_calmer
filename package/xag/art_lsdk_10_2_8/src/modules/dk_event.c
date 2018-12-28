@@ -1,6 +1,13 @@
 /* anwievent.c - functions for event handling */
 
-/* Copyright (c) 2000 Atheros Communications, Inc., All Rights Reserved */
+
+/*
+                Copyright (c) 2014 Qualcomm Atheros, Inc. All rights reserved.
+                Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries.
+                All Qualcomm Incorporated trademarks are used with permission.
+                Atheros is a trademark of Qualcomm Atheros, Inc., registered in the United States and other countries.
+                Other products and brand names may be trademarks or registered trademarks of their respective owners.
+*/
 
 /*
 DESCRIPTION
@@ -12,14 +19,19 @@ Contains low level functions for event handling.
 #include <linux/slab.h>
 #include <linux/interrupt.h>
 
+#include <linux/version.h>
+
 #include "dk_event.h"
 
 //void acquireLock(p_event_queue);
 //void releaseLock(p_event_queue);
 
 
-//spinlock_t driver_lock = SPIN_LOCK_UNLOCKED;
-DEFINE_SPINLOCK(driver_lock);
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,31)
+static DEFINE_SPINLOCK(driver_lock);
+#else
+spinlock_t driver_lock = SPIN_LOCK_UNLOCKED;
+#endif
 
 // initEventQueue - initialize an event queue
 void initEventQueue(p_event_queue pQueue) 

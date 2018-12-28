@@ -61,6 +61,7 @@ all:
 	cp -fp ./devlib/Linux_qc98xx/libqc98xx.so $(OUTPUT_DIR)
 	cp -fp ./calibration/cal-2p/Linux_ar9300/libcal-2p.so $(OUTPUT_DIR)
 	cp -fp ./art/obj/nart.out $(OUTPUT_DIR)
+	cp -fp ./art2.sh  $(OUTPUT_DIR)
 
 libtlvtemplate:
 	$(MAKE) -C ./libtlv/outputTemplate -f makefile.ap all

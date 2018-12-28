@@ -29,8 +29,14 @@
 #define HORNET_RTC_BASE_ADDRESS 0xb8100000
 #define HORNET_WMAC_BASE_VIR_ADDRESS 0xb8100000
 /* global variables */
-#if defined(P1020)
-extern A_UINT_PTR get_pci_virt_addr();
+#if defined(DUAL_PCIE)
+
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18))
+extern u_int32_t get_pci_virt_addr(u_int slot);
+#else
+extern resource_size_t get_pci_virt_addr(u_int slot);
+#endif
+
 #endif
 static atheros_dev dev_table[MAX_CLIENTS_SUPPORTED];
 static long unsigned int mem_table[MAX_CLIENTS_SUPPORTED];
@@ -41,6 +47,10 @@ extern irqreturn_t dk_intr_handler(INT32,VOID *,struct pt_regs *);
 
 /* forward declarations */
 static VOID reset_device(INT32 cli_id);
+
+#if (CFG_64BIT == 1) 
+resource_size_t pci_phy_baseaddr[MAX_BARS];
+#endif
 
 VOID init_client
 (
@@ -131,7 +141,11 @@ p_atheros_dev get_client
 INT32 add_client
 (
  	VOID *bus_dev,
+#if (CFG_64BIT == 1)
+	resource_size_t baseaddr[MAX_BARS],
+#else
 	A_UINT_PTR baseaddr[MAX_BARS],
+#endif
 	UINT32 len[MAX_BARS],
 	UINT32 irq,
     UINT32 numBars,
@@ -144,7 +158,11 @@ INT32 add_client
 		p_atheros_dev dev;
 		A_UINT_PTR reg_vir_addr[MAX_BARS];
 		A_UINT_PTR mem_phy_addr;
+#if (CFG_64BIT == 1)
+		resource_size_t *mem;
+#else
 		long unsigned int *mem;
+#endif
 		struct page *page;
 		UINT32 no_pages, iIndex;
 
@@ -156,6 +174,7 @@ INT32 add_client
 #if defined(OCTEON)
         dma_addr_t dma_handle;
 #endif
+
 
 		dev = NULL;
 		mem = NULL;
@@ -182,9 +201,14 @@ INT32 add_client
 
         for(iIndex=0; iIndex<numBars; iIndex++) {
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
-#if defined(P1020)
-                      reg_vir_addr[iIndex] = (A_UINT_PTR)get_pci_virt_addr();
+#if defined(DUAL_PCIE)
+
+                      reg_vir_addr[iIndex] = (A_UINT_PTR)get_pci_virt_addr(iIndex);
+
 			printk(KERN_ERR" Reg Virtual address :0x%08lx\n", reg_vir_addr[iIndex]);
+#if (CFG_64BIT == 1)
+	pci_phy_baseaddr[cli_id] = baseaddr[iIndex];
+#endif
 #endif
 if(pci){
             (void)pci_read_config_byte(bus_dev, PCI_BASE_ADDRESS_0 + (iIndex *4), &ret_val);
@@ -199,11 +223,18 @@ if(pci){
                */
             }
             else {
+#if (CFG_64BIT == 1)
+		printk("DK:: Requesting MEM region=%llx:range=%d\n", baseaddr[iIndex], len[iIndex]);
+#else
 		      printk("DK:: Requesting MEM region=%lx:range=%d\n", baseaddr[iIndex], len[iIndex]);
+#endif
 		      if (request_mem_region(baseaddr[iIndex],len[iIndex],DRV_NAME) == NULL) {
 		          printk(KERN_ERR "DK:: unable to request mem region for Bar %d: len = %d\n", iIndex, len[iIndex]);
 				  return -1;
 	          }
+#if (CFG_64BIT == 1)
+	pci_phy_baseaddr[cli_id] = baseaddr[iIndex];
+#endif
                       reg_vir_addr[iIndex] = (A_UINT_PTR)ioremap_nocache(baseaddr[iIndex],len[iIndex]);
                       if ((VOID *)reg_vir_addr[iIndex] == NULL) {
                                 free_irq(irq,(void *)dev);
@@ -249,14 +280,19 @@ if(!pci){
 
 
         for(iIndex=0; iIndex<numBars; iIndex++) {
-		   printk("DK::Reg phy addr = %lx vir Addr = %lx \n",baseaddr[iIndex],reg_vir_addr[iIndex]);
+#if (CFG_64BIT == 1)
+	printk("DK::Reg phy addr = %llx vir Addr = %llx \n",baseaddr[iIndex],reg_vir_addr[iIndex]);
+#else	   
+	printk("DK::Reg phy addr = %lx vir Addr = %lx \n",baseaddr[iIndex],reg_vir_addr[iIndex]);
+#endif
         }
 		printk("DK::Irq = %x \n",irq);
 
 
 		if (*mem == 0) {
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
-#if defined (P1020)
+#if defined (DUAL_PCIE)
+
 		    *mem = __get_free_pages(GFP_KERNEL|GFP_DMA,ORDER);
                     page_order = ORDER;
 #endif
@@ -461,7 +497,8 @@ INT32 register_client
 		printk("DK::register_client:Client alreay in use \n");
 		return -EACCES;
 	}
-#if !defined (P1020)	
+#if !defined (DUAL_PCIE)	
+
 	// check whether the device is present
 	// by reading the vendor id
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
@@ -542,8 +579,12 @@ INT32 cli_reg_read
 		printk("DK::reg_read:Invalid client \n");
 	 	return -1;
     }
-#if defined(OWL_PB42) || defined(PYTHON_EMU)	
+#if defined(OWL_PB42) || defined(PYTHON_EMU)
+#if (CFG_64BIT == 1)
+	addr = (resource_size_t *)(dev->areg_ker_vir_addr[0] + offset);	
+#else	
 	addr = (UINT32 *)(dev->areg_ker_vir_addr[0] + offset);
+#endif
 #endif
 #ifdef AP83
 #ifndef WASP_OSPREY
@@ -589,7 +630,6 @@ INT32 cli_reg_write
 	#endif        
 #endif
 #endif
-	printk("DK::Reg write @ 0x%08lx : 0x%04x \n",(A_UINT_PTR)addr,data);
 	writel(data,addr);
 #ifdef DK_DEBUG
 	printk("DK::Reg write @ 0x%08lx : 0x%04x \n",(A_UINT_PTR)addr,data);

@@ -13,7 +13,7 @@
 #define UART_FN_DEV_START_NUM      4
 #define NETWORK_CLASS   0x2
 #define SIMPLE_COMM_CLASS       0x7
-
+#define CFG_64BIT 0
 
 
 /* atheros devices info */
@@ -49,7 +49,11 @@ VOID init_client
 INT32 add_client
 (
  	VOID *bus_dev,
+#if (CFG_64BIT == 1)
+	resource_size_t baseaddr[MAX_BARS],
+#else
 	A_UINT_PTR baseaddr[MAX_BARS],
+#endif
 	UINT32 len[MAX_BARS],
 	UINT32 irq,
     UINT32 numBars,

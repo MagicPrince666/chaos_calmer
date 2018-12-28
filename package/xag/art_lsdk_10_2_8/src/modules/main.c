@@ -1,6 +1,20 @@
 /* main.c main 'C' file for the linux dk driver */
+/*
+                Copyright (c) 2014 Qualcomm Atheros, Inc. All rights reserved.
+                Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries.
+                All Qualcomm Incorporated trademarks are used with permission.
+                Atheros is a trademark of Qualcomm Atheros, Inc., registered in the United States and other countries.
+                Other products and brand names may be trademarks or registered trademarks of their respective owners.
+*/
 
 /* Copyright (c) 2001 Atheros Communications, Inc., All Rights Reserved */
+/*
+                Copyright (c) 2014 Qualcomm Atheros, Inc. All rights reserved.
+                Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries.
+                All Qualcomm Incorporated trademarks are used with permission.
+                Atheros is a trademark of Qualcomm Atheros, Inc., registered in the United States and other countries.
+                Other products and brand names may be trademarks or registered trademarks of their respective owners.
+*/
 
 // Include files
 #include <linux/version.h>
@@ -8,7 +22,6 @@
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/errno.h>
-
 
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
 #include <linux/pci.h>
@@ -20,7 +33,6 @@
 #include <linux/interrupt.h>
 #include <linux/page-flags.h>
 #include <asm/io.h>
-
 #include "dk.h"
 #include "client.h"
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
@@ -38,14 +50,17 @@
 #define HORNET_WMAC_BASE_PHY_ADDRESS 0x18100000
 #define PCIE_1_LINK_ADDRESS 0xb80f0018
 #define PCIE_2_LINK_ADDRESS 0xb8280018
-
 #define CHIP_REV_ID_SCORPION_A 0x013 // last nibble is for Chip revision which is ignored
 #define CHIP_REV_ID_SCORPION_B 0x113 // last nibble is for Chip revision which is ignored
 #define CHIP_REV_ID_DRANGONFLY 0x15  
-
 extern INT32  dk_dev_init(void);
-#if  defined(P1020)
-extern A_UINT_PTR get_pci_reg_addr();
+#if  defined(DUAL_PCIE)
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,18))
+extern u_int32_t get_pci_reg_addr(u_int slot);
+#else
+extern resource_size_t get_pci_reg_addr(u_int slot);
+#endif
+extern u_int get_pci_irq(u_int slot);
 #endif
 extern void dk_dev_exit(void);
 extern INT32 get_chip_id(INT32 cli_id,INT32 offset,INT32 size,INT32 *ret_val);
@@ -53,8 +68,12 @@ int init_wmac_device(void);
 static INT32 __init dk_module_init(void)
 {
 		INT32 error;
-#if  defined(P1020)
+#if  defined(DUAL_PCIE)
+#if (CFG_64BIT == 1)
+	resource_size_t baseaddr[1];
+#else
 	A_UINT_PTR baseaddr[1];
+#endif
 	UINT32 len[1];
 	UINT32 irq;
 #ifndef PYTHON_EMU
@@ -69,8 +88,7 @@ static INT32 __init dk_module_init(void)
 	UINT32 sIndex = WMAC_FN_DEV_START_NUM;
  	VOID *dev;
 #endif
-
-#if  !defined(P1020)
+#if  !defined(DUAL_PCIE)
 #if  defined(PYTHON_EMU)
         	UINT32 *addr;
 		INT32 ret_val;
@@ -78,11 +96,9 @@ static INT32 __init dk_module_init(void)
 #ifndef OCTEON
         INT32 chip_rev_id=0;
 #endif
-
 #ifdef DK_DEBUG
 		printk("DK::Module init \n");
 #endif // DK_DEBUG
-
 #ifndef OWL_PB42
         get_chip_id(0,CHIP_ID_LOCATION,4,&chip_rev_id); // for getting the chip rev_id; to differentiate between PB and AP
         printk("CHIP REV ID: %x\n",chip_rev_id);
@@ -146,11 +162,9 @@ static INT32 __init dk_module_init(void)
                 addr = (UINT32 *)(0xb80f001c );
                 writel(readl(addr)& 0xfffeffff,addr);
                 printk("Resetting bit 16 of Python  register 0xb80f001c \n");
-
 	}
-
 #endif
-#endif // #if  !defined(P1020)
+#endif // #if  !defined(DUAL_PCIE)
 
 		error = dk_dev_init();
 		if (error < 0) {
@@ -158,33 +172,34 @@ static INT32 __init dk_module_init(void)
 			return error;
 		}
 		init_client();
-#if  !defined(P1020)
+#if  !defined(DUAL_PCIE)
 #ifdef AP83
                 if (init_wmac_device()){ // enabling the wmac ; setting the handle for applications
                          printk("Error in initializing wmac \n");
                          return error;
                 }
-
 #ifndef WASP_OSPREY
 		return 0;
 #endif
-
 #endif
 #endif
-
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
-#if  !defined(P1020)
+#if  !defined(DUAL_PCIE)
 		     error = bus_module_init();
 #endif
-#if  defined(P1020)
+#if  defined(DUAL_PCIE)
 	iIndex=0;
-	baseaddr[iIndex] = (A_UINT_PTR)get_pci_reg_addr();
+#if (CFG_64BIT == 1)
+	baseaddr[iIndex] = (resource_size_t)get_pci_reg_addr(iIndex);   
+	printk(KERN_ERR" Base Phsycal address :0x%llx\n", baseaddr[iIndex]);
+#else
+	baseaddr[iIndex] = (A_UINT_PTR)get_pci_reg_addr(iIndex);
 	printk(KERN_ERR" Base Phsycal address :0x%08lx\n", baseaddr[iIndex]);
+#endif
 	len[iIndex] = 0x20000;
     numBars = 1;
-	irq = 17;
+	irq = get_pci_irq(iIndex);
 	sIndex = 0;
-
 	if (add_client(dev,baseaddr,len,irq, numBars, sIndex,0) < 0) {
 		printk(KERN_ERR "DK:: unable to add client \n");
 #if LINUX_VERSION_CODE > 132098
@@ -194,7 +209,6 @@ static INT32 __init dk_module_init(void)
 	}
 #endif
 #endif
-
 #if !defined(OWL_PB42) && !defined(PYTHON_EMU)
 		if (error < 0) {
 			cleanup_client();
@@ -205,11 +219,9 @@ static INT32 __init dk_module_init(void)
 #endif
 		return 0;
 }
-
 #ifdef AP83
 int init_wmac_device()
 {
-
         VOID *dev;
 	UINT32 baseaddr[MAX_BARS];
 	UINT32 len[MAX_BARS];
@@ -233,9 +245,13 @@ for (iIndex=0; iIndex<1; iIndex++) { // assume that only one wmac
       if (len[iIndex] == 0) break;
     }
     numBars = iIndex;
-    //irq=2;
     irq=5;
+
+#if (CFG_64BIT == 1)
+if (add_client(dev,(INT32 *)baseaddr,len,irq, numBars, sIndex,0) < 0) {
+#else
 if (add_client(dev,(A_UINT_PTR *)baseaddr,len,irq, numBars, sIndex,0) < 0) {
+#endif
 		printk(KERN_ERR "DK:: unable to add client \n");
 #if LINUX_VERSION_CODE > 132098
 		//pci_disable_device(dev);
@@ -247,10 +263,8 @@ if (add_client(dev,(A_UINT_PTR *)baseaddr,len,irq, numBars, sIndex,0) < 0) {
 	}
 	return 0;
 
-
 }
 #endif
-
 
 static void __exit  dk_module_exit(void)
 {
@@ -258,25 +272,20 @@ static void __exit  dk_module_exit(void)
 		printk("DK::Module exit \n");
 #endif // DK_DEBUG
 #if defined(OWL_PB42) || defined(PYTHON_EMU)
+#if !defined(DUAL_PCIE)
 		bus_module_exit();
+#endif
 #endif
 		cleanup_client();
 		dk_dev_exit();
-
 		return;
 }
-
 #ifdef MODULE
-
 #if LINUX_VERSION_CODE > 132098
 	MODULE_LICENSE(MOD_LICENCE);
 #endif
-
 MODULE_AUTHOR(MOD_AUTHOR);
 MODULE_DESCRIPTION(MOD_DESCRIPTION);
-
 module_init(dk_module_init);
 module_exit(dk_module_exit);
-
 #endif // MODULE
-

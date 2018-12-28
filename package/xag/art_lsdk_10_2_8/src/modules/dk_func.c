@@ -1,17 +1,17 @@
 /* func.c contains the device functions */
-
 #include <linux/mm.h>
 #include <linux/fs.h>
 #include <linux/module.h>
 #include <linux/slab.h>
+#include <linux/uaccess.h>
 #include <linux/version.h>
-#include <asm/uaccess.h>
-
 #include "dk.h"
 #include "dk_ioctl.h"
 #include "client.h"
 
-
+#if (CFG_64BIT == 1)
+extern resource_size_t pci_phy_baseaddr[MAX_BARS];
+#endif
 
 static int dk_open
 (	
@@ -40,16 +40,17 @@ static int dk_open
 		if (error < 0) {
 				return error;
 		}
-
 		/*
 		 * Store the client id in the private data field
 		 */
-		 
+	
+#if (CFG_64BIT == 1)
+	file->private_data = (void *)((unsigned int)error);
+#else 
 		file->private_data = (void *)((unsigned long)error);
-
+#endif
 		return 0;
 }
-
 static int dk_release
 (	
  	struct inode *inode, 
@@ -60,10 +61,12 @@ static int dk_release
 #ifdef DK_DEBUG
 		printk("DK:: dk_release \n");
 #endif
+#if (CFG_64BIT == 1)
+	cli_id = (int) ((unsigned int)file->private_data);
+#else
 		cli_id = (int) ((unsigned long)file->private_data);
-
+#endif
 		unregister_client(cli_id);
-		
 		return 0;
 }
 
@@ -82,46 +85,54 @@ static inline int uncached_access(struct file *file, unsigned long addr)
                  return 1;
          return addr >= __pa(high_memory);
 }
-
 static int dk_mmap
 (
  	struct file *file,
 	struct vm_area_struct *vma
 )
 {
+#if (CFG_64BIT == 1)
+	int cli_id;
+        resource_size_t baseaddr; 
+        
+        cli_id = (int) ((unsigned int)file->private_data);
+        baseaddr = pci_phy_baseaddr[cli_id];
+
+        printk("dk_mmap: baseaddr = %llx pgoff=%llx\n",baseaddr,baseaddr|(vma->vm_pgoff << PAGE_SHIFT));
+
+        if ( baseaddr == ( baseaddr | (vma->vm_pgoff << PAGE_SHIFT)))
+        	vma->vm_pgoff = baseaddr >> PAGE_SHIFT;
+#endif
 #if defined(__HAVE_PHYS_MEM_ACCESS_PROT)
         unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-
         vma->vm_page_prot = phys_mem_access_prot(file, offset,
                                                  vma->vm_end - vma->vm_start,
                                                  vma->vm_page_prot);
 #elif defined(pgprot_noncached)
         unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
         int uncached;
-
         uncached = uncached_access(file, offset);
         if (uncached)
                 vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 #endif
 
-        /* Remap-pfn-range will mark the range VM_IO and VM_RESERVED */
-        if (remap_pfn_range(vma,
-                            vma->vm_start,
-                            vma->vm_pgoff,
-                            vma->vm_end-vma->vm_start,
-                            vma->vm_page_prot))
-                return -EAGAIN;
+#if (CFG_64BIT == 1)
+	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+#endif
 
+        /* Remap-pfn-range will mark the range VM_IO and VM_RESERVED */
+        if (remap_pfn_range(vma,vma->vm_start,vma->vm_pgoff,vma->vm_end-vma->vm_start,vma->vm_page_prot))
+            return -EAGAIN;
+		
 		return 0; 
+
 }
+
 
 
 static int dk_ioctl
 (
-#if (LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 31))
-#else
  	struct inode *inode, 
-#endif
 	struct file *file,
 	unsigned int cmd,
 	unsigned long arg
@@ -137,13 +148,15 @@ static int dk_ioctl
 		event_handle evt_hnd;
 		p_event_struct p_event;
 		p_atheros_dev p_client;
-
 		
 #ifdef DK_DEBUG
 		printk("DK::dk_ioctl \n");
 #endif
-
+#if (CFG_64BIT == 1)
+		cli_id = (int) ((unsigned int)file->private_data); 
+#else
 		cli_id = (int) ((unsigned long)file->private_data);
+#endif
 		p_client = get_client(cli_id);
 		if (p_client == NULL) {
 				printk("DK:: Invalid client \n");
@@ -170,7 +183,7 @@ static int dk_ioctl
 				ret = 0;
 				break;
 			case DK_IOCTL_CFG_READ:
-#if !defined(P1020)
+#if !defined(DUAL_PCIE)
 				if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
 						return -EFAULT;
 				}
@@ -209,7 +222,6 @@ static int dk_ioctl
                                 }
 #endif
                                 break;
-
 			case DK_IOCTL_GET_CHIP_ID:
 				if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
 						return -EFAULT;
@@ -247,7 +259,19 @@ static int dk_ioctl
 #endif
 				break;
                         case DK_IOCTL_SYS_REG_WRITE_32:
-                        case DK_IOCTL_FULL_ADDR_WRITE:
+#ifdef IOCTL_REG_ACCESS
+				if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
+                                                return -EFAULT;
+                                }
+#ifdef DK_DEBUG
+                                printk("DK::Reg write @ offset %x : %x \n",co.offset,co.value);
+#endif
+                                cli_reg_write(cli_id, co.offset, co.value);
+                                ret = 0;
+                                break; 
+#endif
+		
+			case DK_IOCTL_FULL_ADDR_WRITE:
                                 if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
                                                 return -EFAULT;
                                 }
@@ -262,8 +286,24 @@ static int dk_ioctl
                                 }
 #endif
                                 break;
-						case DK_IOCTL_SYS_REG_READ_32:
-                        case DK_IOCTL_FULL_ADDR_READ:
+				
+			case DK_IOCTL_SYS_REG_READ_32:
+#ifdef IOCTL_REG_ACCESS
+				if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
+                                                return -EFAULT;
+                                }
+#ifdef DK_DEBUG
+                                //printk("DK::Reg read @ offset %x \n",co.offset);
+#endif
+#ifdef DK_DEBUG
+                                //printk("DK::Reg read @ offset %x \n",co.offset);
+#endif
+                                cli_reg_read(cli_id, co.offset, &co.value);
+                                ret = copy_to_user((void *)arg,(void *)&co,sizeof(co));
+                                break;
+#endif                  
+     
+			 case DK_IOCTL_FULL_ADDR_READ:
                                 if (copy_from_user((void *)&co,(void *)arg,sizeof(co))) {
                                                 return -EFAULT;
                                 }
@@ -295,7 +335,6 @@ static int dk_ioctl
 #endif
 #endif
                                 break;
-
 			case DK_IOCTL_CREATE_EVENT:
 #ifdef DK_DEBUG
 				printk("DK::Create event \n");
@@ -390,7 +429,6 @@ static int dk_ioctl
                      printk("DK:: Copy_from_user failed 3\n");
                      return -EFAULT;
                  }
-
 #ifdef DK_DEBUG
                  printk("DK:: MAC Addr\n");
 				 for(i=0; i<6; i++)
@@ -400,16 +438,13 @@ static int dk_ioctl
 					printk("%x  ", mac1Addr[i]);
 				 printk("\n");
 #endif
-
 				memcpy(&hw_mac_cfg, 0xbf7f0000, 16);
 				ar7100_spi_sector_erase(0x7f0000);
 				// Copy mac address to ath_hw_cfg structure
 				for(i=0; i<6; i++)
 			        hw_mac_cfg.macAddr0[i] = mac0Addr[i];
-
 				for(i=0; i<6; i++)
 			        hw_mac_cfg.macAddr1[i] = mac1Addr[i];
-
 				ar7100_spi_write_page(0x7f0000, &hw_mac_cfg, 256);				
 				ret = 1;
                 break; 
@@ -421,46 +456,15 @@ static int dk_ioctl
 		}
 		return ret;
 }
-
-/*
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,6,31)
 static long dk_ioctl_new(struct file *file, unsigned int cmd, unsigned long arg)
 {
-        struct inode *inode = file->f_path.dentry->d_inode;
+	struct inode *inode = file->f_path.dentry->d_inode;
         long ret;
         ret = dk_ioctl(inode, file, cmd, arg);
         return ret;
 }
-
-static struct file_operations dk_fops = {
-        owner:  THIS_MODULE,
-        open:   dk_open,
-        release: dk_release,
-        mmap:   dk_mmap,
-	unlocked_ioctl: dk_ioctl_new
-};
-*/
-/*
-static struct file_operations dk_fops = {
-	owner:	THIS_MODULE,
-	open:	dk_open,
-	release: dk_release,
-	mmap:	dk_mmap,
-	compat_ioctl  : dk_ioctl
-};
-*/
-static long dk_ioctl_new(struct file *file, unsigned int cmd, unsigned long arg)
-{
-	struct inode *inode = NULL;
-        long ret;
-		inode = file->f_path.dentry->d_inode;
-#if (LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 31))
-		ret = dk_ioctl(file, cmd, arg);
-#else
-		ret = dk_ioctl(inode,file, cmd, arg);
 #endif
-        return ret;
-}
-
 static struct file_operations dk_fops = {
 	owner:	THIS_MODULE,
 	open:	dk_open,
@@ -472,19 +476,16 @@ static struct file_operations dk_fops = {
 	ioctl  : dk_ioctl
 #endif
 };
-
 INT32  dk_dev_init(void) {
 		int status;
 		status = register_chrdev(DK_MAJOR_NUMBER,"dk",&dk_fops);
 		printk("dk_dev_init::status after register_chrdev(dk) = %d\n", status);
-
 #ifdef DK_UART
 	        status |= register_chrdev(DK_UART_MAJOR_NUMBER, "dk_uart", &dk_fops);
 		printk("dk_dev_init::status after register_chrdev(dk_uart) = %d\n", status);
 #endif
 		return status;
 }
-
 void dk_dev_exit(void) {
 		unregister_chrdev(DK_MAJOR_NUMBER,"dk");
 //#ifdef DK_UART

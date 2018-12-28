@@ -42,12 +42,15 @@ rmmod_art()
 start_art()
 {
     #/etc/rc.d/rc.tools up >/dev/null 2>&1
+    rmmod ath9k
+    rmmod ath9k_common
+    rmmod ath9k_hw
 
     #ifconfig br-lan 192.168.1.2
-    #export LD_LIBRARY_PATH=/root/nartbuild:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/tmp/nartbuild
 
-    #insmod /root/nartbuild/art.ko
-    insmod /lib/modules/'uname -r'/art.ko
+    insmod /tmp/nartbuild/art.ko
+    #insmod /lib/modules/'uname -r'/art.ko
     #insmod /lib/modules/2.6.31/net/art-dragonfly-pci.ko
 
     if [ ! -e /dev/dk0 ]; then
@@ -58,8 +61,8 @@ start_art()
         mknod /dev/dk1 c 63 1
     fi
 
-    nart.out -console -port 2390 -instance 0 &
-    nart.out -console -port 2391 -instance 1 &
+    /tmp/nartbuild/nart.out -console -port 2390 -instance 0 &
+    /tmp/nartbuild/nart.out -console -port 2391 -instance 1 &
 
     ln -s /dev/mtdblock5 /dev/caldata
 }

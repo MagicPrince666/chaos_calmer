@@ -25,8 +25,8 @@ endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin $(1)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/nartbuild/nart.out $(1)/usr/bin/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/nartbuild/*.so $(1)/usr/lib/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/nartbuild/nart.out $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/nartbuild/*.so $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,nart_lsdk_10_2_8))

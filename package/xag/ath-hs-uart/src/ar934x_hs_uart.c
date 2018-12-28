@@ -53,6 +53,8 @@
 #include "atheros.h"
 #define AR934X_HS_UART1_TX				13
 #define AR934X_HS_UART1_RX				15
+//#define AR934X_HS_UART1_TX				1
+//#define AR934X_HS_UART1_RX				2
 //#define AR934X_HS_UART1_RTS				14
 //#define AR934X_HS_UART1_CTS				17
 
@@ -895,6 +897,7 @@ static void ar934x_hs_uart_gpio(void)
 	// Enabling UART1_RD as inputs on GPIO12
 	ath_reg_wr(ATH_GPIO_IN_ENABLE9, AR934X_HS_UART1_RX<<16);
 
+/*
 //set uart to default
 	data = ath_reg_rd(ATH_GPIO_OE);
 	data = (data & (~BIT(DEFAULT_LS_UART0_TX))) | BIT(DEFAULT_LS_UART0_RX);
@@ -910,6 +913,7 @@ static void ar934x_hs_uart_gpio(void)
 	data = ath_reg_rd(ATH_GPIO_IN_ENABLE0);
 	data = (data&0x00FF) | DEFAULT_LS_UART0_RX << 8;
 	ath_reg_wr(ATH_GPIO_IN_ENABLE0, data);
+*/
 }
 
 static int __init ar934x_hs_uart_init(void)

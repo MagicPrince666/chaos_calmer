@@ -1,6 +1,12 @@
 /* dk_event.h - contains definitions for event.c */
 
-/* Copyright (c) 2000 Atheros Communications, Inc., All Rights Reserved */
+/*
+                Copyright (c) 2014 Qualcomm Atheros, Inc. All rights reserved.
+                Qualcomm is a trademark of Qualcomm Incorporated, registered in the United States and other countries.
+                All Qualcomm Incorporated trademarks are used with permission.
+                Atheros is a trademark of Qualcomm Atheros, Inc., registered in the United States and other countries.
+                Other products and brand names may be trademarks or registered trademarks of their respective owners.
+*/
 
 #ifndef __DK_EVENT_H_
 #define __DK_EVENT_H_
