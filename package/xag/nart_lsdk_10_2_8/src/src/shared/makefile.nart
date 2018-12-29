@@ -6,7 +6,7 @@ CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/common \
 
 
-CFLAGS += -fPIC
+CFLAGS += -fPIC -DLINUX
 
 VPATH = $(ART_ROOT)/art \
 	$(ART_ROOT)/common \

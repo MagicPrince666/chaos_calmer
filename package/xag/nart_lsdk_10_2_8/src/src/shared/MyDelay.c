@@ -35,7 +35,7 @@ PARSEDLLSPEC void MyDelay(int ms)
 	if(ms<=0) ms=1;
 //#endif
 #ifdef MDK_AP
-	milliSleep(ms);
+	usleep(ms*1000);
 #elif defined(__APPLE__)
 	usleep(ms);
 #elif defined(LINUX)
