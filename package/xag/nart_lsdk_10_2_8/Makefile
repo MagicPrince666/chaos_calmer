@@ -11,7 +11,7 @@ define Package/$(PKG_NAME)
 	CATEGORY:=Utilities
 	TITLE:=nart ver lsdk 10.2.8
 	SUBMENU:=XAG
-	DEPENDS:= +libpthread +librt
+	DEPENDS:= +libpthread +librt +kmod-qca-art_lsdk_10_2_8
 endef
 
 define Package/$(PKG_NAME)/description

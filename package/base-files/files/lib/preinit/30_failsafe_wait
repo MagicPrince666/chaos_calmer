@@ -93,4 +93,4 @@ failsafe_wait() {
 	fi
 }
 
-boot_hook_add preinit_main failsafe_wait
+#boot_hook_add preinit_main failsafe_wait

@@ -14,4 +14,4 @@ indicate_failsafe() {
 	indicate_failsafe_led
 }
 
-boot_hook_add failsafe indicate_failsafe
+#boot_hook_add failsafe indicate_failsafe
