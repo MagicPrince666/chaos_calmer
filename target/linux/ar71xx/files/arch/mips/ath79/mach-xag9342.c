@@ -24,7 +24,6 @@
 #include <linux/platform_device.h>
 #include <linux/platform_data/phy-at803x.h>
 #include <linux/ath9k_platform.h>
-#include <linux/ar8216_platform.h>
 #include <linux/export.h>
 
 #include <asm/mach-ath79/ar71xx_regs.h>
@@ -90,7 +89,6 @@ static struct gpio_keys_button xag9342_gpio_keys[] __initdata = {
 	},
 };
 
-
 static struct at803x_platform_data mi124_ar8035_data = {
 		.disable_smarteee = 0,
 		.enable_rgmii_rx_delay = 1,
@@ -118,7 +116,7 @@ static void __init xag9342_setup(void)
 					xag9342_gpio_keys);
 
 	ath79_register_usb();
-	ath79_register_pci();
+	//ath79_register_pci();
 
 	ath79_register_wmac(art + XAG9342_WMAC_CALDATA_OFFSET, NULL);
 
@@ -132,9 +130,9 @@ static void __init xag9342_setup(void)
 
 	mdiobus_register_board_info(mi124_mdio0_info, ARRAY_SIZE(mi124_mdio0_info));
 
-	/* GMAC0 is connected to an AR8035 Gigabit PHY */
+	// GMAC0 is connected to an AR8035 Gigabit PHY 
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
-	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
+	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_-+RGMII;
 	ath79_eth0_data.phy_mask = BIT(0);
 	ath79_eth0_pll_data.pll_1000 = 0x03000000;
 	ath79_eth0_pll_data.pll_100 = 0x0101;
