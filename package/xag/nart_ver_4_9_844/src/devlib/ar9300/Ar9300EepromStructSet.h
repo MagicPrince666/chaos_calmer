@@ -1,5 +1,5 @@
-
-
+#ifndef _AR9300EEPROMSTRUCTSET_H_
+#define _AR9300EEPROMSTRUCTSET_H_
 
 #include "ParameterConfigDef.h"
 #include "ConfigurationStatus.h"
@@ -45,8 +45,8 @@ extern A_INT32 Ar9300AntCtrlCommonSet(int value, int iBand);
 extern A_INT32 Ar9300AntCtrlCommon2Set(int value, int iBand);
 extern A_INT32 Ar9300TempSlopeSet(int *value, int ix, int iy, int iz,int num, int iBand);
 extern A_INT32 Ar9300VoltSlopeSet(int value, int iBand);
-extern A_INT32 Ar9300TempSlopeLowSet(int *value, int ix, int iy, int iz);
-extern A_INT32 Ar9300TempSlopeHighSet(int *value, int ix, int iy, int iz );
+extern A_INT32 Ar9300TempSlopeLowSet(int *value, int ix, int iy, int iz, int num,int iBand);
+extern A_INT32 Ar9300TempSlopeHighSet(int *value, int ix, int iy, int iz, int num,int iBand);
 extern A_INT32 Ar9300TempSlopeExtensionSet(int *value, int ix, int iy, int iz, int num, int iBand);
 extern A_INT32 Ar9300QuickDropSet(int value, int iBand);
 extern A_INT32 Ar9300QuickDropLowSet(int value);
@@ -140,3 +140,4 @@ extern int Ar9300PsatPowerGet(double *value, int ix, int iy, int iz, int *num, i
 extern int Ar9300PsatDiffGet(double *value, int ix, int iy, int iz, int *num, int iBand);
 extern A_INT32 Ar9300PsatDiffSet(double *value, int ix, int iy, int iz, int num, int iBand);
 
+#endif

@@ -1,3 +1,6 @@
+#ifndef _PARAMETERPARSENART_H_
+#define _PARAMETERPARSENART_H_
+
 #include "ParameterConfigDef.h"
 
 extern void paramItemSet(_PARAM_ITEM_STRUCT *param, char *itemName, int min, int max, int numValues);
@@ -12,5 +15,5 @@ extern void calTGTpwrDataRateTitle(int iMode, char *title);
 
 extern int getCmdSetValue(char *name, int ip, int num, int *value, char *tValue, int isHex);
 
-
+#endif
 

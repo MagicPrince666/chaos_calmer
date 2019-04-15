@@ -1,5 +1,6 @@
 #ifndef _LINKLIST_H_
-#define _LINKTXRX_H_
+#define _LINKLIST_H_
+
 #include "vrate_constants.h"
 enum {TpcmTxGain=0, TpcmTxPower, TpcmTargetPower, TpcmTxGainIndex, TpcmDACGain, TpcmForcedTargetPower};
 
@@ -913,4 +914,5 @@ static int LinkDutyCycleMax=99;
 	0,0,0,0,0}
 #define LINK_DUTY_CYCLE {LinkParameterDutyCycle,{"dutycycle","duc",0},"specify tx duty cycle",'u',0,1,1,1,\
 	&LinkDutyCycleMin, &LinkDutyCycleMax, &LinkDutyCycleDefault,0,0}
+	
 #endif //_LINKTXRX_H_

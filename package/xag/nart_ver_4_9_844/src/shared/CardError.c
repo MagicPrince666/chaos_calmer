@@ -1,9 +1,4 @@
-
-
 //  "ACI $Id: //depot/sw/branches/art2_main_per_cs/src/art2/shared/CardError.c#1 $, $Header: //depot/sw/branches/art2_main_per_cs/src/art2/shared/CardError.c#1 $"
-
-
-
 
 #include <stdio.h>
 #include <time.h>

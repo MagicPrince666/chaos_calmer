@@ -1,4 +1,5 @@
-
+#ifndef _ERRORPRINT_H_
+#define _ERRORPRINT_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -140,3 +141,6 @@ extern PARSEDLLSPEC int ErrorTypeParse(char *text);
 
 
 extern PARSEDLLSPEC void ErrorTypeAbbreviation(int onoff);
+
+
+#endif

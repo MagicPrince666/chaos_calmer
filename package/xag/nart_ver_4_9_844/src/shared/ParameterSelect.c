@@ -600,7 +600,8 @@ PARSEDLLSPEC int ParameterSelectIndexArray(char *buffer, struct _ParameterList *
 						}
 						//
 						// ran out of parameter name. but still have input, no match
-						//
+						//  | 天降bug 无解
+						//  V　
                         if(cl[il].word[ic][ip]==' ' || cl[il].word[ic][ip]==0)
 						{
                             break;

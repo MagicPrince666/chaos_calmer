@@ -95,7 +95,8 @@ static int parseConfigCmd(int *nFreq, unsigned int *Rate, unsigned int *nRate, d
 	int status = VALUE_OK;
 	//int foundRatesByName;
 	unsigned int nrate;//, rate[MRATE];
-	int rlegacy,rht20,rht40,nvalue,rerror,extra, index;
+	int rlegacy,rht20,rht40,nvalue,rerror,index;
+	char extra;
 
 	//for (i=0; i<MRATE; i++) {
 	//	rate[i]=0;

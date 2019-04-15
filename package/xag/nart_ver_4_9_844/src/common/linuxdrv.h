@@ -1,8 +1,8 @@
 /*
- *  Copyright © 2000-2001 Atheros Communications, Inc.,  All Rights Reserved.
+ *  Copyright ï¿½ 2000-2001 Atheros Communications, Inc.,  All Rights Reserved.
  */
 
-#ident  "ACI $Header: //depot/sw/branches/art2_main_per_cs/src/art2/common/linuxdrv.h#1 $"
+//#ident  "ACI $Header: //depot/sw/branches/art2_main_per_cs/src/art2/common/linuxdrv.h#1 $"
 
 /*
 DESCRIPTION
@@ -27,7 +27,7 @@ typedef	A_UINT32	FHANDLE;
 /* Atheros declarations mapped to OS specific declarations */
 
 #define A_RAND      rand
-#define A_MALLOC(a)	(malloc(a))
+#define A_MALLOC(a)	malloc(a)
 #define A_FREE(a)	free(a);a=NULL
 #define A_DRIVER_MALLOC(a)	(malloc(a))
 #define A_DRIVER_FREE(a, b)	(free(a))

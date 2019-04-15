@@ -431,6 +431,8 @@ int Ar9287CustomerDataGet(unsigned char *data, int len)
 	return 0;
 }
 
+extern int32_t ar5416_calibration_data_get(struct ath_hal *ah);
+extern int32_t ar5416_eeprom_size(struct ath_hal *ah);
 
 int Ar9287Attach(int devid, int calmem)
 {
@@ -442,7 +444,7 @@ int Ar9287Attach(int devid, int calmem)
     struct hal_reg_parm hal_conf_parm;
 	HAL_STATUS error;
 	struct ath_hal_5416 *ahp;
-	const u_int32_t *header;
+	u_int8_t *header;
 
 
 	int start,end;

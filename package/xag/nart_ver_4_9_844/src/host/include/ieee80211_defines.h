@@ -10,6 +10,7 @@
 #define _IEEE80211_DEFINES_H_
 
 #include <ieee80211.h>
+#include <stdint.h>
 #ifndef EXTERNAL_USE_ONLY
 #include <_ieee80211.h>        /* IEEE80211_ADDR_LEN, iee80211_phymode */
 #endif
@@ -79,7 +80,7 @@ typedef struct ieee80211_scan_entry *wlan_scan_entry_t;
 
 typedef struct _ieee80211_ssid {
     int         len;
-    u_int8_t    ssid[IEEE80211_NWID_LEN + 1];
+    uint8_t    ssid[IEEE80211_NWID_LEN + 1];
 } ieee80211_ssid;
 
 typedef struct ieee80211_tx_status {
@@ -89,7 +90,7 @@ typedef struct ieee80211_tx_status {
 
     int         ts_retries;     /* number of retries to successfully transmit this frame */
 #ifdef ATH_SUPPORT_TxBF
-    u_int8_t    ts_txbfstatus;
+    uint8_t    ts_txbfstatus;
 #define	AR_BW_Mismatch      0x1
 #define	AR_Stream_Miss      0x2
 #define	AR_CV_Missed        0x4
@@ -100,13 +101,13 @@ typedef struct ieee80211_tx_status {
 #define TxBF_STATUS_Sounding_Request    0x40
 #define TxBF_Valid_SW_Status  (TxBF_STATUS_Sounding_Complete | TxBF_STATUS_Sounding_Request)
 #define TxBF_Valid_Status  (AR_TxBF_Valid_HW_Status | TxBF_Valid_SW_Status)
-    u_int32_t    ts_tstamp;     /* tx time stamp */
+    uint32_t    ts_tstamp;     /* tx time stamp */
 #endif
 #if ATH_SUPPORT_FLOWMAC_MODULE
-    u_int8_t    ts_flowmac_flags;
+    uint8_t    ts_flowmac_flags;
 #define IEEE80211_TX_FLOWMAC_DONE           0x01
 #endif
-    u_int32_t    ts_rateKbps;
+    uint32_t    ts_rateKbps;
 } ieee80211_xmit_status;
 
 #ifndef EXTERNAL_USE_ONLY
@@ -125,16 +126,16 @@ typedef struct ieee80211_rx_status {
     int         rs_ratephy;
 
 #define IEEE80211_MAX_ANTENNA       3                /* Keep the same as ATH_MAX_ANTENNA */
-    u_int8_t    rs_rssictl[IEEE80211_MAX_ANTENNA];   /* RSSI (noise floor ajusted) */
-    u_int8_t    rs_rssiextn[IEEE80211_MAX_ANTENNA];  /* RSSI (noise floor ajusted) */    
-    u_int8_t    rs_isvalidrssi;                      /* rs_rssi is valid or not */
+    uint8_t    rs_rssictl[IEEE80211_MAX_ANTENNA];   /* RSSI (noise floor ajusted) */
+    uint8_t    rs_rssiextn[IEEE80211_MAX_ANTENNA];  /* RSSI (noise floor ajusted) */    
+    uint8_t    rs_isvalidrssi;                      /* rs_rssi is valid or not */
 
     enum ieee80211_phymode rs_phymode;
     int         rs_freq;
     
     union {
-        u_int8_t            data[8];
-        u_int64_t           tsf;
+        uint8_t            data[8];
+        uint64_t           tsf;
     } rs_tstamp;
 
     /* 
@@ -144,18 +145,18 @@ typedef struct ieee80211_rx_status {
     struct ieee80211_channel *rs_full_chan; 
 
 #if ATH_SUPPORT_AOW
-    u_int16_t   rs_rxseq;      /* WLAN Sequence number */
+    uint16_t   rs_rxseq;      /* WLAN Sequence number */
 #endif
 #if ATH_VOW_EXT_STATS
-    u_int32_t vow_extstats_offset; /* Lower 16 bits holds the udp checksum offset in the data pkt */
+    uint32_t vow_extstats_offset; /* Lower 16 bits holds the udp checksum offset in the data pkt */
                                    /* Higher 16 bits contains offset in the data pkt at which vow ext stats are embedded */
 #endif
-    u_int8_t rs_isaggr;
-    u_int8_t rs_isapsd;
+    uint8_t rs_isaggr;
+    uint8_t rs_isapsd;
     int16_t rs_noisefloor;
-    u_int16_t  rs_channel;
+    uint16_t  rs_channel;
 #ifdef ATH_SUPPORT_TxBF
-    u_int32_t   rs_rpttstamp;   /* txbf report time stamp*/
+    uint32_t   rs_rpttstamp;   /* txbf report time stamp*/
 #endif
 
     /* The following counts are meant to assist in stats calculation.
@@ -163,10 +164,10 @@ typedef struct ieee80211_rx_status {
        should not be relied upon for any purpose other than the original
        stats related purpose they have been introduced for. */
 
-    u_int16_t   rs_cryptodecapcount; /* Crypto bytes decapped/demic'ed. */
-    u_int8_t    rs_padspace;         /* No. of padding bytes present after header
+    uint16_t   rs_cryptodecapcount; /* Crypto bytes decapped/demic'ed. */
+    uint8_t    rs_padspace;         /* No. of padding bytes present after header
                                         in wbuf. */
-    u_int8_t    rs_qosdecapcount;    /* QoS/HTC bytes decapped. */
+    uint8_t    rs_qosdecapcount;    /* QoS/HTC bytes decapped. */
 
     /* End of stats calculation related counts. */
 
@@ -219,7 +220,7 @@ typedef enum _ieee80211_dev_vap_event {
 typedef struct _wlan_dev_event_handler_table {
     void (*wlan_dev_vap_event) (void *event_arg, wlan_dev_t, os_if_t, ieee80211_dev_vap_event);  /* callback to receive vap events*/
 #if ATH_SUPPORT_SPECTRAL
-    void (*wlan_dev_spectral_indicate)(void*, void*, u_int32_t);
+    void (*wlan_dev_spectral_indicate)(void*, void*, uint32_t);
 #endif
 } wlan_dev_event_handler_table;
 
@@ -235,10 +236,10 @@ typedef int IEEE80211_STATUS;
 #include <wbuf.h> /* wbuf_t */
 typedef struct _wlan_event_handler_table {
     void (*wlan_receive) (os_if_t osif, wbuf_t wbuf,
-                          u_int16_t type, u_int16_t subtype,
+                          uint16_t type, uint16_t subtype,
                           ieee80211_recv_status *rs);                       /* callback to receive all the packets */
     int  (*wlan_receive_filter_80211) (os_if_t osif, wbuf_t wbuf,
-                                       u_int16_t type, u_int16_t subtype,
+                                       uint16_t type, uint16_t subtype,
                                        ieee80211_recv_status *rs);          /* callback to receive and filter all the 802.11 frames*/
     void (*wlan_receive_monitor_80211) (os_if_t osif, wbuf_t wbuf,
                                         ieee80211_recv_status *rs);         /* recieve 802.11 frames for monitor mode only*/
@@ -249,7 +250,7 @@ typedef struct _wlan_event_handler_table {
                                                                              * NB: this is to allow IHV to update certain statistics,
                                                                              * it should NOT consume the wbuf */
 #if ATH_SUPPORT_IWSPY
-	void (*wlan_iwspy_update)(os_if_t osif, u_int8_t *address, int8_t rssi); /* IWSPY support, update rssi */
+	void (*wlan_iwspy_update)(os_if_t osif, uint8_t *address, int8_t rssi); /* IWSPY support, update rssi */
 #endif
 #if ATH_SUPPORT_FLOWMAC_MODULE
     /* pause: 1-pause, 0-wake */
@@ -263,28 +264,28 @@ typedef struct _wlan_mlme_event_handler_table {
     void (*mlme_join_complete_adhoc)(os_handle_t, IEEE80211_STATUS);
     void (*mlme_auth_complete)(os_handle_t, IEEE80211_STATUS);
     void (*mlme_assoc_req)(os_handle_t, wbuf_t wbuf);
-    void (*mlme_assoc_complete)(os_handle_t, IEEE80211_STATUS, u_int16_t aid, wbuf_t wbuf);
-    void (*mlme_reassoc_complete)(os_handle_t, IEEE80211_STATUS, u_int16_t aid, wbuf_t wbuf);
-    void (*mlme_deauth_complete)(os_handle_t,u_int8_t *, IEEE80211_STATUS);
-    void (*mlme_disassoc_complete)(os_handle_t, u_int8_t *, u_int32_t, IEEE80211_STATUS);
+    void (*mlme_assoc_complete)(os_handle_t, IEEE80211_STATUS, uint16_t aid, wbuf_t wbuf);
+    void (*mlme_reassoc_complete)(os_handle_t, IEEE80211_STATUS, uint16_t aid, wbuf_t wbuf);
+    void (*mlme_deauth_complete)(os_handle_t,uint8_t *, IEEE80211_STATUS);
+    void (*mlme_disassoc_complete)(os_handle_t, uint8_t *, uint32_t, IEEE80211_STATUS);
 
     /* MLME indication handler */
-    void (*mlme_auth_indication)(os_handle_t, u_int8_t *macaddr, u_int16_t result);
-    void (*mlme_deauth_indication)(os_handle_t, u_int8_t *macaddr, u_int16_t reason_code);
-    void (*mlme_assoc_indication)(os_handle_t, u_int8_t *macaddr, u_int16_t result, wbuf_t wbuf, wbuf_t resp_wbuf);
-    void (*mlme_reassoc_indication)(os_handle_t, u_int8_t *macaddr, u_int16_t result, wbuf_t wbuf, wbuf_t resp_wbuf);
-    void (*mlme_disassoc_indication)(os_handle_t, u_int8_t *macaddr, u_int32_t reason_code);
-    void (*mlme_ibss_merge_start_indication)(os_handle_t, u_int8_t *bssid);
-    void (*mlme_ibss_merge_completion_indication)(os_handle_t, u_int8_t *bssid);
-    void (*wlan_radar_detected) (os_if_t, u_int32_t csa_delay);
+    void (*mlme_auth_indication)(os_handle_t, uint8_t *macaddr, uint16_t result);
+    void (*mlme_deauth_indication)(os_handle_t, uint8_t *macaddr, uint16_t reason_code);
+    void (*mlme_assoc_indication)(os_handle_t, uint8_t *macaddr, uint16_t result, wbuf_t wbuf, wbuf_t resp_wbuf);
+    void (*mlme_reassoc_indication)(os_handle_t, uint8_t *macaddr, uint16_t result, wbuf_t wbuf, wbuf_t resp_wbuf);
+    void (*mlme_disassoc_indication)(os_handle_t, uint8_t *macaddr, uint32_t reason_code);
+    void (*mlme_ibss_merge_start_indication)(os_handle_t, uint8_t *bssid);
+    void (*mlme_ibss_merge_completion_indication)(os_handle_t, uint8_t *bssid);
+    void (*wlan_radar_detected) (os_if_t, uint32_t csa_delay);
 } wlan_mlme_event_handler_table;
 
 typedef struct _wlan_misc_event_handler_table {
     void (*wlan_channel_change) (os_handle_t, wlan_chan_t chan);
     void (*wlan_country_changed) (os_handle_t, char *country);
-    void (*wlan_linkspeed)(os_handle_t, u_int32_t rxlinkspeed, u_int32_t txlinkspeed);
-    void (*wlan_michael_failure_indication)(os_handle_t, const u_int8_t *frm, u_int keyix);
-    void (*wlan_replay_failure_indication)(os_handle_t, const u_int8_t *frm, u_int keyix);
+    void (*wlan_linkspeed)(os_handle_t, uint32_t rxlinkspeed, uint32_t txlinkspeed);
+    void (*wlan_michael_failure_indication)(os_handle_t, const uint8_t *frm, uint32_t keyix);
+    void (*wlan_replay_failure_indication)(os_handle_t, const uint8_t *frm, uint32_t keyix);
     void (*wlan_beacon_miss_indication)(os_handle_t);
     void (*wlan_beacon_rssi_indication)(os_handle_t);
     void (*wlan_device_error_indication)(os_handle_t);
@@ -292,16 +293,16 @@ typedef struct _wlan_misc_event_handler_table {
     void (*wlan_sta_scan_entry_update)(os_handle_t, wlan_scan_entry_t, bool);
     void (*wlan_ap_stopped)(os_handle_t, ieee80211_ap_stopped_reason reason);
 #if ATH_SUPPORT_WAPI
-    void (*wlan_sta_rekey_indication)(os_handle_t, u_int8_t *macaddr);
+    void (*wlan_sta_rekey_indication)(os_handle_t, uint8_t *macaddr);
 #endif
 #if ATH_SUPPORT_IBSS_NETLINK_NOTIFICATION
-    void (*wlan_ibss_rssi_monitor) (os_handle_t, u_int8_t *macaddr, u_int32_t rssi_class);
+    void (*wlan_ibss_rssi_monitor) (os_handle_t, uint8_t *macaddr, uint32_t rssi_class);
 #endif
 #if UMAC_SUPPORT_RRM_MISC
-    void (*wlan_channel_load) (os_handle_t, u_int8_t chload);
-    void (*wlan_nonerpcnt) (os_handle_t, u_int8_t erpcnt);
-    void (*wlan_bgjoin) (os_handle_t, u_int8_t val);
-    void (*wlan_cochannelap_cnt) (os_handle_t, u_int8_t val);
+    void (*wlan_channel_load) (os_handle_t, uint8_t chload);
+    void (*wlan_nonerpcnt) (os_handle_t, uint8_t erpcnt);
+    void (*wlan_bgjoin) (os_handle_t, uint8_t val);
+    void (*wlan_cochannelap_cnt) (os_handle_t, uint8_t val);
 #endif
 #if ATH_SUPPORT_HYFI_ENHANCEMENTS 
     void (*wlan_buffull)(os_handle_t);
@@ -312,18 +313,18 @@ typedef struct _wlan_misc_event_handler_table {
 } wlan_misc_event_handler_table;
 
 typedef struct _wlan_ccx_handler_table {
-    void (*wlan_ccx_trigger_roam) (os_if_t,  u_int16_t reason);
-    void (*wlan_ccx_set_vperf) (os_if_t, u_int8_t);
-    void (*wlan_ccx_fill_tsrsie)(os_if_t, u_int8_t tid, u_int32_t rate, u_int8_t *frm, u_int8_t *len);
+    void (*wlan_ccx_trigger_roam) (os_if_t,  uint16_t reason);
+    void (*wlan_ccx_set_vperf) (os_if_t, uint8_t);
+    void (*wlan_ccx_fill_tsrsie)(os_if_t, uint8_t tid, uint32_t rate, uint8_t *frm, uint8_t *len);
     bool (*wlan_ccx_is_mfp)(os_if_t);
     bool (*wlan_ccx_validate_bss)(os_if_t, wlan_scan_entry_t, int);
-    void (*wlan_ccx_process_qos)(os_if_t, u_int8_t, u_int16_t);
-    bool (*wlan_ccx_check_msdu_life)(os_if_t, u_int16_t);
+    void (*wlan_ccx_process_qos)(os_if_t, uint8_t, uint16_t);
+    bool (*wlan_ccx_check_msdu_life)(os_if_t, uint16_t);
     void (*wlan_ccx_vperf_pause)(os_if_t, bool);
 } wlan_ccx_handler_table;
 
 /* action frame complete callback*/
-typedef void (*wlan_action_frame_complete_handler)(wlan_if_t vaphandle, wbuf_t wbuf, void *arg, u_int8_t *dst_addr, u_int8_t *src_addr, u_int8_t *bssid, ieee80211_xmit_status *ts);
+typedef void (*wlan_action_frame_complete_handler)(wlan_if_t vaphandle, wbuf_t wbuf, void *arg, uint8_t *dst_addr, uint8_t *src_addr, uint8_t *bssid, ieee80211_xmit_status *ts);
 
 /* 
  *                        
@@ -384,8 +385,8 @@ typedef enum ieee80211_scan_priority_t {
     IEEE80211_SCAN_PRIORITY_COUNT   /* number of priorities supported */
 } IEEE80211_SCAN_PRIORITY;
 
-typedef u_int16_t    IEEE80211_SCAN_REQUESTOR;
-typedef u_int32_t    IEEE80211_SCAN_ID;
+typedef uint16_t    IEEE80211_SCAN_REQUESTOR;
+typedef uint32_t    IEEE80211_SCAN_ID;
 
 #define IEEE80211_SCAN_ID_NONE                    0
 
@@ -468,20 +469,20 @@ typedef struct _ieee80211_scan_params {
     bool                                restricted_scan;        /* Perform restricted scan */
     bool                                chan_list_allocated;
     IEEE80211_SCAN_PRIORITY             p2p_scan_priority;      /* indicates the scan priority if this is a P2P-related scan */
-    u_int32_t                           *chan_list;             /* array of ieee channels (or) frequencies to scan */
+    uint32_t                           *chan_list;             /* array of ieee channels (or) frequencies to scan */
     int                                 num_ssid;               /* number of desired ssids */
     ieee80211_ssid                      ssid_list[IEEE80211_SCAN_PARAMS_MAX_SSID];
     int                                 num_bssid;              /* number of desired bssids */
-    u_int8_t                            bssid_list[IEEE80211_SCAN_PARAMS_MAX_BSSID][IEEE80211_ADDR_LEN];
+    uint8_t                            bssid_list[IEEE80211_SCAN_PARAMS_MAX_BSSID][IEEE80211_ADDR_LEN];
     struct ieee80211_node               *bss_node;              /* BSS node */
     int                                 ie_len;                 /* length of the ie data to be added to probe req */ 
-    u_int8_t                            *ie_data;               /* pointer to ie data */
+    uint8_t                            *ie_data;               /* pointer to ie data */
     ieee80211_scan_termination_check    check_termination_function;  /* function checking for termination condition */
     void                                *check_termination_context;  /* context passed to function above */
 } ieee80211_scan_params;
 
 /* Data types used to specify scan priorities */
-typedef u_int32_t IEEE80211_PRIORITY_MAPPING[IEEE80211_SCAN_PRIORITY_COUNT];
+typedef uint32_t IEEE80211_PRIORITY_MAPPING[IEEE80211_SCAN_PRIORITY_COUNT];
 
 /**************************************
  * Called before attempting to roam.  Modifies the rssiAdder of a BSS
@@ -664,7 +665,7 @@ typedef struct _ieee80211_scan_request_info {
     ieee80211_scan_request_status    scheduling_status;
     ieee80211_scan_params            params;
     systime_t                        request_timestamp;
-    u_int32_t                        maximum_duration;
+    uint32_t                        maximum_duration;
 } ieee80211_scan_request_info;
 
 #endif /* EXTERNAL_USE_ONLY */
@@ -678,7 +679,7 @@ typedef void (*ieee80211_acs_scantimer_handler) (void *arg);
 
 typedef struct _wlan_rssi_info {
     int8_t      avg_rssi;     /* average rssi */
-    u_int8_t    valid_mask;   /* bitmap of valid elements in rssi_ctrl/ext array */
+    uint8_t    valid_mask;   /* bitmap of valid elements in rssi_ctrl/ext array */
     int8_t      rssi_ctrl[MAX_CHAINS];
     int8_t      rssi_ext[MAX_CHAINS];
 } wlan_rssi_info;
@@ -697,10 +698,10 @@ typedef enum _ieee80211_rate_type {
 
 typedef struct _ieee80211_rate_info {
     ieee80211_rate_type    type;
-    u_int32_t              rate;     /* average rate in kbps */
-    u_int32_t              lastrate; /* last packet rate in kbps */
-    u_int8_t               mcs;      /* mcs index . is valid if rate type is MCS20 or MCS40 */
-    u_int8_t               maxrate_per_client;
+    uint32_t              rate;     /* average rate in kbps */
+    uint32_t              lastrate; /* last packet rate in kbps */
+    uint8_t               mcs;      /* mcs index . is valid if rate type is MCS20 or MCS40 */
+    uint8_t               maxrate_per_client;
 } ieee80211_rate_info;
 
 typedef enum _ieee80211_node_param_type {
@@ -715,81 +716,81 @@ typedef enum _ieee80211_node_param_type {
  * Per/node (station) statistics available when operating as an AP.
  */
 struct ieee80211_nodestats {
-    u_int32_t    ns_rx_data;             /* rx data frames */
-    u_int32_t    ns_rx_mgmt;             /* rx management frames */
-    u_int32_t    ns_rx_ctrl;             /* rx control frames */
-    u_int32_t    ns_rx_ucast;            /* rx unicast frames */
-    u_int32_t    ns_rx_mcast;            /* rx multi/broadcast frames */
-    u_int64_t    ns_rx_bytes;            /* rx data count (bytes) */
-    u_int64_t    ns_rx_beacons;          /* rx beacon frames */
-    u_int32_t    ns_rx_proberesp;        /* rx probe response frames */
+    uint32_t    ns_rx_data;             /* rx data frames */
+    uint32_t    ns_rx_mgmt;             /* rx management frames */
+    uint32_t    ns_rx_ctrl;             /* rx control frames */
+    uint32_t    ns_rx_ucast;            /* rx unicast frames */
+    uint32_t    ns_rx_mcast;            /* rx multi/broadcast frames */
+    uint64_t    ns_rx_bytes;            /* rx data count (bytes) */
+    uint64_t    ns_rx_beacons;          /* rx beacon frames */
+    uint32_t    ns_rx_proberesp;        /* rx probe response frames */
 
-    u_int32_t    ns_rx_dup;              /* rx discard 'cuz dup */
-    u_int32_t    ns_rx_noprivacy;        /* rx w/ wep but privacy off */
-    u_int32_t    ns_rx_wepfail;          /* rx wep processing failed */
-    u_int32_t    ns_rx_demicfail;        /* rx demic failed */
+    uint32_t    ns_rx_dup;              /* rx discard 'cuz dup */
+    uint32_t    ns_rx_noprivacy;        /* rx w/ wep but privacy off */
+    uint32_t    ns_rx_wepfail;          /* rx wep processing failed */
+    uint32_t    ns_rx_demicfail;        /* rx demic failed */
        
     /* We log MIC and decryption failures against Transmitter STA stats.
        Though the frames may not actually be sent by STAs corresponding
        to TA, the stats are still valuable for some customers as a sort
        of rough indication.
        Also note that the mapping from TA to STA may fail sometimes. */
-    u_int32_t    ns_rx_tkipmic;          /* rx TKIP MIC failure */
-    u_int32_t    ns_rx_ccmpmic;          /* rx CCMP MIC failure */
-    u_int32_t    ns_rx_wpimic;           /* rx WAPI MIC failure */
-    u_int32_t    ns_rx_tkipicv;          /* rx ICV check failed (TKIP) */
-    u_int32_t    ns_rx_decap;            /* rx decapsulation failed */
-    u_int32_t    ns_rx_defrag;           /* rx defragmentation failed */
-    u_int32_t    ns_rx_disassoc;         /* rx disassociation */
-    u_int32_t    ns_rx_deauth;           /* rx deauthentication */
-    u_int32_t    ns_rx_action;           /* rx action */
-    u_int32_t    ns_rx_decryptcrc;       /* rx decrypt failed on crc */
-    u_int32_t    ns_rx_unauth;           /* rx on unauthorized port */
-    u_int32_t    ns_rx_unencrypted;      /* rx unecrypted w/ privacy */
+    uint32_t    ns_rx_tkipmic;          /* rx TKIP MIC failure */
+    uint32_t    ns_rx_ccmpmic;          /* rx CCMP MIC failure */
+    uint32_t    ns_rx_wpimic;           /* rx WAPI MIC failure */
+    uint32_t    ns_rx_tkipicv;          /* rx ICV check failed (TKIP) */
+    uint32_t    ns_rx_decap;            /* rx decapsulation failed */
+    uint32_t    ns_rx_defrag;           /* rx defragmentation failed */
+    uint32_t    ns_rx_disassoc;         /* rx disassociation */
+    uint32_t    ns_rx_deauth;           /* rx deauthentication */
+    uint32_t    ns_rx_action;           /* rx action */
+    uint32_t    ns_rx_decryptcrc;       /* rx decrypt failed on crc */
+    uint32_t    ns_rx_unauth;           /* rx on unauthorized port */
+    uint32_t    ns_rx_unencrypted;      /* rx unecrypted w/ privacy */
 
-    u_int32_t    ns_tx_data;             /* tx data frames */
-    u_int32_t    ns_tx_data_success;     /* tx data frames successfully
+    uint32_t    ns_tx_data;             /* tx data frames */
+    uint32_t    ns_tx_data_success;     /* tx data frames successfully
                                             transmitted (unicast only) */
-    u_int32_t    ns_tx_mgmt;             /* tx management frames */
-    u_int32_t    ns_tx_ucast;            /* tx unicast frames */
-    u_int32_t    ns_tx_mcast;            /* tx multi/broadcast frames */
-    u_int64_t    ns_tx_bytes;            /* tx data count (bytes) */
-    u_int64_t    ns_tx_bytes_success;    /* tx success data count - unicast only
+    uint32_t    ns_tx_mgmt;             /* tx management frames */
+    uint32_t    ns_tx_ucast;            /* tx unicast frames */
+    uint32_t    ns_tx_mcast;            /* tx multi/broadcast frames */
+    uint64_t    ns_tx_bytes;            /* tx data count (bytes) */
+    uint64_t    ns_tx_bytes_success;    /* tx success data count - unicast only
                                             (bytes) */
-    u_int32_t    ns_tx_probereq;         /* tx probe request frames */
-    u_int32_t    ns_tx_uapsd;            /* tx on uapsd queue */
-    u_int32_t    ns_tx_discard;          /* tx dropped by NIC */
-    u_int32_t    ns_is_tx_not_ok;        /* tx not ok */
-    u_int32_t    ns_tx_novlantag;        /* tx discard 'cuz no tag */
-    u_int32_t    ns_tx_vlanmismatch;     /* tx discard 'cuz bad tag */
+    uint32_t    ns_tx_probereq;         /* tx probe request frames */
+    uint32_t    ns_tx_uapsd;            /* tx on uapsd queue */
+    uint32_t    ns_tx_discard;          /* tx dropped by NIC */
+    uint32_t    ns_is_tx_not_ok;        /* tx not ok */
+    uint32_t    ns_tx_novlantag;        /* tx discard 'cuz no tag */
+    uint32_t    ns_tx_vlanmismatch;     /* tx discard 'cuz bad tag */
 
-    u_int32_t    ns_tx_eosplost;         /* uapsd EOSP retried out */
+    uint32_t    ns_tx_eosplost;         /* uapsd EOSP retried out */
 
-    u_int32_t    ns_ps_discard;          /* ps discard 'cuz of age */
+    uint32_t    ns_ps_discard;          /* ps discard 'cuz of age */
 
-    u_int32_t    ns_uapsd_triggers;      /* uapsd triggers */
-    u_int32_t    ns_uapsd_duptriggers;    /* uapsd duplicate triggers */
-    u_int32_t    ns_uapsd_ignoretriggers; /* uapsd duplicate triggers */
-    u_int32_t    ns_uapsd_active;         /* uapsd duplicate triggers */
-    u_int32_t    ns_uapsd_triggerenabled; /* uapsd duplicate triggers */
-    u_int32_t    ns_last_tx_rate;
-    u_int32_t    ns_last_rx_rate;
-    u_int32_t    ns_is_tx_nobuf;
+    uint32_t    ns_uapsd_triggers;      /* uapsd triggers */
+    uint32_t    ns_uapsd_duptriggers;    /* uapsd duplicate triggers */
+    uint32_t    ns_uapsd_ignoretriggers; /* uapsd duplicate triggers */
+    uint32_t    ns_uapsd_active;         /* uapsd duplicate triggers */
+    uint32_t    ns_uapsd_triggerenabled; /* uapsd duplicate triggers */
+    uint32_t    ns_last_tx_rate;
+    uint32_t    ns_last_rx_rate;
+    uint32_t    ns_is_tx_nobuf;
 
     /* MIB-related state */
-    u_int32_t    ns_tx_assoc;            /* [re]associations */
-    u_int32_t    ns_tx_assoc_fail;       /* [re]association failures */
-    u_int32_t    ns_tx_auth;             /* [re]authentications */
-    u_int32_t    ns_tx_auth_fail;        /* [re]authentication failures*/
-    u_int32_t    ns_tx_deauth;           /* deauthentications */
-    u_int32_t    ns_tx_deauth_code;      /* last deauth reason */
-    u_int32_t    ns_tx_disassoc;         /* disassociations */
-    u_int32_t    ns_tx_disassoc_code;    /* last disassociation reason */
-    u_int32_t    ns_psq_drops;           /* power save queue drops */
+    uint32_t    ns_tx_assoc;            /* [re]associations */
+    uint32_t    ns_tx_assoc_fail;       /* [re]association failures */
+    uint32_t    ns_tx_auth;             /* [re]authentications */
+    uint32_t    ns_tx_auth_fail;        /* [re]authentication failures*/
+    uint32_t    ns_tx_deauth;           /* deauthentications */
+    uint32_t    ns_tx_deauth_code;      /* last deauth reason */
+    uint32_t    ns_tx_disassoc;         /* disassociations */
+    uint32_t    ns_tx_disassoc_code;    /* last disassociation reason */
+    uint32_t    ns_psq_drops;           /* power save queue drops */
     
     /* IQUE-HBR related state */
 #ifdef ATH_SUPPORT_IQUE
-	u_int32_t	ns_tx_dropblock;	/* tx discard 'cuz headline block */
+	uint32_t	ns_tx_dropblock;	/* tx discard 'cuz headline block */
 #endif
 };
 
@@ -1198,7 +1199,7 @@ typedef enum _ieee80211_privacy_filter_packet_type {
 } ieee80211_privacy_filter_packet_type ;
 
 typedef struct _ieee80211_privacy_excemption_filter {
-    u_int16_t                               ether_type; /* type of ethernet to apply this filter, in host byte order*/
+    uint16_t                               ether_type; /* type of ethernet to apply this filter, in host byte order*/
     ieee80211_privacy_filter                filter_type; 
     ieee80211_privacy_filter_packet_type    packet_type;
 } ieee80211_privacy_exemption;
@@ -1250,22 +1251,22 @@ typedef enum _ieee80211_key_direction {
     IEEE80211_KEY_DIR_BOTH
 } ieee80211_key_direction;
 
-#define IEEE80211_KEYIX_NONE    ((u_int16_t) -1)
+#define IEEE80211_KEYIX_NONE    ((uint16_t) -1)
 
 typedef struct _ieee80211_keyval {
     ieee80211_cipher_type   keytype;
     ieee80211_key_direction keydir;
-    u_int                   persistent:1,   /* persistent key */
+    uint32_t                   persistent:1,   /* persistent key */
                             mfp:1;          /* management frame protection */
-    u_int16_t               keylen;         /* length of the key data fields */
-    u_int8_t                *macaddr;       /* mac address of length IEEE80211_ADDR_LEN . all bytes are 0xff for multicast key */
-    u_int64_t               keyrsc;
-    u_int64_t               keytsc;
-    u_int16_t               txmic_offset;   /* TKIP/SMS4 only: offset to tx mic key */
-    u_int16_t               rxmic_offset;   /* TKIP/SMS4 only: offset to rx mic key */
-    u_int8_t                *keydata;
+    uint16_t               keylen;         /* length of the key data fields */
+    uint8_t                *macaddr;       /* mac address of length IEEE80211_ADDR_LEN . all bytes are 0xff for multicast key */
+    uint64_t               keyrsc;
+    uint64_t               keytsc;
+    uint16_t               txmic_offset;   /* TKIP/SMS4 only: offset to tx mic key */
+    uint16_t               rxmic_offset;   /* TKIP/SMS4 only: offset to rx mic key */
+    uint8_t                *keydata;
 #if ATH_SUPPORT_WAPI
-    u_int8_t                key_used;       /*index for WAPI rekey labeling*/
+    uint8_t                key_used;       /*index for WAPI rekey labeling*/
 #endif    
 } ieee80211_keyval;
 
@@ -1281,8 +1282,8 @@ typedef enum _ieee80211_rsn_param {
 #define IEEE80211_PMKID_LEN     16
 
 typedef struct _ieee80211_pmkid_entry {
-    u_int8_t    bssid[IEEE80211_ADDR_LEN];
-    u_int8_t    pmkid[IEEE80211_PMKID_LEN];
+    uint8_t    bssid[IEEE80211_ADDR_LEN];
+    uint8_t    pmkid[IEEE80211_PMKID_LEN];
 } ieee80211_pmkid_entry;
 
 typedef enum _wlan_wme_param {
@@ -1320,7 +1321,7 @@ typedef enum _ieee80211_reset_type {
 typedef struct _ieee80211_reset_request {
     ieee80211_reset_type    type;
 
-    u_int                   reset_hw:1,         /* reset the actual H/W */
+    uint32_t                   reset_hw:1,         /* reset the actual H/W */
                             /*
                              * The following fields are only valid for DOT11 reset, i.e.,
                              * IEEE80211_RESET_TYPE_DOT11_INTF
@@ -1329,7 +1330,7 @@ typedef struct _ieee80211_reset_request {
                             reset_mac:1,        /* reset MAC */
                             set_default_mib:1,  /* set default MIB variables */
                             no_flush:1;
-    u_int8_t                macaddr[IEEE80211_ADDR_LEN];
+    uint8_t                macaddr[IEEE80211_ADDR_LEN];
     enum ieee80211_phymode  phy_mode;
 } ieee80211_reset_request;
 
@@ -1415,174 +1416,174 @@ enum {
 /*
  * WAPI commands to authenticator
  */
-#define WAPI_WAI_REQUEST            (u_int16_t)0x00F1
-#define WAPI_UNICAST_REKEY          (u_int16_t)0x00F2
-#define WAPI_STA_AGING              (u_int16_t)0x00F3
-#define WAPI_MULTI_REKEY            (u_int16_t)0x00F4
-#define WAPI_STA_STATS              (u_int16_t)0x00F5
+#define WAPI_WAI_REQUEST            (uint16_t)0x00F1
+#define WAPI_UNICAST_REKEY          (uint16_t)0x00F2
+#define WAPI_STA_AGING              (uint16_t)0x00F3
+#define WAPI_MULTI_REKEY            (uint16_t)0x00F4
+#define WAPI_STA_STATS              (uint16_t)0x00F5
 
 /*
  * IEEE80211 PHY Statistics.
  */
 struct ieee80211_phy_stats {
-    u_int64_t   ips_tx_packets;      /* frames successfully transmitted */
-    u_int64_t   ips_tx_multicast;    /* multicast/broadcast frames successfully transmitted */
-    u_int64_t   ips_tx_fragments;    /* fragments successfully transmitted */
-    u_int64_t   ips_tx_xretries;     /* frames that are xretried. NB: not number of retries */
-    u_int64_t   ips_tx_retries;      /* frames transmitted after retries. NB: not number of retries */
-    u_int64_t   ips_tx_multiretries; /* frames transmitted after more than one retry. */
-    u_int64_t   ips_tx_timeout;      /* frames that expire the dot11MaxTransmitMSDULifetime */
-    u_int64_t   ips_rx_packets;      /* frames successfully received */
-    u_int64_t   ips_rx_multicast;    /* multicast/broadcast frames successfully received */
-    u_int64_t   ips_rx_fragments;    /* fragments successfully received */
-    u_int64_t   ips_rx_timeout;      /* frmaes that expired the dot11MaxReceiveLifetime */
-    u_int64_t   ips_rx_dup;          /* duplicated fragments */
-    u_int64_t   ips_rx_mdup;         /* multiple duplicated fragments */
-    u_int64_t   ips_rx_promiscuous;  /* frames that are received only because promiscuous filter is on */
-    u_int64_t   ips_rx_promiscuous_fragments; /* fragments that are received only because promiscuous filter is on */
-    u_int64_t   ips_tx_rts;          /* RTS success count */
-    u_int64_t   ips_tx_shortretry;   /* tx on-chip retries (short). RTSFailCnt */
-    u_int64_t   ips_tx_longretry;    /* tx on-chip retries (long). DataFailCnt */
-    u_int64_t   ips_rx_crcerr;       /* rx failed 'cuz of bad CRC */
-    u_int64_t   ips_rx_fifoerr;      /* rx failed 'cuz of FIFO overrun */
-    u_int64_t   ips_rx_decrypterr;   /* rx decryption error */
+    uint64_t   ips_tx_packets;      /* frames successfully transmitted */
+    uint64_t   ips_tx_multicast;    /* multicast/broadcast frames successfully transmitted */
+    uint64_t   ips_tx_fragments;    /* fragments successfully transmitted */
+    uint64_t   ips_tx_xretries;     /* frames that are xretried. NB: not number of retries */
+    uint64_t   ips_tx_retries;      /* frames transmitted after retries. NB: not number of retries */
+    uint64_t   ips_tx_multiretries; /* frames transmitted after more than one retry. */
+    uint64_t   ips_tx_timeout;      /* frames that expire the dot11MaxTransmitMSDULifetime */
+    uint64_t   ips_rx_packets;      /* frames successfully received */
+    uint64_t   ips_rx_multicast;    /* multicast/broadcast frames successfully received */
+    uint64_t   ips_rx_fragments;    /* fragments successfully received */
+    uint64_t   ips_rx_timeout;      /* frmaes that expired the dot11MaxReceiveLifetime */
+    uint64_t   ips_rx_dup;          /* duplicated fragments */
+    uint64_t   ips_rx_mdup;         /* multiple duplicated fragments */
+    uint64_t   ips_rx_promiscuous;  /* frames that are received only because promiscuous filter is on */
+    uint64_t   ips_rx_promiscuous_fragments; /* fragments that are received only because promiscuous filter is on */
+    uint64_t   ips_tx_rts;          /* RTS success count */
+    uint64_t   ips_tx_shortretry;   /* tx on-chip retries (short). RTSFailCnt */
+    uint64_t   ips_tx_longretry;    /* tx on-chip retries (long). DataFailCnt */
+    uint64_t   ips_rx_crcerr;       /* rx failed 'cuz of bad CRC */
+    uint64_t   ips_rx_fifoerr;      /* rx failed 'cuz of FIFO overrun */
+    uint64_t   ips_rx_decrypterr;   /* rx decryption error */
 };
 
 struct ieee80211_chan_stats {
-    u_int32_t   chan_clr_cnt;
-    u_int32_t   cycle_cnt;
-    u_int32_t   phy_err_cnt;
+    uint32_t   chan_clr_cnt;
+    uint32_t   cycle_cnt;
+    uint32_t   phy_err_cnt;
 };
 
 struct ieee80211_mac_stats {
-    u_int64_t   ims_tx_packets; /* frames successfully transmitted */
-    u_int64_t   ims_rx_packets; /* frames successfully received */
-    u_int64_t   ims_tx_bytes;	/* bytes successfully transmitted */
-    u_int64_t	ims_rx_bytes;   /* bytes successfully received */
+    uint64_t   ims_tx_packets; /* frames successfully transmitted */
+    uint64_t   ims_rx_packets; /* frames successfully received */
+    uint64_t   ims_tx_bytes;	/* bytes successfully transmitted */
+    uint64_t	ims_rx_bytes;   /* bytes successfully received */
 
     /* TODO: For the byte counts below, we need to handle some scenarios
        such as encryption related decaps, etc */
-    u_int64_t   ims_tx_data_packets;/* data frames successfully transmitted */
-    u_int64_t   ims_rx_data_packets;/* data frames successfully received */
-    u_int64_t   ims_tx_bcast_data_packets;/* bcast frames successfully transmitted */
-    u_int64_t   ims_rx_bcast_data_packets;/* bcast frames successfully received */
-    u_int64_t   ims_tx_data_bytes;  /* data bytes successfully transmitted,
+    uint64_t   ims_tx_data_packets;/* data frames successfully transmitted */
+    uint64_t   ims_rx_data_packets;/* data frames successfully received */
+    uint64_t   ims_tx_bcast_data_packets;/* bcast frames successfully transmitted */
+    uint64_t   ims_rx_bcast_data_packets;/* bcast frames successfully received */
+    uint64_t   ims_tx_data_bytes;  /* data bytes successfully transmitted,
                                        inclusive of FCS. */
-    u_int64_t   ims_rx_data_bytes;  /* data bytes successfully received,
+    uint64_t   ims_rx_data_bytes;  /* data bytes successfully received,
                                        inclusive of FCS. */
 
-    u_int64_t   ims_tx_datapyld_bytes;  /* data payload bytes successfully
+    uint64_t   ims_tx_datapyld_bytes;  /* data payload bytes successfully
                                            transmitted */
-    u_int64_t   ims_rx_datapyld_bytes;  /* data payload successfully 
+    uint64_t   ims_rx_datapyld_bytes;  /* data payload successfully 
                                            received */
 
     /* Decryption errors */
-    u_int64_t   ims_rx_unencrypted; /* rx w/o wep and privacy on */
-    u_int64_t   ims_rx_badkeyid;    /* rx w/ incorrect keyid */
-    u_int64_t   ims_rx_decryptok;   /* rx decrypt okay */
-    u_int64_t   ims_rx_decryptcrc;  /* rx decrypt failed on crc */
-    u_int64_t   ims_rx_wepfail;     /* rx wep processing failed */
-    u_int64_t   ims_rx_tkipreplay;  /* rx seq# violation (TKIP) */
-    u_int64_t   ims_rx_tkipformat;  /* rx format bad (TKIP) */
-    u_int64_t   ims_rx_tkipmic;     /* rx MIC check failed (TKIP) */
-    u_int64_t   ims_rx_tkipicv;     /* rx ICV check failed (TKIP) */
-    u_int64_t   ims_rx_ccmpreplay;  /* rx seq# violation (CCMP) */
-    u_int64_t   ims_rx_ccmpformat;  /* rx format bad (CCMP) */
-    u_int64_t   ims_rx_ccmpmic;     /* rx MIC check failed (CCMP) */
-    u_int64_t   ims_rx_fcserr;     /* rx MIC check failed (CCMP) */
+    uint64_t   ims_rx_unencrypted; /* rx w/o wep and privacy on */
+    uint64_t   ims_rx_badkeyid;    /* rx w/ incorrect keyid */
+    uint64_t   ims_rx_decryptok;   /* rx decrypt okay */
+    uint64_t   ims_rx_decryptcrc;  /* rx decrypt failed on crc */
+    uint64_t   ims_rx_wepfail;     /* rx wep processing failed */
+    uint64_t   ims_rx_tkipreplay;  /* rx seq# violation (TKIP) */
+    uint64_t   ims_rx_tkipformat;  /* rx format bad (TKIP) */
+    uint64_t   ims_rx_tkipmic;     /* rx MIC check failed (TKIP) */
+    uint64_t   ims_rx_tkipicv;     /* rx ICV check failed (TKIP) */
+    uint64_t   ims_rx_ccmpreplay;  /* rx seq# violation (CCMP) */
+    uint64_t   ims_rx_ccmpformat;  /* rx format bad (CCMP) */
+    uint64_t   ims_rx_ccmpmic;     /* rx MIC check failed (CCMP) */
+    uint64_t   ims_rx_fcserr;     /* rx MIC check failed (CCMP) */
 /*this file can be included by applications as 80211stats that has no such MACRO definition*/
 //#if ATH_SUPPORT_WAPI 
-    u_int64_t   ims_rx_wpireplay;  /* rx seq# violation (WPI) */
-    u_int64_t   ims_rx_wpimic;     /* rx MIC check failed (WPI) */
+    uint64_t   ims_rx_wpireplay;  /* rx seq# violation (WPI) */
+    uint64_t   ims_rx_wpimic;     /* rx MIC check failed (WPI) */
 //#endif
     /* Other Tx/Rx errors */
-    u_int64_t   ims_tx_discard;     /* tx dropped by NIC */
-    u_int64_t   ims_rx_discard;     /* rx dropped by NIC */
+    uint64_t   ims_tx_discard;     /* tx dropped by NIC */
+    uint64_t   ims_rx_discard;     /* rx dropped by NIC */
 
-    u_int64_t   ims_rx_countermeasure; /* rx TKIP countermeasure activation count */
-    u_int64_t   ims_last_tx_rate;
-    u_int64_t   ims_last_tx_rate_mcs;
+    uint64_t   ims_rx_countermeasure; /* rx TKIP countermeasure activation count */
+    uint64_t   ims_last_tx_rate;
+    uint64_t   ims_last_tx_rate_mcs;
 };
 
 /*
  * Summary statistics.
  */
 struct ieee80211_stats {
-    u_int32_t   is_rx_badversion;          /* rx frame with bad version */
-    u_int32_t   is_rx_tooshort;            /* rx frame too short */
-    u_int32_t   is_rx_wrongbss;            /* rx from wrong bssid */
-    u_int32_t   is_rx_wrongdir;            /* rx w/ wrong direction */
-    u_int32_t   is_rx_mcastecho;           /* rx discard 'cuz mcast echo */
-    u_int32_t   is_rx_notassoc;            /* rx discard 'cuz sta !assoc */
-    u_int32_t   is_rx_noprivacy;           /* rx w/ wep but privacy off */
-    u_int32_t   is_rx_decap;               /* rx decapsulation failed */
-    u_int32_t   is_rx_mgtdiscard;          /* rx discard mgt frames */
-    u_int32_t   is_rx_ctl;                 /* rx discard ctrl frames */
-    u_int32_t   is_rx_beacon;              /* rx beacon frames */
-    u_int32_t   is_rx_rstoobig;            /* rx rate set truncated */
-    u_int32_t   is_rx_elem_missing;        /* rx required element missing*/
-    u_int32_t   is_rx_elem_toobig;         /* rx element too big */
-    u_int32_t   is_rx_elem_toosmall;       /* rx element too small */
-    u_int32_t   is_rx_elem_unknown;        /* rx element unknown */
-    u_int32_t   is_rx_badchan;             /* rx frame w/ invalid chan */
-    u_int32_t   is_rx_chanmismatch;        /* rx frame chan mismatch */
-    u_int32_t   is_rx_nodealloc;           /* rx frame dropped */
-    u_int32_t   is_rx_ssidmismatch;        /* rx frame ssid mismatch  */
-    u_int32_t   is_rx_auth_unsupported;    /* rx w/ unsupported auth alg */
-    u_int32_t   is_rx_auth_fail;           /* rx sta auth failure */
-    u_int32_t   is_rx_auth_countermeasures;/* rx auth discard 'cuz CM */
-    u_int32_t   is_rx_assoc_bss;           /* rx assoc from wrong bssid */
-    u_int32_t   is_rx_assoc_notauth;       /* rx assoc w/o auth */
-    u_int32_t   is_rx_assoc_capmismatch;   /* rx assoc w/ cap mismatch */
-    u_int32_t   is_rx_assoc_norate;        /* rx assoc w/ no rate match */
-    u_int32_t   is_rx_assoc_badwpaie;      /* rx assoc w/ bad WPA IE */
-    u_int32_t   is_rx_deauth;              /* rx deauthentication */
-    u_int32_t   is_rx_disassoc;            /* rx disassociation */
-    u_int32_t   is_rx_action;              /* rx action mgt */
-    u_int32_t   is_rx_badsubtype;          /* rx frame w/ unknown subtype*/
-    u_int32_t   is_rx_nobuf;               /* rx failed for lack of buf */
-    u_int32_t   is_rx_ahdemo_mgt;          /* rx discard ahdemo mgt frame*/
-    u_int32_t   is_rx_bad_auth;            /* rx bad auth request */
-    u_int32_t   is_rx_unauth;              /* rx on unauthorized port */
-    u_int32_t   is_rx_badcipher;           /* rx failed 'cuz key type */
-    u_int32_t   is_tx_nodefkey;            /* tx failed 'cuz no defkey */
-    u_int32_t   is_tx_noheadroom;          /* tx failed 'cuz no space */
-    u_int32_t   is_rx_nocipherctx;         /* rx failed 'cuz key !setup */
-    u_int32_t   is_rx_acl;                 /* rx discard 'cuz acl policy */
-    u_int32_t   is_rx_ffcnt;               /* rx fast frames */
-    u_int32_t   is_rx_badathtnl;           /* driver key alloc failed */
-    u_int32_t   is_rx_nowds;               /* 4-addr packets received with no wds enabled */
-    u_int32_t   is_tx_nobuf;               /* tx failed for lack of buf */
-    u_int32_t   is_tx_nonode;              /* tx failed for no node */
-    u_int32_t   is_tx_unknownmgt;          /* tx of unknown mgt frame */
-    u_int32_t   is_tx_badcipher;           /* tx failed 'cuz key type */
-    u_int32_t   is_tx_ffokcnt;             /* tx fast frames sent success */
-    u_int32_t   is_tx_fferrcnt;            /* tx fast frames sent success */
-    u_int32_t   is_tx_not_ok;            /* tx ok not set in desc */
-    u_int32_t   is_scan_active;            /* active scans started */
-    u_int32_t   is_scan_passive;           /* passive scans started */
-    u_int32_t   is_node_timeout;           /* nodes timed out inactivity */
-    u_int32_t   is_crypto_nomem;           /* no memory for crypto ctx */
-    u_int32_t   is_crypto_tkip;            /* tkip crypto done in s/w */
-    u_int32_t   is_crypto_tkipenmic;       /* tkip en-MIC done in s/w */
-    u_int32_t   is_crypto_tkipdemic;       /* tkip de-MIC done in s/w */
-    u_int32_t   is_crypto_tkipcm;          /* tkip counter measures */
-    u_int32_t   is_crypto_ccmp;            /* ccmp crypto done in s/w */
-    u_int32_t   is_crypto_wep;             /* wep crypto done in s/w */
-    u_int32_t   is_crypto_setkey_cipher;   /* cipher rejected key */
-    u_int32_t   is_crypto_setkey_nokey;    /* no key index for setkey */
-    u_int32_t   is_crypto_delkey;          /* driver key delete failed */
-    u_int32_t   is_crypto_badcipher;       /* unknown cipher */
-    u_int32_t   is_crypto_nocipher;        /* cipher not available */
-    u_int32_t   is_crypto_attachfail;      /* cipher attach failed */
-    u_int32_t   is_crypto_swfallback;      /* cipher fallback to s/w */
-    u_int32_t   is_crypto_keyfail;         /* driver key alloc failed */
-    u_int32_t   is_crypto_enmicfail;       /* en-MIC failed */
-    u_int32_t   is_ibss_capmismatch;       /* merge failed-cap mismatch */
-    u_int32_t   is_ibss_norate;            /* merge failed-rate mismatch */
-    u_int32_t   is_ps_unassoc;             /* ps-poll for unassoc. sta */
-    u_int32_t   is_ps_badaid;              /* ps-poll w/ incorrect aid */
-    u_int32_t   is_ps_qempty;              /* ps-poll w/ nothing to send */
+    uint32_t   is_rx_badversion;          /* rx frame with bad version */
+    uint32_t   is_rx_tooshort;            /* rx frame too short */
+    uint32_t   is_rx_wrongbss;            /* rx from wrong bssid */
+    uint32_t   is_rx_wrongdir;            /* rx w/ wrong direction */
+    uint32_t   is_rx_mcastecho;           /* rx discard 'cuz mcast echo */
+    uint32_t   is_rx_notassoc;            /* rx discard 'cuz sta !assoc */
+    uint32_t   is_rx_noprivacy;           /* rx w/ wep but privacy off */
+    uint32_t   is_rx_decap;               /* rx decapsulation failed */
+    uint32_t   is_rx_mgtdiscard;          /* rx discard mgt frames */
+    uint32_t   is_rx_ctl;                 /* rx discard ctrl frames */
+    uint32_t   is_rx_beacon;              /* rx beacon frames */
+    uint32_t   is_rx_rstoobig;            /* rx rate set truncated */
+    uint32_t   is_rx_elem_missing;        /* rx required element missing*/
+    uint32_t   is_rx_elem_toobig;         /* rx element too big */
+    uint32_t   is_rx_elem_toosmall;       /* rx element too small */
+    uint32_t   is_rx_elem_unknown;        /* rx element unknown */
+    uint32_t   is_rx_badchan;             /* rx frame w/ invalid chan */
+    uint32_t   is_rx_chanmismatch;        /* rx frame chan mismatch */
+    uint32_t   is_rx_nodealloc;           /* rx frame dropped */
+    uint32_t   is_rx_ssidmismatch;        /* rx frame ssid mismatch  */
+    uint32_t   is_rx_auth_unsupported;    /* rx w/ unsupported auth alg */
+    uint32_t   is_rx_auth_fail;           /* rx sta auth failure */
+    uint32_t   is_rx_auth_countermeasures;/* rx auth discard 'cuz CM */
+    uint32_t   is_rx_assoc_bss;           /* rx assoc from wrong bssid */
+    uint32_t   is_rx_assoc_notauth;       /* rx assoc w/o auth */
+    uint32_t   is_rx_assoc_capmismatch;   /* rx assoc w/ cap mismatch */
+    uint32_t   is_rx_assoc_norate;        /* rx assoc w/ no rate match */
+    uint32_t   is_rx_assoc_badwpaie;      /* rx assoc w/ bad WPA IE */
+    uint32_t   is_rx_deauth;              /* rx deauthentication */
+    uint32_t   is_rx_disassoc;            /* rx disassociation */
+    uint32_t   is_rx_action;              /* rx action mgt */
+    uint32_t   is_rx_badsubtype;          /* rx frame w/ unknown subtype*/
+    uint32_t   is_rx_nobuf;               /* rx failed for lack of buf */
+    uint32_t   is_rx_ahdemo_mgt;          /* rx discard ahdemo mgt frame*/
+    uint32_t   is_rx_bad_auth;            /* rx bad auth request */
+    uint32_t   is_rx_unauth;              /* rx on unauthorized port */
+    uint32_t   is_rx_badcipher;           /* rx failed 'cuz key type */
+    uint32_t   is_tx_nodefkey;            /* tx failed 'cuz no defkey */
+    uint32_t   is_tx_noheadroom;          /* tx failed 'cuz no space */
+    uint32_t   is_rx_nocipherctx;         /* rx failed 'cuz key !setup */
+    uint32_t   is_rx_acl;                 /* rx discard 'cuz acl policy */
+    uint32_t   is_rx_ffcnt;               /* rx fast frames */
+    uint32_t   is_rx_badathtnl;           /* driver key alloc failed */
+    uint32_t   is_rx_nowds;               /* 4-addr packets received with no wds enabled */
+    uint32_t   is_tx_nobuf;               /* tx failed for lack of buf */
+    uint32_t   is_tx_nonode;              /* tx failed for no node */
+    uint32_t   is_tx_unknownmgt;          /* tx of unknown mgt frame */
+    uint32_t   is_tx_badcipher;           /* tx failed 'cuz key type */
+    uint32_t   is_tx_ffokcnt;             /* tx fast frames sent success */
+    uint32_t   is_tx_fferrcnt;            /* tx fast frames sent success */
+    uint32_t   is_tx_not_ok;            /* tx ok not set in desc */
+    uint32_t   is_scan_active;            /* active scans started */
+    uint32_t   is_scan_passive;           /* passive scans started */
+    uint32_t   is_node_timeout;           /* nodes timed out inactivity */
+    uint32_t   is_crypto_nomem;           /* no memory for crypto ctx */
+    uint32_t   is_crypto_tkip;            /* tkip crypto done in s/w */
+    uint32_t   is_crypto_tkipenmic;       /* tkip en-MIC done in s/w */
+    uint32_t   is_crypto_tkipdemic;       /* tkip de-MIC done in s/w */
+    uint32_t   is_crypto_tkipcm;          /* tkip counter measures */
+    uint32_t   is_crypto_ccmp;            /* ccmp crypto done in s/w */
+    uint32_t   is_crypto_wep;             /* wep crypto done in s/w */
+    uint32_t   is_crypto_setkey_cipher;   /* cipher rejected key */
+    uint32_t   is_crypto_setkey_nokey;    /* no key index for setkey */
+    uint32_t   is_crypto_delkey;          /* driver key delete failed */
+    uint32_t   is_crypto_badcipher;       /* unknown cipher */
+    uint32_t   is_crypto_nocipher;        /* cipher not available */
+    uint32_t   is_crypto_attachfail;      /* cipher attach failed */
+    uint32_t   is_crypto_swfallback;      /* cipher fallback to s/w */
+    uint32_t   is_crypto_keyfail;         /* driver key alloc failed */
+    uint32_t   is_crypto_enmicfail;       /* en-MIC failed */
+    uint32_t   is_ibss_capmismatch;       /* merge failed-cap mismatch */
+    uint32_t   is_ibss_norate;            /* merge failed-rate mismatch */
+    uint32_t   is_ps_unassoc;             /* ps-poll for unassoc. sta */
+    uint32_t   is_ps_badaid;              /* ps-poll w/ incorrect aid */
+    uint32_t   is_ps_qempty;              /* ps-poll w/ nothing to send */
 };
 
 typedef enum _ieee80211_send_frame_type {
@@ -1591,30 +1592,30 @@ typedef enum _ieee80211_send_frame_type {
 } ieee80211_send_frame_type;
 
 typedef struct _ieee80211_tspec_info {
-    u_int8_t    traffic_type;
-    u_int8_t    direction;
-    u_int8_t    dot1Dtag;
-    u_int8_t    tid;
-    u_int8_t    acc_policy_edca;
-    u_int8_t    acc_policy_hcca;
-    u_int8_t    aggregation;
-    u_int8_t    psb;
-    u_int8_t    ack_policy;
-    u_int16_t   norminal_msdu_size;
-    u_int16_t   max_msdu_size;
-    u_int32_t   min_srv_interval;
-    u_int32_t   max_srv_interval;
-    u_int32_t   inactivity_interval;
-    u_int32_t   suspension_interval;
-    u_int32_t   srv_start_time;
-    u_int32_t   min_data_rate;
-    u_int32_t   mean_data_rate;
-    u_int32_t   peak_data_rate;
-    u_int32_t   max_burst_size;
-    u_int32_t   delay_bound;
-    u_int32_t   min_phy_rate;
-    u_int16_t   surplus_bw;
-    u_int16_t   medium_time;
+    uint8_t    traffic_type;
+    uint8_t    direction;
+    uint8_t    dot1Dtag;
+    uint8_t    tid;
+    uint8_t    acc_policy_edca;
+    uint8_t    acc_policy_hcca;
+    uint8_t    aggregation;
+    uint8_t    psb;
+    uint8_t    ack_policy;
+    uint16_t   norminal_msdu_size;
+    uint16_t   max_msdu_size;
+    uint32_t   min_srv_interval;
+    uint32_t   max_srv_interval;
+    uint32_t   inactivity_interval;
+    uint32_t   suspension_interval;
+    uint32_t   srv_start_time;
+    uint32_t   min_data_rate;
+    uint32_t   mean_data_rate;
+    uint32_t   peak_data_rate;
+    uint32_t   max_burst_size;
+    uint32_t   delay_bound;
+    uint32_t   min_phy_rate;
+    uint16_t   surplus_bw;
+    uint16_t   medium_time;
 } ieee80211_tspec_info;
 
 #ifndef EXTERNAL_USE_ONLY
@@ -1637,12 +1638,12 @@ enum {
 
 struct ieee80211_addba_delba_request {
     wlan_dev_t             ic;
-    u_int8_t               action;
-    u_int8_t               tid;
-    u_int16_t              status;
-    u_int16_t              aid;
-    u_int32_t              arg1;
-    u_int32_t              arg2;
+    uint8_t               action;
+    uint8_t               tid;
+    uint16_t              status;
+    uint16_t              aid;
+    uint32_t              arg1;
+    uint32_t              arg2;
 };
 #endif /* EXTERNAL_USE_ONLY */
 
@@ -1654,8 +1655,8 @@ typedef enum _ieee80211_bt_coex_info_type {
 #endif
 
 struct tkip_countermeasure {
-    u_int16_t   mic_count_in_60s;
-    u_int32_t   timestamp;
+    uint16_t   mic_count_in_60s;
+    uint32_t   timestamp;
 } ;
 
 enum _ieee80211_qos_frame_direction {
@@ -1677,25 +1678,25 @@ typedef struct ieee80211_vap_opmode_count {
 } ieee80211_vap_opmode_count;
 
 struct ieee80211_app_ie_t {
-        u_int32_t       length;
-        u_int8_t        *ie;
+        uint32_t       length;
+        uint8_t        *ie;
 };
 
 /* ACS debug structure to
  * export report to user tool
  */
 struct ieee80211_acs_dbg {
-    u_int8_t  nchans;
-    u_int8_t  entry_id;
-    u_int16_t chan_freq;
-    u_int8_t  ieee_chan;
-    u_int8_t  chan_nbss;
+    uint8_t  nchans;
+    uint8_t  entry_id;
+    uint16_t chan_freq;
+    uint8_t  ieee_chan;
+    uint8_t  chan_nbss;
     int32_t   chan_maxrssi;    
     int32_t   chan_minrssi;    
     int16_t   noisefloor;      
     int16_t   channel_loading; 
-    u_int32_t chan_load;
-    u_int8_t  sec_chan;
+    uint32_t chan_load;
+    uint8_t  sec_chan;
 };
 
 /* 

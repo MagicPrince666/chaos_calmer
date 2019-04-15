@@ -51,7 +51,7 @@ Qualcomm Atheros Confidential and Proprietary.
 struct termios oldtio;
 
 #define COM1 "/dev/ttyS0"
-#define COM2 "/dev/ttyS1"
+#define COM2 "/dev/ttyHS0"
 
 #define SEND_BUF_SIZE        1024
 
@@ -61,18 +61,19 @@ char terminationChar = '\n';
 #define q_uiPrintf UserPrint
 
 extern A_UINT32 sent_bytes;
-static A_UINT32 os_com_open(struct _Socket *pOSSock);
-static A_UINT32 os_com_close(struct _Socket *pOSSock);
+//static A_UINT32 os_com_open(struct _Socket *pOSSock);
+//static A_UINT32 os_com_close(struct _Socket *pOSSock);
 extern HANDLE open_device(A_UINT32 device_fn, A_UINT32 devIndex, char*);
 int socketListen (struct _Socket *pOSSock);
 
+#if 0
 static A_INT32 socketConnect
 (
  	char *target_hostname, 
 	int target_port_num, 
 	A_UINT32 *ip_addr
 );
-
+#endif
 
 long SocketRead(struct _Socket *pSockInfo, char *buf, long len )
 {
@@ -335,7 +336,7 @@ void SocketClose
 	return;
 }
 
-
+#if 0
 static A_INT32 socketConnect
 (
  	char *target_hostname, 
@@ -417,6 +418,7 @@ static A_INT32 socketConnect
 		
    	return sockfd;
 }
+#endif
 
 #if 0
 /* Returns number of bytes written, -1 if error */
@@ -678,7 +680,7 @@ struct _Socket *osSockCreate
 
     return pOSSock;
 }
-
+#if 0
 A_UINT32 os_com_open(struct _Socket *pOSSock)
 {
     A_INT32 fd; 
@@ -741,6 +743,7 @@ A_UINT32 os_com_close(struct _Socket *pOSSock)
 
     return 0;
 }
+#endif
 #endif //WMI_PIPE
 
 PARSEDLLSPEC void SetStrTerminationChar( char tc )

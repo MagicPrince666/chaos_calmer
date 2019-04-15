@@ -13,6 +13,8 @@
 #include <math.h> /* pow() */
 #endif /* ART_BUILD */
 
+
+#include <stdio.h>
 #include "opt_ah.h"
 
 #ifdef AH_SUPPORT_AR9300
@@ -438,7 +440,7 @@ int16_t ar9300_get_nf_from_reg(struct ath_hal *ah, HAL_CHANNEL *chan, int wait_t
     }
 
     if (!ath_hal_wait(ah, AR_PHY_AGC_CONTROL, AR_PHY_AGC_CONTROL_NF, 0, wait_time)) {
-        printk("%s: NF cal is not complete in %dus", __func__, wait_time);
+        printf("%s: NF cal is not complete in %dus", __func__, wait_time);
         return 0;
     }
 #define IS(_c, _f)       (((_c)->channel_flags & _f) || 0)
@@ -1791,7 +1793,7 @@ ar9300_channel_change(struct ath_hal *ah, HAL_CHANNEL *chan,
 #endif
     return true;
 }
-
+#include "linux_hw.h"
 void
 ar9300_set_operating_mode(struct ath_hal *ah, int opmode)
 {

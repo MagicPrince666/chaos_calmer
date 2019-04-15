@@ -77,10 +77,10 @@ static int IsComment(char *buffer)
 int CommandParse(char *buffer)
 {
     char *ptr,*pname,*pvalue,*sptr = NULL;
-    int equal;
+    //int equal;
     int done = 0;
 	int noEqualSign = 0;
-	int isArray = 0;
+	//int isArray = 0;
 	//
     // find beginning of command Word
     //
@@ -110,19 +110,20 @@ int CommandParse(char *buffer)
     // find end of name and put a NULL there.
     // no spaces allowed in names.
     //
-    equal=0;
+    //equal=0;
     for( ; *ptr!=0 ; ptr++)
     {
 
 //        if(*ptr=='=')	// get sometime doesn't have =
         if(*ptr=='=' || *ptr==';' || *ptr=='\t' || *ptr==' ')
         {
-			if (*ptr=='\t' || *ptr==' ')
-				isArray = 1;
+			if (*ptr=='\t' || *ptr==' '){
+				//isArray = 1;
+			}		
 
 			if (*ptr==';')
 				noEqualSign = 1;
-            equal=1;
+            //equal=1;
             *pname=0;
             //
             // trim spaces off the back end of the command word

@@ -5,7 +5,7 @@
 #include <linux/module.h>
 #include <linux/slab.h>
 #include <linux/version.h>
-#include <asm/uaccess.h>
+#include <linux/uaccess.h>
 
 #include "dk.h"
 #include "dk_ioctl.h"
@@ -129,12 +129,8 @@ static int dk_mmap
 #endif
 
         /* Remap-pfn-range will mark the range VM_IO and VM_RESERVED */
-        if (remap_pfn_range(vma,
-                            vma->vm_start,
-                            vma->vm_pgoff,
-                            vma->vm_end-vma->vm_start,
-                            vma->vm_page_prot))
-                return -EAGAIN;
+        if (remap_pfn_range(vma,vma->vm_start,vma->vm_pgoff,vma->vm_end-vma->vm_start,vma->vm_page_prot))
+            return -EAGAIN;
 
 		return 0; 
 }

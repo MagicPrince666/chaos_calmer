@@ -27,6 +27,8 @@
 #ifndef ATH_ALD_EXTERNAL_H
 #define ATH_ALD_EXTERNAL_H
 
+#include <stdint.h>
+
 #if ATH_SUPPORT_HYFI_ENHANCEMENTS
 #define IEEE80211_IOCTL_ALD	        (SIOCIWFIRSTPRIV+25)
 enum {
@@ -45,30 +47,30 @@ enum {
 #define MAX_NODES_NETWORK (64+1) // one is ap self
 typedef struct _linkcapacity_t
 {
-    u_int32_t   capacity;   // Current number of bits per second that can be delivered to the given DA.
-    u_int32_t   aggr;
-    u_int32_t   phyerr;
-    u_int32_t   lastper;
-    u_int32_t   msdusize;
-    u_int8_t    da[6];      // This link’s destination address.
-    u_int16_t   nobufs[WME_NUM_AC]; /*#pkts lost due to buff overflows per ac*/
-    u_int16_t   excretries[WME_NUM_AC];/* #pkts lost due to exc retries per ac*/
-    u_int16_t   txpktcnt[WME_NUM_AC];/* #successfully transmitted pkts per ac*/
-	u_int16_t	retries;
-	u_int32_t	aggrmax;
+    uint32_t   capacity;   // Current number of bits per second that can be delivered to the given DA.
+    uint32_t   aggr;
+    uint32_t   phyerr;
+    uint32_t   lastper;
+    uint32_t   msdusize;
+    uint8_t    da[6];      // This link’s destination address.
+    uint16_t   nobufs[WME_NUM_AC]; /*#pkts lost due to buff overflows per ac*/
+    uint16_t   excretries[WME_NUM_AC];/* #pkts lost due to exc retries per ac*/
+    uint16_t   txpktcnt[WME_NUM_AC];/* #successfully transmitted pkts per ac*/
+	uint16_t	retries;
+	uint32_t	aggrmax;
 } linkcapacity_t;
 
 struct ald_stat_info {
-    u_int32_t cmd;
-    u_int8_t name[IFNAMSIZ];
-    u_int32_t maxcu;
-    u_int32_t utility;
-    u_int32_t load;
-    u_int32_t txbuf;
-    u_int32_t curThroughput;
-    u_int32_t vapstatus;
+    uint32_t cmd;
+    uint8_t name[IFNAMSIZ];
+    uint32_t maxcu;
+    uint32_t utility;
+    uint32_t load;
+    uint32_t txbuf;
+    uint32_t curThroughput;
+    uint32_t vapstatus;
 
-    u_int32_t nientry;
+    uint32_t nientry;
     linkcapacity_t lkcapacity[MAX_NODES_NETWORK];
 };
 
@@ -85,17 +87,17 @@ enum {
 };
 
 struct ald_assoc_info {
-    u_int32_t cmd;
-    u_int8_t name[IFNAMSIZ];
-    u_int8_t macaddr[IEEE80211_ADDR_LEN];
-    u_int8_t aflag;
-    u_int8_t afreq;
+    uint32_t cmd;
+    uint8_t name[IFNAMSIZ];
+    uint8_t macaddr[IEEE80211_ADDR_LEN];
+    uint8_t aflag;
+    uint8_t afreq;
 };
 
 struct ald_buffull_info {
-    u_int32_t cmd;
-    u_int8_t name[IFNAMSIZ];
-    u_int16_t resv;
+    uint32_t cmd;
+    uint8_t name[IFNAMSIZ];
+    uint16_t resv;
 };
 
 #endif

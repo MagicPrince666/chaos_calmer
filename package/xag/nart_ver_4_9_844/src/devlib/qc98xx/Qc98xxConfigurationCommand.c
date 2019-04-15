@@ -461,7 +461,8 @@ static void ReturnGet(int ix, int iy, int iz, int status, int *done, int *error,
                 //
                 if(ix<0)
                 {
-                    SformatOutput(atext,MBUFFER-1,"");
+                    //SformatOutput(atext,MBUFFER-1,"\0");
+                    memset(atext, 0, MBUFFER-1);
                     ix=0;
                     iy=0;
                     iz=0;
@@ -505,7 +506,8 @@ static void ReturnGetf(int ix, int iy, int iz, int status, int *done, int *error
                 //
                 if(ix<0)
                 {
-                    SformatOutput(atext,MBUFFER-1,"");
+                    //SformatOutput(atext,MBUFFER-1,"\0");
+                    memset(atext, 0, MBUFFER-1);
                     ix=0;
                     iy=0;
                     iz=0;
@@ -551,7 +553,8 @@ static void ConfigSets(int *done, int *error, int ip, int index, int ix, int iy,
                 //
                 if(ix<0)
                 {
-                    SformatOutput(atext,MBUFFER-1,"");
+                    //SformatOutput(atext,MBUFFER-1,"\0");
+                    memset(atext, 0, MBUFFER-1);
                     ix=0;
                     iy=0;
                     iz=0;
@@ -619,7 +622,8 @@ static void ConfigfSets(int *done, int *error, int ip, int index, int ix, int iy
                 //
                 if(ix<0)
                 {
-                    SformatOutput(atext,MBUFFER-1,"");
+                    //SformatOutput(atext,MBUFFER-1,"\0");
+                    memset(atext, 0, MBUFFER-1);
                     ix=0;
                     iy=0;
                     iz=0;
@@ -783,7 +787,7 @@ QC98XXDLLSPEC int Qc98xxSetCommand(int client)
     char buffer[MBUFFER];
     char *text;
     int status;
-	unsigned long lvalue, addr;
+	unsigned int lvalue, addr;
 	int parseStatus;
     int ix, iy, iz;
     int size;

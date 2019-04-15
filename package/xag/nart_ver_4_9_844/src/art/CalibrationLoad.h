@@ -1,4 +1,5 @@
-//
+#ifndef _CALIBRATIOONLOAD_H_
+#define _CALIBRATIOONLOAD_H_
 // unload the dll
 //
 extern void CalibrationUnload();
@@ -27,3 +28,5 @@ extern int CalibrationGetCommand(int client);
 extern int SetCalParameterSplice(struct _ParameterList *list);
 extern int CalibrationGetScheme(int *x);
 extern int CalibrationGetResetUnusedCalPiers(int *x);
+
+#endif

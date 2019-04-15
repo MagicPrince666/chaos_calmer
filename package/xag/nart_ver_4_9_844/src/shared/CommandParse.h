@@ -1,4 +1,5 @@
-
+#ifndef _COMMANDPARSE_H_
+#define _COMMANDPARSE_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -100,4 +101,4 @@ extern PARSEDLLSPEC int CommandPush();
 //
 extern PARSEDLLSPEC int CommandPop();
 
-
+#endif

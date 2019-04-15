@@ -1,4 +1,5 @@
-
+#ifndef _EEPROMERROR_H_
+#define _EEPROMERROR_H_
 
 enum
 {
@@ -50,4 +51,4 @@ enum
 
 extern PARSEDLLSPEC void EepromErrorInit(void);
 
-
+#endif

@@ -151,7 +151,7 @@ void HALCommand()
 	//
 	// default values
 	//
-	SformatOutput(str,MBUFFER-1,"");
+	SformatOutput(str,MBUFFER-1," ");
 	error=0;
 	//
 	// add the parameters

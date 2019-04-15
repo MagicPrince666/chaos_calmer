@@ -638,7 +638,7 @@ int CommandNext(char *command, int max, int *client)
 		_Command[_CommandNext]=0;
 		_CommandNext=(_CommandNext+1)%MCOMMAND;
 
-		UserPrint("> %s\n",command);
+		UserPrint("xag>%s\n",command);
 
 		return length;
 	}
@@ -819,6 +819,7 @@ static void UserPrintSendIt(char *buffer)
 	}
 	else
 	{
+		printf("xag");
 		UserPrintIt(buffer);
 	}
 }
@@ -1123,6 +1124,7 @@ static void CommandProcess(int client, char *buffer)
 	int returnCode;
 
 	ErrorPrint(NartProcess,buffer,client);
+	//printf("xag %s client=%d\n",__func__,client);
     //
     // ignore leading !
     //
@@ -1377,6 +1379,7 @@ static void StartFile(char *filename)
 				{
 					buffer[length-1]=0;
 					length--;
+					//printf("xag %s clientid=-1\n", __func__);
 					CommandProcess(-1,buffer);
 				}
 			}
@@ -1464,7 +1467,7 @@ void NewArt(unsigned int instance, int port, char *filename)
 
 	    while(1)
 		{
-			nread=CommandNext(buffer,MBUFFER-1,&client);
+			nread=CommandNext(buffer,MBUFFER-1,&client);//which buffer
 			//
 			// Got data. Process it.
 			//
@@ -1475,6 +1478,8 @@ void NewArt(unsigned int instance, int port, char *filename)
 				//
 				UserPrintClient=client;
 				ErrorPrintFunction(UserPrintSendIt);
+				//printf("xag %s clientid=%d\n", __func__,client);
+				//printf("xag buffer=%s\n",buffer);
 				CommandProcess(client,buffer);
 				CommandCurrentDelete();
 			}

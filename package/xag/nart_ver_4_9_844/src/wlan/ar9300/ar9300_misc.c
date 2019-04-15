@@ -9,6 +9,7 @@
  */
 
 #include "opt_ah.h"
+#include <stdio.h>
 
 #ifdef AH_SUPPORT_AR9300
 
@@ -3906,7 +3907,7 @@ ar9300_set_txchainmaskopt(struct ath_hal *ah, u_int8_t mask)
     /* optional txchainmask should be subset of primary txchainmask */
     if ((mask & ahp->ah_tx_chainmask) != mask) {
         ahp->ah_tx_chainmaskopt = 0;
-        printk("Error: ah_tx_chainmask=%d, mask=%d\n", ahp->ah_tx_chainmask, mask);
+        printf("Error: ah_tx_chainmask=%d, mask=%d\n", ahp->ah_tx_chainmask, mask);
         return;
     }
     
@@ -3921,7 +3922,7 @@ void ar9300_reset_nav(struct ath_hal *ah)
 	/*check NAV register */
 	regval = OS_REG_READ(ah, AR_NAV);
 	if ((regval != 0xdeadbeef) && (regval > 0x7fff)) {
-		printk("%s: abnormal nav value found 0x%x\n", __func__, regval);
+		printf("%s: abnormal nav value found 0x%x\n", __func__, regval);
 		OS_REG_WRITE(ah, AR_NAV, 0);
 	}
 

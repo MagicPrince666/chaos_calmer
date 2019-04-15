@@ -1799,14 +1799,14 @@ A_INT32 Qc98xxThresh62Set(int value, int iBand)
 }
 #endif //0
 
-A_UINT32 Qc98xxThermAdcScaledGainSet(int value)
+A_INT32 Qc98xxThermAdcScaledGainSet(int value)
 {
 	EEPROM_BASE_POINTER->chipCalData.thermAdcScaledGain = (A_INT16) value;
     EEPROM_CONFIG_DIFF_CHANGE(chipCalData.thermAdcScaledGain);
     return 0;
 }
 
-A_UINT32 Qc98xxThermAdcOffsetSet(int value)
+A_INT32 Qc98xxThermAdcOffsetSet(int value)
 {
 	EEPROM_BASE_POINTER->chipCalData.thermAdcOffset = (A_INT8) value;
     EEPROM_CONFIG_DIFF_CHANGE(chipCalData.thermAdcOffset);

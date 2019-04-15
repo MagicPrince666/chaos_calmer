@@ -143,7 +143,7 @@ int Ar9300AntDivCtrlGet(void)
  */
 int Ar9300pwrTuningCapsParamsGet(int *value, int ix, int *num)
 {
-	int i, iv=0;
+	//int i, iv=0;
 	if (ix<0 || ix>2) {
 		value[0] = Ar9300EepromStructGet()->base_eep_header.params_for_tuning_caps[0];
 		value[1] = Ar9300EepromStructGet()->base_eep_header.params_for_tuning_caps[1];
@@ -162,7 +162,7 @@ int Ar9300pwrTuningCapsParamsGet(int *value, int ix, int *num)
  */
 int Ar9300regDmnGet(int *value, int ix, int *num)
 {
-	int i, iv=0;
+	//int i, iv=0;
 	if (ix<0 || ix>2) {
 		value[0] = Ar9300EepromStructGet()->base_eep_header.reg_dmn[0];
 		value[1] = Ar9300EepromStructGet()->base_eep_header.reg_dmn[1];
@@ -729,7 +729,7 @@ int Ar9300WlanSpdtSwitchGlobalControlGet(int iBand)
 
 int Ar9300XLANBiasStrengthGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	ar9300_eeprom_t *ahp_Eeprom;
 		ahp_Eeprom = Ar9300EepromStructGet();
@@ -853,13 +853,13 @@ AR9300DLLSPEC A_INT32 Ar9300CaldataMemoryTypeGet(A_UCHAR *memType, A_INT32 maxle
     switch(ar9300_calibration_data_get(AH))
     {
         case calibration_data_flash:
-            strcpy(memType, "flash");
+            strcpy((char *)memType, "flash");
             return 0;
         case calibration_data_eeprom:
-            strcpy(memType, "eeprom");
+            strcpy((char *)memType, "eeprom");
             return 0;
         case calibration_data_otp:
-            strcpy(memType, "otp");
+            strcpy((char *)memType, "otp");
             return 0;
     }
     return -1;
@@ -937,7 +937,7 @@ int setFBIN2FREQ(int bin, int iBand)
 
 A_INT32 Ar9300antCtrlChainGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1004,7 +1004,7 @@ int Ar9300AntCtrlCommon2Get(int iBand)
  */
 A_INT32 Ar9300xatten1DBGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1030,8 +1030,8 @@ A_INT32 Ar9300xatten1DBGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300xatten1DBLowGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
-	int val;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
+	//int val;
 	if (iBand==band_BG) {
 		*num=0;
 		return 0;
@@ -1050,8 +1050,8 @@ A_INT32 Ar9300xatten1DBLowGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300xatten1DBHighGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
-	int val;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
+	//int val;
 	if (iBand==band_BG) {
 		*num=0;
 		return 0;
@@ -1077,7 +1077,7 @@ A_INT32 Ar9300xatten1DBHighGet(int *value, int ix, int *num, int iBand)
  */
 A_INT32 Ar9300xatten1MarginGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1103,8 +1103,8 @@ A_INT32 Ar9300xatten1MarginGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300xatten1MarginLowGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
-	int val;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
+	//int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
 			value[i] = Ar9300EepromStructGet()->base_ext2.xatten1_margin_low[i];
@@ -1119,8 +1119,8 @@ A_INT32 Ar9300xatten1MarginLowGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300xatten1MarginHighGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
-	int val;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
+	//int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
 			value[i] = Ar9300EepromStructGet()->base_ext2.xatten1_margin_high[i];
@@ -1141,7 +1141,7 @@ A_INT32 Ar9300xatten1MarginHighGet(int *value, int ix, int *num, int iBand)
  */
 A_INT32 Ar9300spurChansGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0;
+	int i;
 	int val;
 	if (ix<0 || ix>OSPREY_EEPROM_MODAL_SPURS) {
 		for (i=0; i<OSPREY_EEPROM_MODAL_SPURS; i++) {
@@ -1173,7 +1173,7 @@ A_INT32 Ar9300spurChansGet(int *value, int ix, int *num, int iBand)
  */
 A_INT32 Ar9300MinCCAPwrThreshChGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1199,7 +1199,7 @@ A_INT32 Ar9300MinCCAPwrThreshChGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300ObdboffstAux1ChGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1225,7 +1225,7 @@ A_INT32 Ar9300ObdboffstAux1ChGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300ObdboffstAux2ChGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iCMaxChain=OSPREY_MAX_CHAINS;
+	int i, iCMaxChain=OSPREY_MAX_CHAINS;
 	int val;
 	if (ix<0 || ix>iCMaxChain) {
 		for (i=0; i<iCMaxChain; i++) {
@@ -1251,7 +1251,7 @@ A_INT32 Ar9300ObdboffstAux2ChGet(int *value, int ix, int *num, int iBand)
 
 A_INT32 Ar9300ReservedGet(int *value, int ix, int *num, int iBand)
 {
-	int i, iv=0, iMax=MAX_MODAL_RESERVED;
+	int i, iMax=MAX_MODAL_RESERVED;
 	int val;
 	if (ix<0 || ix>iMax) {
 		for (i=0; i<iMax; i++) {
@@ -1504,7 +1504,7 @@ int Ar9300thresh62Get( int iBand)
  */
 A_INT32 Ar9300calFreqPierGet(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxPier;
+	int i, iMaxPier;
 	int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_CAL_PIERS;
@@ -1810,7 +1810,7 @@ A_INT32 Ar9300calPierDataRxTempMeasGet(int *value, int ix, int iy, int iz, int *
 
 A_INT32 Ar9300calFreqTGTcckGet(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxPier;
+	int i, iMaxPier;
 	int val;
 	iMaxPier=OSPREY_NUM_2G_CCK_TARGET_POWERS;
 	if (ix<0 || ix>iMaxPier) {
@@ -1829,7 +1829,7 @@ A_INT32 Ar9300calFreqTGTcckGet(int *value, int ix, int iy, int iz, int *num, int
 
 A_INT32 Ar9300calFreqTGTLegacyOFDMGet(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxPier;
+	int i, iMaxPier;
 	int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_20_TARGET_POWERS;
@@ -1859,7 +1859,7 @@ A_INT32 Ar9300calFreqTGTLegacyOFDMGet(int *value, int ix, int iy, int iz, int *n
 
 A_INT32 Ar9300calFreqTGTHT20Get(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxPier;
+	int i, iMaxPier;
 	int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_20_TARGET_POWERS;
@@ -1889,7 +1889,7 @@ A_INT32 Ar9300calFreqTGTHT20Get(int *value, int ix, int iy, int iz, int *num, in
 
 A_INT32 Ar9300calFreqTGTHT40Get(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxPier;
+	int i, iMaxPier;
 	int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_40_TARGET_POWERS;
@@ -1920,7 +1920,7 @@ A_INT32 Ar9300calFreqTGTHT40Get(int *value, int ix, int iy, int iz, int *num, in
 A_INT32 Ar9300calTGTPwrCCKGet(double *value, int ix, int iy, int iz, int *num, int iBand)
 {
 	int i, j, iv=0, iMaxPier, jMaxRate=4;
-	int val;
+	//int val;
 	iMaxPier=OSPREY_NUM_2G_CCK_TARGET_POWERS;
 	if (iy<0 || iy>=jMaxRate) {
 		if (ix<0 || ix>=iMaxPier) {
@@ -1953,7 +1953,7 @@ A_INT32 Ar9300calTGTPwrCCKGet(double *value, int ix, int iy, int iz, int *num, i
 A_INT32 Ar9300calTGTPwrLegacyOFDMGet(double *value, int ix, int iy, int iz, int *num, int iBand)
 {
 	int i, j, iv=0, iMaxPier, jMaxRate=4;
-	int val;
+	//int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_20_TARGET_POWERS;
 	else
@@ -2005,7 +2005,7 @@ A_INT32 Ar9300calTGTPwrLegacyOFDMGet(double *value, int ix, int iy, int iz, int 
 A_INT32 Ar9300calTGTPwrHT20Get(double *value, int ix, int iy, int iz, int *num, int iBand)
 {
 	int i, j, iv=0, iMaxPier, jMaxRate=14;
-	int val;
+	//int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_20_TARGET_POWERS;
 	else
@@ -2057,7 +2057,7 @@ A_INT32 Ar9300calTGTPwrHT20Get(double *value, int ix, int iy, int iz, int *num, 
 A_INT32 Ar9300calTGTPwrHT40Get(double *value, int ix, int iy, int iz, int *num, int iBand)
 {
 	int i, j, iv=0, iMaxPier, jMaxRate=14;
-	int val;
+	//int val;
 	if (iBand==band_BG) 
 		iMaxPier=OSPREY_NUM_2G_40_TARGET_POWERS;
 	else
@@ -2109,7 +2109,7 @@ A_INT32 Ar9300calTGTPwrHT40Get(double *value, int ix, int iy, int iz, int *num, 
 
 A_INT32 Ar9300ctlIndexGet(int *value, int ix, int iy, int iz, int *num, int iBand)
 {
-	int i, iv=0, iMaxCtl;
+	int i, iMaxCtl;
 	int val;
 	if (iBand==band_BG) 
 		iMaxCtl=OSPREY_NUM_CTLS_2G;

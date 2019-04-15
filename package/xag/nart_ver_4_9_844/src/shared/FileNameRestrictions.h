@@ -1,4 +1,5 @@
-
+#ifndef _FILENAMERESTRICTION_H_
+#define _FILENAMERESTRICTION_H_
 
 // "ACI $Id: //depot/sw/branches/art2_main_per_cs/src/art2/shared/FileNameRestrictions.h#1 $, $Header: //depot/sw/branches/art2_main_per_cs/src/art2/shared/FileNameRestrictions.h#1 $"
 
@@ -42,3 +43,5 @@ extern PARSEDLLSPEC int FilenameCharacterAllowed(char c, int position);
 // returns 1 if the filename specifies an absolute path that should not be modified
 //
 extern PARSEDLLSPEC int FilenameAbsolutePath(char *name);
+
+#endif

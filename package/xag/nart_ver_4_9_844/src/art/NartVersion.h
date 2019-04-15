@@ -1,3 +1,5 @@
+#ifndef _NARTVERSION_H_
+#define _NARTVERSION_H_
 
 #ifdef _WINDOWS
 #ifdef FIELDDLL
@@ -18,3 +20,5 @@ extern FIELDDLLSPEC int NartVersionMinor();
 extern FIELDDLLSPEC char* NartVersionDate();
 
 extern FIELDDLLSPEC char* NartVersionTime();
+
+#endif

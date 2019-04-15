@@ -15,12 +15,15 @@
 
 #include "genTxBinCmdTlv.h"
 #include "testcmd.h"
+#include <stdint.h>
 
-#define SWAP32(_x) ((u_int32_t)(                       \
-                    (((const u_int8_t *)(&_x))[0]) |        \
-                    (((const u_int8_t *)(&_x))[1]<< 8) |    \
-                    (((const u_int8_t *)(&_x))[2]<<16) |    \
-                    (((const u_int8_t *)(&_x))[3]<<24)))
+//#define SWAP32(_x) __bswap32(_x)
+
+#define SWAP32(_x) ((uint32_t)(                       \
+                    (((const uint8_t *)(&_x))[0]) |        \
+                    (((const uint8_t *)(&_x))[1]<< 8) |    \
+                    (((const uint8_t *)(&_x))[2]<<16) |    \
+                    (((const uint8_t *)(&_x))[3]<<24)))
 
 typedef enum {
     TESTFLOW_CMD=0,

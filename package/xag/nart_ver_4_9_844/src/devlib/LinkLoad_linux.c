@@ -19,6 +19,7 @@
 #include "RxDescriptor.h"
 #include "TxDescriptor.h"
 #include "DeviceError.h"
+#include "UserPrint.h"
 
 
 #define MBUFFER 1024

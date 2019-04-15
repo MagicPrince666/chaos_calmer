@@ -324,9 +324,9 @@ static int Ar5416TxDescriptorPrint(void *block, char *buffer, int max)
 	struct Ar5416TxDescriptor *dr=(struct Ar5416TxDescriptor *)block;
 	int lc, nc;
 
-	lc=SformatOutput(buffer,max-1,"`%x`", dr->link_ptr);
+	lc=SformatOutput(buffer,max-1,"`%lx`", dr->link_ptr);
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", dr->buf_ptr);
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`", dr->buf_ptr);
 	if(nc>0)
 	{
 		lc+=nc;
@@ -519,21 +519,21 @@ static int Ar5416TxDescriptorPrint(void *block, char *buffer, int max)
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->send_timestamp);
 	if(nc>0)
 	{
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->ba_bitmap_0_31);
 	if(nc>0)
 	{
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->ba_bitmap_32_63);
 	if(nc>0)
 	{
@@ -551,21 +551,21 @@ static int Ar5416TxDescriptorPrint(void *block, char *buffer, int max)
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->evm0);
 	if(nc>0)
 	{
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->evm1);
 	if(nc>0)
 	{
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", 	
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`",
 	    dr->evm2);
 	if(nc>0)
 	{

@@ -47,7 +47,7 @@ A_INT32 Ar9300SSIDSet(unsigned int SSID);
 A_INT32 Ar9300SubVendorSet(unsigned int subVendorID);
 A_INT32 Ar9300deviceIDSet(unsigned int deviceID);
 A_INT32 Ar9300vendorSet(unsigned int vendorID);
-A_INT32 Ar9300pcieAddressValueDataSet( unsigned int address, unsigned int data);
+A_INT32 Ar9300pcieAddressValueDataSet( unsigned int address, unsigned int data,int size);
 A_INT32 Ar9300pcieAddressValueDataAdd( unsigned int address, unsigned int dataLow, unsigned int dataHigh);
 
 #define MPCIE 100
@@ -95,7 +95,7 @@ A_INT32 Ar9300pcieAddressValueDataInitEeprom(void)
 // if it's not blank, read the eep context from card, compare with atheros default setting,
 // if not the same update structure data to the default, will write them into eep when runs commit
 {
-	int status = 0;	
+	//int status = 0;	
 	int i;
 	unsigned int addr;
 
@@ -215,20 +215,27 @@ int Ar9380pcieDefault(int devid)	// osprey
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd(0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd(0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED)
-		return ERR_MAX_REACHED;            
-    if (Ar9300pcieAddressValueDataAdd(0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED){
+		return ERR_MAX_REACHED;
+	}            
+    if (Ar9300pcieAddressValueDataAdd(0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
     
 	return num_pcieAddressValueData;
 }
@@ -239,20 +246,27 @@ int Ar934XpcieDefault(int devid)	// wasp
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd(0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd(0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd(0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED)
-		return ERR_MAX_REACHED;            
-    if (Ar9300pcieAddressValueDataAdd(0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd(0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED){
+		return ERR_MAX_REACHED;
+	}            
+    if (Ar9300pcieAddressValueDataAdd(0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
     
 	return num_pcieAddressValueData;
 }
@@ -263,20 +277,27 @@ int Ar9580pcieDefault(int devid)	// peacock
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x2e5e, 0x0831)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x2e5e, 0x0831)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED)
-		return ERR_MAX_REACHED;            
-    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED){
+		return ERR_MAX_REACHED;
+	}            
+    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
              
 	return num_pcieAddressValueData;
 }
@@ -288,20 +309,27 @@ int Ar9330pcieDefault(int devid)		// hornet
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x2e5e, 0x0821)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4040, 0x003b, 0x0008)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED)
-		return ERR_MAX_REACHED;            
-    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4044, 0x0000, 0x0000)== ERR_MAX_REACHED){
+		return ERR_MAX_REACHED;
+	}         
+    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173f)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
                
 	return num_pcieAddressValueData;
 }
@@ -333,7 +361,7 @@ int Ar9485pcieDefault(int devid)	// poseidon
 // |or|0026|1021|
 //
 		// did i get this in the right order? 
-        if (Ar9300pcieAddressValueDataSet( 0x18c00, 0x1021265e)== ERR_MAX_REACHED)
+        if (Ar9300pcieAddressValueDataSet( 0x18c00, 0x1021265e, 0)== ERR_MAX_REACHED)
             return ERR_MAX_REACHED;
 	}
 
@@ -353,14 +381,18 @@ int Ar946XpcieDefault(int devid)	// Jupiter
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x273F)== ERR_MAX_REACHED)
+	}
+    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x273F)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
     
 	return num_pcieAddressValueData;
 }
@@ -370,14 +402,18 @@ int Ar956XpcieDefault(int devid)	//
 
 	Ar9300vendorSet(0x168c);
 
-	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED)
+	if (Ar9300pcieAddressValueDataAdd( 0x5008, 0x0001, 0x0280)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x407c, 0x0001, 0x0000)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED)
+	}
+	if (Ar9300pcieAddressValueDataAdd( 0x4004, 0x021b, 0x0102)== ERR_MAX_REACHED){
 		return ERR_MAX_REACHED;
-    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173F)== ERR_MAX_REACHED)
+	}
+    if (Ar9300pcieAddressValueDataAdd( 0x570C, 0x3f01, 0x173F)== ERR_MAX_REACHED){
         return ERR_MAX_REACHED;
+	}
     
 	return num_pcieAddressValueData;
 }
@@ -468,7 +504,7 @@ A_INT32 Ar9300pcieAddressValueDataAdd( unsigned int address, unsigned int dataLo
 }
 
 
-A_INT32 Ar9300pcieAddressValueDataSet( unsigned int address, unsigned int data)
+A_INT32 Ar9300pcieAddressValueDataSet( unsigned int address, unsigned int data, int size)
 {
 	unsigned int dataLow, dataHigh;
 	dataLow  = (unsigned int)(data & 0xFFFF);
@@ -1107,7 +1143,7 @@ A_INT32 Ar9300ConfigSpaceUsedEeprom(void)
 A_INT32 Ar9300ConfigSpaceUsedOtp(void)
 {
 	int address, addrMax, start_address;
-	unsigned int eregister,evalue;
+	unsigned int eregister;
 
         addrMax = getPcieOtpTopAddress(AH);	
 

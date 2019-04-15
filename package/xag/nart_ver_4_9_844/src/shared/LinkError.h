@@ -1,4 +1,5 @@
-
+#ifndef _LINKERROR_H_
+#define _LINKERROR_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -93,3 +94,5 @@ enum
 
 
 extern PARSEDLLSPEC void LinkErrorInit(void);
+
+#endif

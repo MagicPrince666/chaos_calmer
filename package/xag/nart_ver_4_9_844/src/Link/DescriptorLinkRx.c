@@ -196,7 +196,7 @@ int DescriptorLinkRxSetup(unsigned char *bssid, unsigned char *macaddr)
     // 
 	// cleanup descriptors created last time
 	//
-	DescriptorLinkRxLoopDestroy(0);
+	DescriptorLinkRxLoopDestroy();
     /*
      * create a few descriptors linked in a loop 
      */
@@ -566,7 +566,7 @@ int DescriptorLinkRxComplete(int timeout,
 
 	DeviceReceiveDisable();
 
-	DescriptorLinkRxLoopDestroy(0);
+	DescriptorLinkRxLoopDestroy();
 
     //
 	// do data verify if requested

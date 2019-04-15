@@ -25,6 +25,7 @@
 //
 static short devIndex=0;		// this has to be 0
 
+//#define A_swap32(x) __bswap32(x)
 
 #define A_swap32(x) \
             ((A_UINT32)( \
@@ -299,7 +300,7 @@ ANWIDLLSPEC int MyFieldWrite(unsigned int address, int low, int high, unsigned i
 	return error;
 }
 
-ANWIDLLSPEC uintptr_t MyMemoryBase()
+ANWIDLLSPEC int MyMemoryBase()
 {
     if(AnwiDriverValid())
 	{
@@ -410,8 +411,14 @@ ANWIDLLSPEC int AnwiDriverDeviceIdGet()
 
 	devNum=0;			// why do we still need this????
 	address=0;
-    value=OScfgRead(devNum,address);
+    value = OScfgRead(devNum,address);
 	devid=((value>>16)&0xffff);
+
+	printf("xag %s devid=0x%04x\n", __func__, devid);
+	//if(devid != AR9300_DEVID_AR9340){
+	//	devid = AR9300_DEVID_AR9340;
+	//	DeviceIdUserInput=devid;
+	//}
 
 	return devid;
 }
@@ -448,6 +455,8 @@ ANWIDLLSPEC int AnwiDriverAttach(int devid)
 	{
 	    devid=DeviceIdGet();
 	    UserPrint("devid=%x\n",devid);
+		printf("xag %s devid = %04x\n", __func__, devid);
+		if(devid != AR9300_DEVID_AR9340)devid = AR9300_DEVID_AR9340;
 	}
 
     return devid;

@@ -18,7 +18,7 @@ extern A_INT32 Ar9300vendorGet(unsigned int *vendorID);
 extern A_INT32 Ar9300ConfigSpaceCommit(void);
 extern A_INT32 Ar9300ConfigSpaceUsed(void);
 extern A_INT32 Ar9300pcieAddressValueDataInit(void);
-extern A_INT32 Ar9300pcieAddressValueDataSet(unsigned int address, unsigned int data);
+extern A_INT32 Ar9300pcieAddressValueDataSet(unsigned int address, unsigned int data, int size);
 extern A_INT32 Ar9300pcieAddressValueDataGet(unsigned int address, unsigned int *data);
 extern A_INT32 Ar9300pcieAddressValueDataRemove(unsigned int address);
 extern A_INT32 Ar9300pcieAddressValueDataOfNumGet(int num, unsigned int *address, unsigned int *data);

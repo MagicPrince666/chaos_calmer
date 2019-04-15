@@ -1,5 +1,5 @@
 OUTPUT_DIR=Linux_ar9287
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 CFLAGS += -DAR9287DLL
 

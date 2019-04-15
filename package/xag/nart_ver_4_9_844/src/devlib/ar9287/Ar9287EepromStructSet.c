@@ -25,6 +25,7 @@
 #include "ParameterSelect.h"
 #include "ParameterConfigDef.h"
 #include "Card.h"
+#include "UserPrint.h"
 
 #include "Ar9287EepromStructSet.h"
 #include "instance.h"
@@ -1214,6 +1215,9 @@ A_INT32 Ar9287_CtlChannelSet(int *value, int ix, int iy, int iz, int num, int iB
 	}
     return 0;
 }
+
+//#include "MyAccess.h"
+#include "AnwiDriverInterface.h"
 //given the rate index as per rate_constant.c find and return the target power
 int Ar9287_RefPwrSet(int freq) 
 {

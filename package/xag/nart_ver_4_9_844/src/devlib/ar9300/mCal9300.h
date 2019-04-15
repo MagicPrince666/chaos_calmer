@@ -1,3 +1,5 @@
+#ifndef _MCAL9300_H_
+#define _MCAL9300_H_
 
 #ifdef _WINDOWS
 #ifdef AR9300DLL
@@ -78,3 +80,4 @@ extern AR9300DLLSPEC int Ar9300TxGainTableRead_AddressHeader(unsigned int addres
 
 extern AR9300DLLSPEC int Ar9300TxGainTableRead_AddressValue(unsigned int address, int idx, char *rName, char *fName, int *value, int *low, int *high);
 
+#endif

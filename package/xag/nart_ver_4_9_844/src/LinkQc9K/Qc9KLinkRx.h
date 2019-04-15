@@ -13,3 +13,5 @@ extern int Qc9KLinkRxStart(int promiscuous);
 extern void Qc9KLinkRxSpectralScan(int spectralscan, void ( *f ) ( int rssi, int *rssic, int *rssie, int nchain, int *spectrum, int nspectrum ) );
 
 #endif //_QC9K_LINK_RX_H_
+
+

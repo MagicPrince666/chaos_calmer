@@ -1,4 +1,5 @@
-
+#ifndef _NARTERROR_H_
+#define _NARTERROR_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -45,4 +46,4 @@ enum
 
 extern PARSEDLLSPEC void NartErrorInit(void);
 
-
+#endif

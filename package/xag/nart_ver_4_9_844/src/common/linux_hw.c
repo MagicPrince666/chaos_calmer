@@ -25,7 +25,7 @@
 
 #include "UserPrint.h"
 #include "common_hw.h"
-//#include "ar5210reg.h"
+#include "linuxdrv.h"
 #include "dk_common.h"
 #include "event.h"
 #include "dk_ioctl.h"
@@ -776,7 +776,7 @@ A_STATUS get_device_client_info(MDK_WLAN_DEV_INFO *pdevInfo, PDRV_VERSION_INFO p
 
    /* open the device based on the device index */
    if (pdevInfo->pdkInfo->instance > (WLAN_MAX_DEV-1)) {
-	    A_FREE(pdevInfo->pdkInfo);
+	A_FREE(pdevInfo->pdkInfo);
         A_FREE(pdevInfo);
         uiPrintf("Error: Only 4 devices/functions supported !\n");
         return(A_ERROR);
@@ -785,7 +785,7 @@ A_STATUS get_device_client_info(MDK_WLAN_DEV_INFO *pdevInfo, PDRV_VERSION_INFO p
     hDevice = open_device(pdevInfo->pdkInfo->device_fn, pdevInfo->pdkInfo->instance, NULL);
     if (hDevice == A_ERROR) {
         uiPrintf("Error: Unable to open the device !\n");
-	    A_FREE(pdevInfo->pdkInfo);
+	A_FREE(pdevInfo->pdkInfo);
         A_FREE(pdevInfo);
         return(A_ERROR);
     }
@@ -817,8 +817,8 @@ A_STATUS get_device_client_info(MDK_WLAN_DEV_INFO *pdevInfo, PDRV_VERSION_INFO p
 	     if (cliInfo->aregVirAddr[iIndex] == 0) {
 		   uiPrintf("Error: Cannot map the device registers in user address space \n");
 		   close(hDevice);
-	       A_FREE(pdevInfo->pdkInfo);
-           A_FREE(pdevInfo);
+	        A_FREE(pdevInfo->pdkInfo);
+                A_FREE(pdevInfo);
 		   return A_ERROR;
 	   }
 #if (CFG_64BIT == 1)
@@ -851,8 +851,8 @@ A_STATUS get_device_client_info(MDK_WLAN_DEV_INFO *pdevInfo, PDRV_VERSION_INFO p
                 uiPrintf("Error: munmap to address %x:range=%x: failed with error %s\n", linux_cliInfo.reg_phy_addr,  linux_cliInfo.reg_range, strerror(errno));
         }
 		close(hDevice);
-	    A_FREE(pdevInfo->pdkInfo);
-        A_FREE(pdevInfo);
+	        A_FREE(pdevInfo->pdkInfo);
+                A_FREE(pdevInfo);
 		return A_ERROR;
 	}
 #if (CFG_64BIT == 1)

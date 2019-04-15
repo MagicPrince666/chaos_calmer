@@ -1,6 +1,7 @@
+#ifndef _CARD_H_
+#define _CARD_H_
 
-
-
+#include "ParameterSelect.h"
 //
 // check is a card is loaded.
 // if not, try to load using the default id from the bus
@@ -97,5 +98,8 @@ extern int CardRxChainMask(void);
 
 extern void FreeMemoryPrint(void);
 
+extern int CardPllScreen(int client);
+
 extern int ar9300ChainMany();
 
+#endif

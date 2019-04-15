@@ -182,9 +182,10 @@ union wlanMACAddr {
 #define WLAN_HDR_SIZE           24      /* length for 802.11 frame header without address 4 */
 #define WLAN_HDR4_SIZE          32      /* length for 802.11 frame header with adress 4 */
 #define MAX_WLAN_BODY_SIZE      2312    /* max length for 802.11 frame body */
-#define WLAN_CTRL_FRAME_SIZE    (sizeof(WLAN_FRAME_ACK) + FCS_FIELD_SIZE)
+
 
 #define FCS_FIELD_SIZE          4       /* size of FCS */
+//#define WLAN_CTRL_FRAME_SIZE    (sizeof(WLAN_FRAME_ACK) + FCS_FIELD_SIZE)
 #define WEP_IV_FIELD_SIZE       4       /* wep IV field size */
 #define AES_IV_FIELD_SIZE       4       /* aes IV field size */
 #define EXT_IV_FIELD_SIZE       4       /* ext IV field size */

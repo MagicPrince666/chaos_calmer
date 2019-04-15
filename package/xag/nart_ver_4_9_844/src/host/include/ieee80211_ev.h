@@ -1,6 +1,7 @@
+#include <stdint.h>
 
 struct ev_msg {
-    u_int8_t addr[6];
-    u_int32_t status;
-    u_int32_t reason;
+    uint8_t addr[6];
+    uint32_t status;
+    uint32_t reason;
 };

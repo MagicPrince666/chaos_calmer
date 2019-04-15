@@ -236,168 +236,168 @@ enum
 
 static struct _ParameterList rates[]=
 {
-	{code_all, "all"},
-	{code_all_legacy, "all_legacy","legacy_all"},
-	{code_all_mcs_ht_20, "all_mcs_ht_20","all_mcs_ht20","ht20_mcs_all"},
-	{code_all_mcs_ht_40, "all_mcs_ht_40","all_mcs_ht40","ht40_mcs_all"},
-	{code_all_dvt, "all_dvt","dvt_all"},
-	{code_all_vmcs_ht_20, "all_vmcs_ht_20","all_vmcs_ht20","ht20_vmcs_all"},
-	{code_all_vmcs_ht_40, "all_vmcs_ht_40","all_vmcs_ht40","ht40_vmcs_all"},
-	{code_all_vmcs_ht_80, "all_vmcs_ht_80","all_vmcs_ht80","ht80_vmcs_all"},
-	{code_all_vdvt, "all_vdvt","vdvt_all"},
-	{code_11s, "11s"},
-	{code_11l, "11l"},
-	{code_5s, "5s"},
-	{code_5l, "5l"},
-	{code_2s, "2s"},
-	{code_2l, "2l"},
-	{code_1l, "1l"},
-	{code_6, "6"},
-	{code_9, "9"},
-	{code_12, "12"},
-	{code_18, "18"},
-	{code_24, "24"},
-	{code_36, "36"},
-	{code_48, "48"},
-	{code_54, "54"},
-	{code_t0, "t0", "mcs0"},
-	{code_t1, "t1", "mcs1"},
-	{code_t2, "t2", "mcs2"},
-	{code_t3, "t3", "mcs3"},
-	{code_t4, "t4", "mcs4"},
-	{code_t5, "t5", "mcs5"},
-	{code_t6, "t6", "mcs6"},
-	{code_t7, "t7", "mcs7"},
-	{code_t8, "t8", "mcs8"},
-	{code_t9, "t9", "mcs9"},
-	{code_t10, "t10", "mcs10"},
-	{code_t11, "t11", "mcs11"},
-	{code_t12, "t12", "mcs12"},
-	{code_t13, "t13", "mcs13"},
-	{code_t14, "t14", "mcs14"},
-	{code_t15, "t15", "mcs15"},
-	{code_t16, "t16", "mcs16"},
-	{code_t17, "t17", "mcs17"},
-	{code_t18, "t18", "mcs18"},
-	{code_t19, "t19", "mcs19"},
-	{code_t20, "t20", "mcs20"},
-	{code_t21, "t21", "mcs21"},
-	{code_t22, "t22", "mcs22"},
-	{code_t23, "t23", "mcs23"},
-	{code_vt0, "vt0", "vmcs0"},
-	{code_vt1, "vt1", "vmcs1"},
-	{code_vt2, "vt2", "vmcs2"},
-	{code_vt3, "vt3", "vmcs3"},
-	{code_vt4, "vt4", "vmcs4"},
-	{code_vt5, "vt5", "vmcs5"},
-	{code_vt6, "vt6", "vmcs6"},
-	{code_vt7, "vt7", "vmcs7"},
-	{code_vt8, "vt8", "vmcs8"},
-	{code_vt9, "vt9", "vmcs9"},
-	{code_vt10, "vt10", "vmcs10"},
-	{code_vt11, "vt11", "vmcs11"},
-	{code_vt12, "vt12", "vmcs12"},
-	{code_vt13, "vt13", "vmcs13"},
-	{code_vt14, "vt14", "vmcs14"},
-	{code_vt15, "vt15", "vmcs15"},
-	{code_vt16, "vt16", "vmcs16"},
-	{code_vt17, "vt17", "vmcs17"},
-	{code_vt18, "vt18", "vmcs18"},
-	{code_vt19, "vt19", "vmcs19"},
-	{code_vt20, "vt20", "vmcs20"},
-	{code_vt21, "vt21", "vmcs21"},
-	{code_vt22, "vt22", "vmcs22"},
-	{code_vt23, "vt23", "vmcs23"},
-	{code_vt24, "vt24", "vmcs24"},
-	{code_vt25, "vt25", "vmcs25"},
-	{code_vt26, "vt26", "vmcs26"},
-	{code_vt27, "vt27", "vmcs27"},
-	{code_vt28, "vt28", "vmcs28"},
-	{code_vt29, "vt29", "vmcs29"},
-	{code_f0, "f0", "mcs0/40"},
-	{code_f1, "f1", "mcs1/40"},
-	{code_f2, "f2", "mcs2/40"},
-	{code_f3, "f3", "mcs3/40"},
-	{code_f4, "f4", "mcs4/40"},
-	{code_f5, "f5", "mcs5/40"},
-	{code_f6, "f6", "mcs6/40"},
-	{code_f7, "f7", "mcs7/40"},
-	{code_f8, "f8", "mcs8/40"},
-	{code_f9, "f9", "mcs9/40"},
-	{code_f10, "f10", "mcs10/40"},
-	{code_f11, "f11", "mcs11/40"},
-	{code_f12, "f12", "mcs12/40"},
-	{code_f13, "f13", "mcs13/40"},
-	{code_f14, "f14", "mcs14/40"},
-	{code_f15, "f15", "mcs15/40"},
-	{code_f16, "f16", "mcs16/40"},
-	{code_f17, "f17", "mcs17/40"},
-	{code_f18, "f18", "mcs18/40"},
-	{code_f19, "f19", "mcs19/40"},
-	{code_f20, "f20", "mcs20/40"},
-	{code_f21, "f21", "mcs21/40"},
-	{code_f22, "f22", "mcs22/40"},
-	{code_f23, "f23", "mcs23/40"},
-	{code_vf0, "vf0", "vmcs0/40"},
-	{code_vf1, "vf1", "vmcs1/40"},
-	{code_vf2, "vf2", "vmcs2/40"},
-	{code_vf3, "vf3", "vmcs3/40"},
-	{code_vf4, "vf4", "vmcs4/40"},
-	{code_vf5, "vf5", "vmcs5/40"},
-	{code_vf6, "vf6", "vmcs6/40"},
-	{code_vf7, "vf7", "vmcs7/40"},
-	{code_vf8, "vf8", "vmcs8/40"},
-	{code_vf9, "vf9", "vmcs9/40"},
-	{code_vf10, "vf10", "vmcs10/40"},
-	{code_vf11, "vf11", "vmcs11/40"},
-	{code_vf12, "vf12", "vmcs12/40"},
-	{code_vf13, "vf13", "vmcs13/40"},
-	{code_vf14, "vf14", "vmcs14/40"},
-	{code_vf15, "vf15", "vmcs15/40"},
-	{code_vf16, "vf16", "vmcs16/40"},
-	{code_vf17, "vf17", "vmcs17/40"},
-	{code_vf18, "vf18", "vmcs18/40"},
-	{code_vf19, "vf19", "vmcs19/40"},
-	{code_vf20, "vf20", "vmcs20/40"},
-	{code_vf21, "vf21", "vmcs21/40"},
-	{code_vf22, "vf22", "vmcs22/40"},
-	{code_vf23, "vf23", "vmcs23/40"},
-	{code_vf24, "vf24", "vmcs24/40"},
-	{code_vf25, "vf25", "vmcs25/40"},
-	{code_vf26, "vf26", "vmcs26/40"},
-	{code_vf27, "vf27", "vmcs27/40"},
-	{code_vf28, "vf28", "vmcs28/40"},
-	{code_vf29, "vf29", "vmcs29/40"},
-	{code_ve0, "ve0", "vmcs0/80"},
-	{code_ve1, "ve1", "vmcs1/80"},
-	{code_ve2, "ve2", "vmcs2/80"},
-	{code_ve3, "ve3", "vmcs3/80"},
-	{code_ve4, "ve4", "vmcs4/80"},
-	{code_ve5, "ve5", "vmcs5/80"},
-	{code_ve6, "ve6", "vmcs6/80"},
-	{code_ve7, "ve7", "vmcs7/80"},
-	{code_ve8, "ve8", "vmcs8/80"},
-	{code_ve9, "ve9", "vmcs9/80"},
-	{code_ve10, "ve10", "vmcs10/80"},
-	{code_ve11, "ve11", "vmcs11/80"},
-	{code_ve12, "ve12", "vmcs12/80"},
-	{code_ve13, "ve13", "vmcs13/80"},
-	{code_ve14, "ve14", "vmcs14/80"},
-	{code_ve15, "ve15", "vmcs15/80"},
-	{code_ve16, "ve16", "vmcs16/80"},
-	{code_ve17, "ve17", "vmcs17/80"},
-	{code_ve18, "ve18", "vmcs18/80"},
-	{code_ve19, "ve19", "vmcs19/80"},
-	{code_ve20, "ve20", "vmcs20/80"},
-	{code_ve21, "ve21", "vmcs21/80"},
-	{code_ve22, "ve22", "vmcs22/80"},
-	{code_ve23, "ve23", "vmcs23/80"},
-	{code_ve24, "ve24", "vmcs24/80"},
-	{code_ve25, "ve25", "vmcs25/80"},
-	{code_ve26, "ve26", "vmcs26/80"},
-	{code_ve27, "ve27", "vmcs27/80"},
-	{code_ve28, "ve28", "vmcs28/80"},
-	{code_ve29, "ve29", "vmcs29/80"},
+	{code_all,{"all"}},
+	{code_all_legacy, {"all_legacy","legacy_all"}},
+	{code_all_mcs_ht_20, {"all_mcs_ht_20","all_mcs_ht20","ht20_mcs_all"}},
+	{code_all_mcs_ht_40, {"all_mcs_ht_40","all_mcs_ht40","ht40_mcs_all"}},
+	{code_all_dvt, {"all_dvt","dvt_all"}},
+	{code_all_vmcs_ht_20, {"all_vmcs_ht_20","all_vmcs_ht20","ht20_vmcs_all"}},
+	{code_all_vmcs_ht_40, {"all_vmcs_ht_40","all_vmcs_ht40","ht40_vmcs_all"}},
+	{code_all_vmcs_ht_80, {"all_vmcs_ht_80","all_vmcs_ht80","ht80_vmcs_all"}},
+	{code_all_vdvt, {"all_vdvt","vdvt_all"}},
+	{code_11s, {"11s"}},
+	{code_11l, {"11l"}},
+	{code_5s, {"5s"}},
+	{code_5l, {"5l"}},
+	{code_2s, {"2s"}},
+	{code_2l, {"2l"}},
+	{code_1l, {"1l"}},
+	{code_6, {"6"}},
+	{code_9, {"9"}},
+	{code_12, {"12"}},
+	{code_18, {"18"}},
+	{code_24, {"24"}},
+	{code_36, {"36"}},
+	{code_48, {"48"}},
+	{code_54, {"54"}},
+	{code_t0, {"t0", "mcs0"}},
+	{code_t1, {"t1", "mcs1"}},
+	{code_t2, {"t2", "mcs2"}},
+	{code_t3, {"t3", "mcs3"}},
+	{code_t4, {"t4", "mcs4"}},
+	{code_t5, {"t5", "mcs5"}},
+	{code_t6, {"t6", "mcs6"}},
+	{code_t7, {"t7", "mcs7"}},
+	{code_t8, {"t8", "mcs8"}},
+	{code_t9, {"t9", "mcs9"}},
+	{code_t10, {"t10", "mcs10"}},
+	{code_t11, {"t11", "mcs11"}},
+	{code_t12, {"t12", "mcs12"}},
+	{code_t13, {"t13", "mcs13"}},
+	{code_t14, {"t14", "mcs14"}},
+	{code_t15, {"t15", "mcs15"}},
+	{code_t16, {"t16", "mcs16"}},
+	{code_t17, {"t17", "mcs17"}},
+	{code_t18, {"t18", "mcs18"}},
+	{code_t19, {"t19", "mcs19"}},
+	{code_t20, {"t20", "mcs20"}},
+	{code_t21, {"t21", "mcs21"}},
+	{code_t22, {"t22", "mcs22"}},
+	{code_t23, {"t23", "mcs23"}},
+	{code_vt0, {"vt0", "vmcs0"}},
+	{code_vt1, {"vt1", "vmcs1"}},
+	{code_vt2, {"vt2", "vmcs2"}},
+	{code_vt3, {"vt3", "vmcs3"}},
+	{code_vt4, {"vt4", "vmcs4"}},
+	{code_vt5, {"vt5", "vmcs5"}},
+	{code_vt6, {"vt6", "vmcs6"}},
+	{code_vt7, {"vt7", "vmcs7"}},
+	{code_vt8, {"vt8", "vmcs8"}},
+	{code_vt9, {"vt9", "vmcs9"}},
+	{code_vt10, {"vt10", "vmcs10"}},
+	{code_vt11, {"vt11", "vmcs11"}},
+	{code_vt12, {"vt12", "vmcs12"}},
+	{code_vt13, {"vt13", "vmcs13"}},
+	{code_vt14, {"vt14", "vmcs14"}},
+	{code_vt15, {"vt15", "vmcs15"}},
+	{code_vt16, {"vt16", "vmcs16"}},
+	{code_vt17, {"vt17", "vmcs17"}},
+	{code_vt18, {"vt18", "vmcs18"}},
+	{code_vt19, {"vt19", "vmcs19"}},
+	{code_vt20, {"vt20", "vmcs20"}},
+	{code_vt21, {"vt21", "vmcs21"}},
+	{code_vt22, {"vt22", "vmcs22"}},
+	{code_vt23, {"vt23", "vmcs23"}},
+	{code_vt24, {"vt24", "vmcs24"}},
+	{code_vt25, {"vt25", "vmcs25"}},
+	{code_vt26, {"vt26", "vmcs26"}},
+	{code_vt27, {"vt27", "vmcs27"}},
+	{code_vt28, {"vt28", "vmcs28"}},
+	{code_vt29, {"vt29", "vmcs29"}},
+	{code_f0, {"f0", "mcs0/40"}},
+	{code_f1, {"f1", "mcs1/40"}},
+	{code_f2, {"f2", "mcs2/40"}},
+	{code_f3, {"f3", "mcs3/40"}},
+	{code_f4, {"f4", "mcs4/40"}},
+	{code_f5, {"f5", "mcs5/40"}},
+	{code_f6, {"f6", "mcs6/40"}},
+	{code_f7, {"f7", "mcs7/40"}},
+	{code_f8, {"f8", "mcs8/40"}},
+	{code_f9, {"f9", "mcs9/40"}},
+	{code_f10, {"f10", "mcs10/40"}},
+	{code_f11, {"f11", "mcs11/40"}},
+	{code_f12, {"f12", "mcs12/40"}},
+	{code_f13, {"f13", "mcs13/40"}},
+	{code_f14, {"f14", "mcs14/40"}},
+	{code_f15, {"f15", "mcs15/40"}},
+	{code_f16, {"f16", "mcs16/40"}},
+	{code_f17, {"f17", "mcs17/40"}},
+	{code_f18, {"f18", "mcs18/40"}},
+	{code_f19, {"f19", "mcs19/40"}},
+	{code_f20, {"f20", "mcs20/40"}},
+	{code_f21, {"f21", "mcs21/40"}},
+	{code_f22, {"f22", "mcs22/40"}},
+	{code_f23, {"f23", "mcs23/40"}},
+	{code_vf0, {"vf0", "vmcs0/40"}},
+	{code_vf1, {"vf1", "vmcs1/40"}},
+	{code_vf2, {"vf2", "vmcs2/40"}},
+	{code_vf3, {"vf3", "vmcs3/40"}},
+	{code_vf4, {"vf4", "vmcs4/40"}},
+	{code_vf5, {"vf5", "vmcs5/40"}},
+	{code_vf6, {"vf6", "vmcs6/40"}},
+	{code_vf7, {"vf7", "vmcs7/40"}},
+	{code_vf8, {"vf8", "vmcs8/40"}},
+	{code_vf9, {"vf9", "vmcs9/40"}},
+	{code_vf10, {"vf10", "vmcs10/40"}},
+	{code_vf11, {"vf11", "vmcs11/40"}},
+	{code_vf12, {"vf12", "vmcs12/40"}},
+	{code_vf13, {"vf13", "vmcs13/40"}},
+	{code_vf14, {"vf14", "vmcs14/40"}},
+	{code_vf15, {"vf15", "vmcs15/40"}},
+	{code_vf16, {"vf16", "vmcs16/40"}},
+	{code_vf17, {"vf17", "vmcs17/40"}},
+	{code_vf18, {"vf18", "vmcs18/40"}},
+	{code_vf19, {"vf19", "vmcs19/40"}},
+	{code_vf20, {"vf20", "vmcs20/40"}},
+	{code_vf21, {"vf21", "vmcs21/40"}},
+	{code_vf22, {"vf22", "vmcs22/40"}},
+	{code_vf23, {"vf23", "vmcs23/40"}},
+	{code_vf24, {"vf24", "vmcs24/40"}},
+	{code_vf25, {"vf25", "vmcs25/40"}},
+	{code_vf26, {"vf26", "vmcs26/40"}},
+	{code_vf27, {"vf27", "vmcs27/40"}},
+	{code_vf28, {"vf28", "vmcs28/40"}},
+	{code_vf29, {"vf29", "vmcs29/40"}},
+	{code_ve0, {"ve0", "vmcs0/80"}},
+	{code_ve1, {"ve1", "vmcs1/80"}},
+	{code_ve2, {"ve2", "vmcs2/80"}},
+	{code_ve3, {"ve3", "vmcs3/80"}},
+	{code_ve4, {"ve4", "vmcs4/80"}},
+	{code_ve5, {"ve5", "vmcs5/80"}},
+	{code_ve6, {"ve6", "vmcs6/80"}},
+	{code_ve7, {"ve7", "vmcs7/80"}},
+	{code_ve8, {"ve8", "vmcs8/80"}},
+	{code_ve9, {"ve9", "vmcs9/80"}},
+	{code_ve10, {"ve10", "vmcs10/80"}},
+	{code_ve11, {"ve11", "vmcs11/80"}},
+	{code_ve12, {"ve12", "vmcs12/80"}},
+	{code_ve13, {"ve13", "vmcs13/80"}},
+	{code_ve14, {"ve14", "vmcs14/80"}},
+	{code_ve15, {"ve15", "vmcs15/80"}},
+	{code_ve16, {"ve16", "vmcs16/80"}},
+	{code_ve17, {"ve17", "vmcs17/80"}},
+	{code_ve18, {"ve18", "vmcs18/80"}},
+	{code_ve19, {"ve19", "vmcs19/80"}},
+	{code_ve20, {"ve20", "vmcs20/80"}},
+	{code_ve21, {"ve21", "vmcs21/80"}},
+	{code_ve22, {"ve22", "vmcs22/80"}},
+	{code_ve23, {"ve23", "vmcs23/80"}},
+	{code_ve24, {"ve24", "vmcs24/80"}},
+	{code_ve25, {"ve25", "vmcs25/80"}},
+	{code_ve26, {"ve26", "vmcs26/80"}},
+	{code_ve27, {"ve27", "vmcs27/80"}},
+	{code_ve28, {"ve28", "vmcs28/80"}},
+	{code_ve29, {"ve29", "vmcs29/80"}},
 };
 
 
@@ -414,7 +414,7 @@ PARSEDLLSPEC void ParseParameterReplacement(char * (*f)(char *name, char *buffer
 
 static int TryOtherFormats(char *text, int *value)
 {
-	int extra;
+	char extra;
 	int ngot;
 
 	ngot=0;
@@ -469,7 +469,7 @@ PARSEDLLSPEC int ParseIntegerList(int input, char *name, int *value, struct _Par
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 
     ParseErrorInit();
 
@@ -691,7 +691,7 @@ PARSEDLLSPEC int ParseFloatList(int input, char *name, float *value, struct _Par
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 
     ParseErrorInit();
 
@@ -898,7 +898,7 @@ PARSEDLLSPEC int ParseDoubleList(int input, char *name, double *value, struct _P
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 
     ParseErrorInit();
 
@@ -1104,7 +1104,7 @@ PARSEDLLSPEC int ParseAddressList(int input, char *name, unsigned int *low, unsi
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 	char *tplus;
 
     ParseErrorInit();
@@ -1174,7 +1174,7 @@ PARSEDLLSPEC int ParseAddressList(int input, char *name, unsigned int *low, unsi
 			}
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tmin,&vmin);
+				ngot=TryOtherFormats(tmin,(int*)&vmin);
 			}
 			if(ngot!=1) 
 			{
@@ -1223,7 +1223,7 @@ PARSEDLLSPEC int ParseAddressList(int input, char *name, unsigned int *low, unsi
 				}
 				if(ngot!=1)
 				{
-					ngot=TryOtherFormats(tmax,&vmax);
+					ngot=TryOtherFormats(tmax,(int*)&vmax);
 				}
 				if(ngot!=1) 
 				{
@@ -1265,7 +1265,7 @@ PARSEDLLSPEC int ParseAddressList(int input, char *name, unsigned int *low, unsi
 			}
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tinc,&vinc);
+				ngot=TryOtherFormats(tinc,(int*)&vinc);
 			}
 			if(ngot!=1) 
 			{
@@ -1298,7 +1298,7 @@ PARSEDLLSPEC int ParseHexList(int input, char *name, unsigned int *value, struct
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 	char *tplus;
 
     ParseErrorInit();
@@ -1368,7 +1368,7 @@ PARSEDLLSPEC int ParseHexList(int input, char *name, unsigned int *value, struct
 			}
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tmin,&vmin);
+				ngot=TryOtherFormats(tmin,(int*)&vmin);
 			}
 			if(ngot!=1) 
 			{
@@ -1417,7 +1417,7 @@ PARSEDLLSPEC int ParseHexList(int input, char *name, unsigned int *value, struct
 				}
 				if(ngot!=1)
 				{
-					ngot=TryOtherFormats(tmax,&vmax);
+					ngot=TryOtherFormats(tmax,(int*)&vmax);
 				}
 				if(ngot!=1) 
 				{
@@ -1459,7 +1459,7 @@ PARSEDLLSPEC int ParseHexList(int input, char *name, unsigned int *value, struct
 			}
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tinc,&vinc);
+				ngot=TryOtherFormats(tinc,(int*)&vinc);
 			}
 			if(ngot!=1) 
 			{
@@ -1550,7 +1550,7 @@ PARSEDLLSPEC int ParseUnsignedList(int input, char *name, unsigned int *value, s
 	char buffer[MBUFFER];
 	char *tmin, *tmax, *tinc;
 	int index;
-	int extra;
+	char extra;
 
     ParseErrorInit();
 
@@ -1608,7 +1608,7 @@ PARSEDLLSPEC int ParseUnsignedList(int input, char *name, unsigned int *value, s
 			ngot=sscanf(tmin, " %u %1c",&vmin,&extra);
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tmin,&vmin);
+				ngot=TryOtherFormats(tmin,(int*)&vmin);
 			}
 			if(ngot!=1) 
 			{
@@ -1646,7 +1646,7 @@ PARSEDLLSPEC int ParseUnsignedList(int input, char *name, unsigned int *value, s
 				ngot=sscanf(tmax, " %u %1c",&vmax,&extra);
 				if(ngot!=1)
 				{
-					ngot=TryOtherFormats(tmax,&vmax);
+					ngot=TryOtherFormats(tmax,(int*)&vmax);
 				}
 				if(ngot!=1) 
 				{
@@ -1677,7 +1677,7 @@ PARSEDLLSPEC int ParseUnsignedList(int input, char *name, unsigned int *value, s
 			ngot=sscanf(tinc, " %u %1c",&vinc,&extra);
 			if(ngot!=1)
 			{
-				ngot=TryOtherFormats(tinc,&vinc);
+				ngot=TryOtherFormats(tinc,(int*)&vinc);
 			}
 			if(ngot!=1) 
 			{
@@ -1755,7 +1755,7 @@ PARSEDLLSPEC int ParseUnsigned(int input, char *name, int max, unsigned int *val
 	list.minimum=0;
 	list.maximum=0;
 
-	return ParseIntegerList(input,name,value,&list);
+	return ParseIntegerList(input,name,(int*)value,&list);
 }
 
 

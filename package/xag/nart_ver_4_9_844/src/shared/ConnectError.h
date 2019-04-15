@@ -1,4 +1,5 @@
-
+#ifndef _CONNETERROR_H_
+#define _CONNETERROR_H_
 
 
 #ifdef _WINDOWS
@@ -98,3 +99,4 @@ enum
 
 extern PARSEDLLSPEC void ConnectErrorInit(void);
 
+#endif

@@ -47,7 +47,7 @@ static int RateFlip;			// count the number of times we've only gotten one at a c
 								// if this happens a lot (>10 times), we turn on RateInterleave
 
 
-#define MRATE 100
+//#define MRATE 100
 
 static int AggSize=0;
 static int AggCount=0;

@@ -37,3 +37,4 @@ extern int ChannelCalculate();
 extern int ChannelCommand(int client);
 
 #endif //_INC_CHANNEL_H
+

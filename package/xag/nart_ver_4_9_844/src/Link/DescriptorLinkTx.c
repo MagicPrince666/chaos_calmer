@@ -36,7 +36,7 @@
 #include "Field.h"
 
 
-#define MRATE 100
+//#define MRATE 100
 #define MDESCRIPTOR 30
 
 

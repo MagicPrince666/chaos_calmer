@@ -31,6 +31,78 @@
 
 extern struct ath_hal *AH;
 
+const static char *sRatePrintHT[24] = 
+{
+	"MCS0 ",
+	"MCS1 ", 
+	"MCS2 ",
+	"MCS3 ",
+	"MCS4 ",
+	"MCS5 ",
+	"MCS6 ",
+	"MCS7 ",
+	"MCS8 ",
+	"MCS9 ",
+	"MCS10",
+	"MCS11",
+	"MCS12",
+	"MCS13",
+	"MCS14",
+	"MCS15",
+	"MCS16",
+	"MCS17",
+	"MCS18",
+	"MCS19",
+	"MCS20",
+	"MCS21",
+	"MCS22",
+	"MCS23"
+};
+
+
+const static char *sRatePrintLegacy[4] = 
+{
+	"6-24",
+	" 36 ", 
+	" 48 ", 
+	" 54 "
+};
+
+
+
+const static char *sRatePrintCck[4] = 
+{
+	"1L-5L",
+	" 5S  ", 
+	" 11L ", 
+	" 11S "
+};
+
+
+
+const static char *sDeviceType[] = {
+	"UNKNOWN",
+	"Cardbus",
+	"PCI    ",
+	"MiniPCI",
+	"AP     ",
+	"PCIE   ",
+	"UNKNOWN",
+	"UNKNOWN",
+};
+
+const static char *sCtlType[] = {
+	"[ 11A base mode ]",
+	"[ 11B base mode ]",
+	"[ 11G base mode ]",
+	"[ INVALID       ]",
+	"[ INVALID       ]",
+	"[ 2G HT20 mode  ]",
+	"[ 5G HT20 mode  ]",
+	"[ 2G HT40 mode  ]",
+	"[ 5G HT40 mode  ]",
+};
+
 void print9300BaseHeader(int client, const OSPREY_BASE_EEP_HEADER    *pBaseEepHeader)
 {
 	char  buffer[MBUFFER];

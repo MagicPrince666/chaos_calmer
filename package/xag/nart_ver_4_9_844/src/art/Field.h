@@ -1,3 +1,5 @@
+#ifndef _FIELD_H_
+#define _FIELD_H_
 
 #ifdef _WINDOWS
 #ifdef FIELDDLL
@@ -43,3 +45,5 @@ extern FIELDDLLSPEC int FieldList(char *pattern, void (*print)(char *name, unsig
 
 extern FIELDDLLSPEC int FieldGet(char *name, unsigned int *value, unsigned int reg);
 extern FIELDDLLSPEC int FieldSet(char *name, unsigned int value, unsigned int *reg);
+
+#endif

@@ -12,7 +12,7 @@
 #define _IEEE80211_WNM_PROTO_H_ 
 
 #include <sys/queue.h>
-
+#include <stdint.h>
 /*
  * Wireless Network management Protocol definitions
  */
@@ -65,10 +65,10 @@ enum {
 #define MAC_ADDR_LEN 6
 
 typedef struct wnm_netlink_event {
-    u_int32_t type;
-    u_int8_t mac[MAC_ADDR_LEN];
-    u_int32_t datalen;
-    u_int8_t event_data[IEEE80211_WNM_NETLINKBUF];
+    uint32_t type;
+    uint8_t mac[MAC_ADDR_LEN];
+    uint32_t datalen;
+    uint8_t event_data[IEEE80211_WNM_NETLINKBUF];
 }__packed wnm_netlink_event_t;
 
 
@@ -99,41 +99,41 @@ enum {
 
 
 struct tclas_type3 {
-    u_int16_t filter_offset;
-    u_int8_t  *filter_value;
-    u_int8_t  *filter_mask;
-    u_int8_t  filter_len;
+    uint16_t filter_offset;
+    uint8_t  *filter_value;
+    uint8_t  *filter_mask;
+    uint8_t  filter_len;
 } __packed;
 
 
 struct tclas_type4_v4 {
-    u_int8_t  version;
-    u_int8_t  src_ip[IEEE80211_IPV4_LEN];
-    u_int8_t  dst_ip[IEEE80211_IPV4_LEN];
-    u_int16_t src_port;
-    u_int16_t dst_port;
-    u_int8_t  dscp;
-    u_int8_t  protocol;
-    u_int8_t  reserved;
+    uint8_t  version;
+    uint8_t  src_ip[IEEE80211_IPV4_LEN];
+    uint8_t  dst_ip[IEEE80211_IPV4_LEN];
+    uint16_t src_port;
+    uint16_t dst_port;
+    uint8_t  dscp;
+    uint8_t  protocol;
+    uint8_t  reserved;
 } __packed;
 
 struct tclas_type4_v6 {
-    u_int8_t version;
-    u_int8_t  src_ip[IEEE80211_IPV6_LEN];
-    u_int8_t  dst_ip[IEEE80211_IPV6_LEN];
-    u_int16_t src_port;
-    u_int16_t dst_port;
-    u_int8_t  dscp;
-    u_int8_t  next_header;
-    u_int8_t  flow_label[3];
+    uint8_t version;
+    uint8_t  src_ip[IEEE80211_IPV6_LEN];
+    uint8_t  dst_ip[IEEE80211_IPV6_LEN];
+    uint16_t src_port;
+    uint16_t dst_port;
+    uint8_t  dscp;
+    uint8_t  next_header;
+    uint8_t  flow_label[3];
 } __packed;
 
 typedef struct tclas_element {
-    u_int8_t  elemid;
-    u_int8_t  len;
-    u_int8_t  up;
-    u_int8_t  type;
-    u_int8_t  mask;
+    uint8_t  elemid;
+    uint8_t  len;
+    uint8_t  up;
+    uint8_t  type;
+    uint8_t  mask;
     union {
         struct tclas_type3  type3;
         union {
@@ -145,60 +145,60 @@ typedef struct tclas_element {
 } __packed ieee80211_tclas_element;
 
 typedef struct ieee80211_tclas_processing {
-    u_int8_t elem_id;
-    u_int8_t length;
-    u_int8_t tclas_process;
+    uint8_t elem_id;
+    uint8_t length;
+    uint8_t tclas_process;
 } __packed ieee80211_tclas_processing;
     
 
 typedef struct ieee80211_tfs_subelement_rsp {
-    u_int8_t elem_id;
-    u_int8_t length;
-    u_int8_t status;
-    u_int8_t tfsid;
+    uint8_t elem_id;
+    uint8_t length;
+    uint8_t status;
+    uint8_t tfsid;
     TAILQ_ENTRY(ieee80211_tfs_subelement_rsp) tsub_next;
 } __packed ieee80211_tfs_subelement_rsp;
 
 typedef struct ieee80211_tfs_subelement_req {
     TAILQ_HEAD(, tclas_element) tclas_head;
-    u_int8_t elem_id;
-    u_int8_t length;
+    uint8_t elem_id;
+    uint8_t length;
     struct ieee80211_tclas_processing tclasprocess;
     TAILQ_ENTRY(ieee80211_tfs_subelement_req) tsub_next;
 } __packed ieee80211_tfs_subelement_req;
 
 typedef struct ieee80211_tfs_response {
     TAILQ_ENTRY(ieee80211_tfs_response) tfs_rsp_next;
-    u_int8_t tfs_elemid;
-    u_int8_t length;
+    uint8_t tfs_elemid;
+    uint8_t length;
     TAILQ_HEAD(, ieee80211_tfs_subelement_rsp) tfs_rsp_sub;
 } __packed ieee80211_tfs_response;
 
 typedef struct ieee80211_tfs_request {
     TAILQ_ENTRY(ieee80211_tfs_request) tfs_req_next;
-    u_int8_t tfs_elemid;
-    u_int8_t length;
-    u_int8_t tfs_id;
-    u_int8_t tfs_action_code;
+    uint8_t tfs_elemid;
+    uint8_t length;
+    uint8_t tfs_id;
+    uint8_t tfs_action_code;
     TAILQ_HEAD(, ieee80211_tfs_subelement_req) tfs_req_sub;
 } __packed ieee80211_tfs_request;
 
 struct ieee80211_tfsreq{
-    u_int8_t dialogtoken;
+    uint8_t dialogtoken;
     TAILQ_HEAD(, ieee80211_tfs_request)  tfs_req_head;
 }__packed;
 
 struct ieee80211_tfsrsp {
-    u_int8_t dialogtoken;
+    uint8_t dialogtoken;
     TAILQ_HEAD(, ieee80211_tfs_response)  tfs_rsp_head;
 }__packed;
 
 struct ieee80211_bstm_reqinfo {
-    u_int8_t dialogtoken;
-    u_int8_t candidate_list;
-    u_int8_t disassoc;
-    u_int16_t disassoc_timer;
-    u_int8_t validity_itvl;
+    uint8_t dialogtoken;
+    uint8_t candidate_list;
+    uint8_t disassoc;
+    uint16_t disassoc_timer;
+    uint8_t validity_itvl;
 } __packed;
 
 enum IEEE80211_TFS_ERRORS {
@@ -211,22 +211,22 @@ enum IEEE80211_TFS_ERRORS {
 /* Flexible Multicast Service(FMS) Types */
 
 typedef struct ieee80211_rate_identifier_s {
-    u_int8_t mask;
-    u_int8_t mcs_idx;
-    u_int16_t rate;
+    uint8_t mask;
+    uint8_t mcs_idx;
+    uint16_t rate;
 }__packed ieee80211_fms_rate_identifier_t;
 
 typedef struct ieee80211_fmsreq_subele_s
 {
     TAILQ_ENTRY(ieee80211_fmsreq_subele_s) fmssubele_next;
-    u_int8_t accepted;
-    u_int8_t num_tclas;
-    u_int8_t elem_id;
-    u_int8_t len;
-    u_int8_t del_itvl;
-    u_int8_t max_del_itvl;
+    uint8_t accepted;
+    uint8_t num_tclas;
+    uint8_t elem_id;
+    uint8_t len;
+    uint8_t del_itvl;
+    uint8_t max_del_itvl;
     ieee80211_fms_rate_identifier_t rate_id;
-    u_int8_t mcast_addr[6];
+    uint8_t mcast_addr[6];
     TAILQ_HEAD(, tclas_element) tclas_head;
     struct ieee80211_tclas_processing tclasprocess;
 }__packed ieee80211_fmsreq_subele_t;
@@ -235,21 +235,21 @@ typedef struct ieee80211_fmsreq_subele_s
 typedef struct ieee80211_fms_subelement_status_s 
 {
     TAILQ_ENTRY (ieee80211_fms_subelement_status_s) subele_status_next;
-    u_int8_t len;
-    u_int8_t element_status;
-    u_int8_t del_itvl;
-    u_int8_t max_del_itvl;
-    u_int8_t fmsid;
-    u_int8_t fms_counter;
+    uint8_t len;
+    uint8_t element_status;
+    uint8_t del_itvl;
+    uint8_t max_del_itvl;
+    uint8_t fmsid;
+    uint8_t fms_counter;
     ieee80211_fms_rate_identifier_t rate_id;
-    u_int8_t mcast_addr[6];
+    uint8_t mcast_addr[6];
 }ieee80211_fms_subelement_status_t;
 
 typedef struct ieee80211_tclass_subelement_status_s
 {
-    u_int8_t subelementid;
-    u_int8_t len;
-    u_int8_t fmsid;
+    uint8_t subelementid;
+    uint8_t len;
+    uint8_t fmsid;
     TAILQ_HEAD(, tclas_element) tclas_head;
     ieee80211_tclas_processing tclasprocess;
 }ieee80211_tclass_subelement_status_t;
@@ -257,91 +257,91 @@ typedef struct ieee80211_tclass_subelement_status_s
 typedef struct ieee80211_fms_status_subelement_s 
 {
     TAILQ_ENTRY(ieee80211_fms_status_subelement_s) status_subele_next;
-    u_int8_t subelementid;
+    uint8_t subelementid;
     void     *subele_status;
 }ieee80211_fms_status_subelement_t;
 
 typedef struct ieee80211_fms_response_s
 { 
     TAILQ_ENTRY(ieee80211_fms_response_s) fmsrsp_next;
-    u_int8_t elemid;
-    u_int8_t len;
-    u_int8_t fms_token;
+    uint8_t elemid;
+    uint8_t len;
+    uint8_t fms_token;
     TAILQ_HEAD(, ieee80211_fms_status_subelement_s) status_subele_head;
 }ieee80211_fms_response_t;
 
 
 typedef struct ieee80211_fms_request_s {
     TAILQ_ENTRY(ieee80211_fms_request_s) fmsreq_next;
-    u_int8_t elem_id;
-    u_int8_t len;
-    u_int8_t fms_token;
+    uint8_t elem_id;
+    uint8_t len;
+    uint8_t fms_token;
     TAILQ_HEAD(, ieee80211_fmsreq_subele_s) fmssubele_head;
 }ieee80211_fms_request_t;
 
 typedef struct ieee80211_fmsreq_active_element {
     TAILQ_ENTRY(ieee80211_fmsreq_active_element) fmsreq_act_next;
-    u_int8_t fms_token;
+    uint8_t fms_token;
     TAILQ_HEAD(, ieee80211_fms_act_stream_ptr) fmsact_strmptr_head;
 }ieee80211_fmsreq_active_element_t;
 
 struct ieee80211_fmsreq {
-    u_int8_t dialog_token;
+    uint8_t dialog_token;
     TAILQ_HEAD(, ieee80211_fms_request_s) fmsreq_head;
 };
 
 struct ieee80211_fmsrsp {
-    u_int8_t dialog_token;
+    uint8_t dialog_token;
     TAILQ_HEAD(, ieee80211_fms_response_s) fmsrsp_head;
 };
 
 typedef struct ieee80211_fms_action_hdr_s {
-    u_int8_t  ia_category;
-    u_int8_t  ia_action;
-    u_int8_t  dialogtoken;
-    u_int8_t  fms_ies[1];
+    uint8_t  ia_category;
+    uint8_t  ia_action;
+    uint8_t  dialogtoken;
+    uint8_t  fms_ies[1];
 } __packed ieee80211_fms_action_hdr_t;
 
 typedef struct ieee80211_fms_status_tclass_subelement_s {
-    u_int8_t subelement_id;
-    u_int8_t len;
-    u_int8_t fmsid;
-    u_int8_t tclass_elements[1];
+    uint8_t subelement_id;
+    uint8_t len;
+    uint8_t fmsid;
+    uint8_t tclass_elements[1];
 }__packed ieee80211_fms_status_tclass_subelement_t;
 
 typedef struct ieee80211_fms_status_subelements_s {
-    u_int8_t subelement_id;
-    u_int8_t len;
-    u_int8_t element_status;
-    u_int8_t del_itvl;
-    u_int8_t max_del_itvl;
-    u_int8_t fmsid;
-    u_int8_t fms_counter;
+    uint8_t subelement_id;
+    uint8_t len;
+    uint8_t element_status;
+    uint8_t del_itvl;
+    uint8_t max_del_itvl;
+    uint8_t fmsid;
+    uint8_t fms_counter;
     ieee80211_fms_rate_identifier_t rate_id;
-    u_int8_t mcast_addr[6];
+    uint8_t mcast_addr[6];
 }__packed ieee80211_fms_status_subelements_t;
 
 typedef struct ieee80211_fms_hdr_s {
-    u_int8_t elementid;
-    u_int8_t len;
-    u_int8_t fms_token;
+    uint8_t elementid;
+    uint8_t len;
+    uint8_t fms_token;
 }__packed ieee80211_fms_hdr_t;
 
 typedef struct ieee80211_fms_descr_s {
-    u_int8_t elementid;
-    u_int8_t len;
-    u_int8_t num_ctrs;
-    u_int8_t fms_ctrs[1];
+    uint8_t elementid;
+    uint8_t len;
+    uint8_t num_ctrs;
+    uint8_t fms_ctrs[1];
 }__packed ieee80211_fms_descr_t;
 
 typedef struct ieee80211_fms_req_s {
     ieee80211_fms_hdr_t hdr;
-    u_int8_t subelements[1];
+    uint8_t subelements[1];
 }__packed ieee80211_fms_req_t;
 
 typedef struct ieee80211_fms_resp_s {
     ieee80211_fms_hdr_t hdr;
-    u_int8_t subelements[1];
+    uint8_t subelements[1];
 }__packed ieee80211_fms_resp_t;
 
 #endif /* _IEEE80211_WNM_PROTO_H_ */

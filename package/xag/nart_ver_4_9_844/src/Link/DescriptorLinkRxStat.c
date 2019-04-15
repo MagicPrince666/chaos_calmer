@@ -30,7 +30,7 @@
 #define MBUFFER 1024
 #define MDESCRIPTOR 30
 
-#define MRATE 100
+//#define MRATE 100
 
 #define MINRSSI (-10)
 

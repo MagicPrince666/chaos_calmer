@@ -238,7 +238,7 @@ static int Ar9300EepromPrintIt(unsigned char *data,char *ename, int type, int si
 	char names[MPRINTBUFFER];
 	short *vs;
 	int *vl;
-	double *vd;
+	//double *vd;
 	float *vf;
 	int lc, nc=0;
 	int it;
@@ -467,7 +467,7 @@ static int Ar9300EepromPrintIt(unsigned char *data,char *ename, int type, int si
 			            nc=SformatOutput(&buffer[lc],max-lc-1,"%u",(voff+(unsigned int)vuse)&0xffff);
 						break;
 		            case 'c':
-			            nc=SformatOutput(&buffer[lc],max-lc-1,"%2c",(voff+(unsigned int)vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff);
+			            nc=SformatOutput(&buffer[lc],max-lc-1,"%c%c",(voff+(unsigned int)vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff);
 						break;
 					default:
 		            case 'x':
@@ -511,7 +511,7 @@ static int Ar9300EepromPrintIt(unsigned char *data,char *ename, int type, int si
 			            nc=SformatOutput(&buffer[lc],max-lc-1,"%g",voff+vf[it]);
 						break;
 		            case 'c':
-			            nc=SformatOutput(&buffer[lc],max-lc-1,"%4c",(voff+vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff,((voff+(unsigned int)vuse)>>16)&0xff,((voff+(unsigned int)vuse)>>24)&0xff);
+			            nc=SformatOutput(&buffer[lc],max-lc-1,"%c%c%c%c",(voff+vuse)&0xff,(((voff+(unsigned int)vuse)>>8)&0xff),(((voff+(unsigned int)vuse)>>16)&0xff),(((voff+(unsigned int)vuse)>>24)&0xff));
 						break;
 					default:
 		            case 'x':
@@ -586,7 +586,7 @@ void Ar9300EepromPrintEntry(void (*print)(char *format, ...),
 	int im;
 	int lc, nc;
 	char buffer[MPRINTBUFFER],fullname[MPRINTBUFFER];
-	int it, iuse;
+	int it;
 	int different;
 	int length;
 	int ix, iy, iz;
@@ -756,11 +756,11 @@ void Ar9300EepromPrintEntry(void (*print)(char *format, ...),
 void Ar9300EepromDifferenceAnalyze_List(void (*print)(char *format, ...), ar9300_eeprom_t *mptr, int mcount, int all,
 										_EepromPrintStruct *_EepromList, int nt, int checkUnknown)
 {	
-	int msize;
+	//int msize;
 	int offset;
-	int length;
-	int lc, nc;
-	char buffer[MPRINTBUFFER];
+	//int length;
+	//int lc, nc;
+	//char buffer[MPRINTBUFFER];
 	int it;
 	int io;
 	int jw;

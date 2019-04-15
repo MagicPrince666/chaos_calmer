@@ -116,7 +116,7 @@ static void ReturnSigned(char *command, char *name, char *atext, int *value, int
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -142,7 +142,7 @@ static void ReturnUnsigned(char *command, char *name, char *atext, int *value, i
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -168,7 +168,7 @@ static void ReturnHex(char *command, char *name, char *atext, int *value, int nv
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -194,7 +194,7 @@ static void ReturnDouble(char *command, char *name, char *atext, double *value, 
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -425,7 +425,8 @@ static void ReturnGet(int ix, int iy, int iz, int status, int *done, int *error,
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -470,7 +471,8 @@ static void ReturnGetf(int ix, int iy, int iz, int status, int *done, int *error
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -520,7 +522,8 @@ static void ConfigSets(int *done, int *error, int ip, int index, int ix, int iy,
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -589,7 +592,8 @@ static void ConfigfSets(int *done, int *error, int ip, int index, int ix, int iy
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -752,7 +756,7 @@ AR9300DLLSPEC int Ar9300SetCommand(int client)
 	char *text;
 	int status;
 	int ix, iy, iz;
-	unsigned long lvalue, addr; 
+	unsigned int lvalue, addr; 
 	int parseStatus;
 	char atext[MBUFFER];
 
@@ -797,7 +801,7 @@ AR9300DLLSPEC int Ar9300SetCommand(int client)
 					if (parseStatus==1) {
 						parseStatus = ParseHex(++ip, name, 1, &addr);
 						if (parseStatus==1) {
-							status=Ar9300pcieAddressValueDataSet(addr, lvalue);
+							status=Ar9300pcieAddressValueDataSet(addr, lvalue, 0);
 							SformatOutput(buffer, MBUFFER-1, "%s(0x%x) 0x%x", name, addr, lvalue);
 							ReturnText("set",GetParameter[index].word[0],"",buffer);
 						}

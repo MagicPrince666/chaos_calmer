@@ -75,8 +75,8 @@ extern A_INT32 Qc98xxDeltaCck20Set(int value);
 extern A_INT32 Qc98xxDelta4020Set(int value);
 extern A_INT32 Qc98xxDelta8020Set(int value);
 
-extern A_UINT32 Qc98xxThermAdcScaledGainSet(int value);
-extern A_UINT32 Qc98xxThermAdcOffsetSet(int value);
+extern A_INT32 Qc98xxThermAdcScaledGainSet(int value);
+extern A_INT32 Qc98xxThermAdcOffsetSet(int value);
 
 extern A_INT32 Qc98xxCalFreqPierSet(int *value, int ix, int iy, int iz, int num, int iBand);
 extern A_INT32 Qc98xxCalPointTxGainIdxSet(int *value, int ix, int iy, int iz, int num, int iBand);

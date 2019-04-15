@@ -41,6 +41,7 @@
 #include "ar9300eep.h"
 #include "ar9300reg.h"
 #include "ar9300desc.h"
+#include "MyDelay.h"
 
 extern struct ath_hal *AH;
 
@@ -103,9 +104,9 @@ static void Ar9300TemperatureFieldLookup()
 
 static int TemperatureRestart()
 {
-	unsigned int save;
+	//unsigned int save;
 	unsigned int reg;
-    unsigned int txReg;
+    //unsigned int txReg;
     unsigned int readbackReg=0;
     int i;
     int pass = 1;
@@ -202,16 +203,16 @@ static int TemperatureRestart()
 
 AR9300DLLSPEC int Ar9300TemperatureGet(int forceTempRead)
 {
-    unsigned int txReg;
-    unsigned int txState;
+    //unsigned int txReg;
+    //unsigned int txState;
 	unsigned int temperature=0;
-    unsigned int done=0;
+    //unsigned int done=0;
     unsigned int AnalogTemp;
     unsigned int currentTime;
     unsigned int endTime;
-    unsigned int tempReading[NUM_TEMP_READINGS];
-    int i;
-    int maxIndex = 0;
+    //unsigned int tempReading[NUM_TEMP_READINGS];
+    //int i;
+    //int maxIndex = 0;
 
 #ifdef AR9560_EMULATION
 	return 20;

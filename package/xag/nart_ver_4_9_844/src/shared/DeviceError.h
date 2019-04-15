@@ -1,4 +1,5 @@
-
+#ifndef _DEVICEERROR_H_
+#define _DEVICEERROR_H_
 
 
 #ifdef _WINDOWS
@@ -105,3 +106,4 @@ enum
 
 extern PARSEDLLSPEC void DeviceErrorInit(void);
 
+#endif

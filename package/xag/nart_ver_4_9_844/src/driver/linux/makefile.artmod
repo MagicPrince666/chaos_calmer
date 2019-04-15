@@ -1,4 +1,4 @@
-KDIR	:= $(KERNELPATH)
+KDIR	:= /Volumes/WPJ342/xlinkhs/build_dir/target-mips_24kc_musl/linux-ar71xx_generic/linux-4.9.138
 PWD	:= $(shell pwd)
 ROOTDIR := $(PWD)/modules
 
@@ -8,18 +8,22 @@ KERNELARCH=mips
 endif
 
 ARC = $(KERNELARCH)
-CROSS_CC=$(ARC)-linux-uclibc-
+CROSS_CC=/Volumes/WPJ342/xlinkhs/staging_dir/toolchain-mips_24kc_gcc-7.4.0_musl/bin/mips-openwrt-linux-musl-
+STAGING_DIR=/Volumes/WPJ342/xlinkhs/staging_dir
 
 ifeq ($(POWERPC),1)
 ARC     :=powerpc
 CROSS_CC :=powerpc-none-linux-gnuspe-
 endif
 
+DEBUG=0
+
 export KDIR
 export ROOTDIR
 export CROSS_CC
+export STAGING_DIR
 
-all: default
+all: wasp
 
 default:
 	@echo Making generic AP art module build. This build target is used for 3rd party AP processor. 

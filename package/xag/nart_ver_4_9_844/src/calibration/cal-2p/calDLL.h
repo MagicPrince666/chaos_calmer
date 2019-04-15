@@ -1,3 +1,6 @@
+#ifndef _CALDLL_H_
+#define _CALDLL_H_
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -25,11 +28,11 @@ enum CalNextStatus
     CALNEXT_ReMeas,
 };
 
-#define CALIBRATION_SCHEME_TXGAIN				0
-#define CALIBRATION_SCHEME_GAININDEX			1
-#define CALIBRATION_SCHEME_GAININDEX_DACGAIN	2
+#define CALIBRATION_SCHEME_TXGAIN               0
+#define CALIBRATION_SCHEME_GAININDEX            1
+#define CALIBRATION_SCHEME_GAININDEX_DACGAIN    2
 
-#define MAX_INITXGAIN_ENTRY		100
+#define MAX_INITXGAIN_ENTRY    100
 
 // Parse the calibration setup file and get the initial gain settings in setup  file.
 // Cart command line init value could overwrite the first calibration point init value in setup file.
@@ -76,5 +79,7 @@ extern CAL2P_API int Calibration_ParameterSplice(struct _ParameterList *list);
 
 
 #ifdef __cplusplus
-}
+} 
+#endif
+
 #endif

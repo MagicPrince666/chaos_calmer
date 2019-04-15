@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #if 0
 #include <sys/file.h>
@@ -617,7 +620,7 @@ A_BOOL Qc98xxLoadOtp()
 
 #if AP_BUILD
     Qc98xx_eeprom_template_swap();
-    Qc98xx_swap_eeprom(mptr);
+    Qc98xx_swap_eeprom((QC98XX_EEPROM *)mptr);
 #endif
 
     return TRUE;

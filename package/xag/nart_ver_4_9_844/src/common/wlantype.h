@@ -120,7 +120,8 @@ typedef unsigned int           A_UINT32;
 typedef unsigned int           A_UINT;
 typedef unsigned int           UINT;
 #else
-typedef unsigned long           A_UINT32;
+//typedef unsigned long           A_UINT32;
+typedef unsigned int           A_UINT32;
 typedef unsigned long           A_UINT;
 typedef unsigned long           UINT;
 #endif

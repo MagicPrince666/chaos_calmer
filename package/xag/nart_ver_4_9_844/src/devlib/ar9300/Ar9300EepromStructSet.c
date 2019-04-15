@@ -49,14 +49,22 @@
 
 extern struct ath_hal *AH;
 
- double Psat2GPower[2][3]={25.9, 25.9, 25.9,
-                                 25.9, 25.9, 25.9};
- double Psat5GPower[2][8]={24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0,
-                                 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0};
- double Psat2GDiff[2][3]={2.7, 2.7, 2.7,
-                                 2.7, 2.7, 2.7};
- double Psat5GDiff[2][8]={3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,
-                                3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0};
+ double Psat2GPower[2][3]={
+	{25.9, 25.9, 25.9},
+    {25.9, 25.9, 25.9}
+ };
+ double Psat5GPower[2][8]={
+	{24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0},
+    {24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0, 24.0}
+ };
+ double Psat2GDiff[2][3]={
+	{2.7, 2.7, 2.7},
+    {2.7, 2.7, 2.7}
+ };
+ double Psat5GDiff[2][8]={
+	{3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0},
+    {3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0}
+ };
 
 ar9300_eeprom_t *Ar9300EepromStructGet(void)
 {
@@ -198,7 +206,7 @@ A_INT32 Ar9300ReconfigDriveStrengthApply(int value) {
 
 int checkFreq(int value, int iBand)
 {
-	int i;
+	//int i;
 	if (iBand==band_BG) {
 		if (value!=0 && (value >MAX_G_BAND_FREQ || value<MIN_G_BAND_FREQ)) {
 //			sprintf(tValue,"%d is not BG band freq.", value);
@@ -331,7 +339,7 @@ A_INT32 Ar9300TempSlopeSet(int *value, int ix, int iy, int iz, int num,int iBand
 
     return 0;
 }
-A_INT32 Ar9300TempSlopeLowSet(int *value, int ix, int iy, int iz)
+A_INT32 Ar9300TempSlopeLowSet(int *value, int ix, int iy, int iz, int num,int iBand)
 {
 	if(!AR_SREV_SCORPION(AH)) {
 		Ar9300EepromStructGet()->base_ext2.temp_slope_low= (int8_t)value[0];
@@ -350,7 +358,7 @@ A_INT32 Ar9300TempSlopeLowSet(int *value, int ix, int iy, int iz)
     return 0;
 }
 
-A_INT32 Ar9300TempSlopeHighSet(int *value, int ix, int iy, int iz)
+A_INT32 Ar9300TempSlopeHighSet(int *value, int ix, int iy, int iz, int num,int iBand)
 {
 	if(!AR_SREV_SCORPION(AH)) {
 		Ar9300EepromStructGet()->base_ext2.temp_slope_high= (int8_t)value[0];
@@ -598,9 +606,10 @@ A_INT32 Ar9300CustomerDataSet(A_UCHAR *data, A_INT32 len)
     if(len>OSPREY_CUSTOMER_DATA_SIZE) {
         len=OSPREY_CUSTOMER_DATA_SIZE;
     }
-  if (data)
+  if (data){
     for(i=0; i<len; i++)
         Ar9300EepromStructGet()->custData[i]=data[i];
+  }
 
     return 0;
 }
@@ -617,11 +626,11 @@ A_INT32 Ar9300CustomerDataSet(A_UCHAR *data, A_INT32 len)
  */
 A_INT32 Ar9300CaldataMemoryTypeSet(A_UCHAR *memType)
 {
-    if(!strcmp(memType, "eeprom"))
+    if(!strcmp((char *)memType, "eeprom"))
         ar9300_calibration_data_set(AH, calibration_data_eeprom);
-    else if(!strcmp(memType, "flash"))
+    else if(!strcmp((char *)memType, "flash"))
         ar9300_calibration_data_set(AH, calibration_data_flash);
-    else if(!strcmp(memType, "otp"))
+    else if(!strcmp((char *)memType, "otp"))
         ar9300_calibration_data_set(AH, calibration_data_otp);
     else
         return -1;
@@ -1317,7 +1326,7 @@ A_INT32 Ar9300_SWREG_Set(int value)
 
 A_INT32 Ar9300_SWREG_PROGRAM_Set(int value)
 {
-	int status=VALUE_OK;
+	//int status=VALUE_OK;
 	unsigned int address, swregAddr;
 	int low, high;
 	int ngot;
@@ -1511,7 +1520,7 @@ A_INT32 Ar9300xatten1MarginHighSet(int *value, int ix, int iy, int iz, int num, 
  */
 A_INT32 Ar9300spurChansSet(int *value, int ix, int iy, int iz, int num, int iBand)
 {
-	char buff[1024];
+	//char buff[1024];
 	A_UINT8 bin;
 	int i, iv=0;
 	for (i=ix; i<OSPREY_EEPROM_MODAL_SPURS; i++) {
@@ -1825,7 +1834,7 @@ A_INT32 Ar9300thresh62Set(int value, int iBand)
 
 A_INT32 Ar9300calFreqPierSet(int *value, int ix, int iy, int iz, int num, int iBand)
 {
-	char buff[1024];
+	//char buff[1024];
 	A_UINT8 bin;
 	int i, maxnum, iv=0;
 	if (iBand==band_BG)
@@ -2064,7 +2073,7 @@ A_INT32 Ar9300calFreqTGTcckSet(int *value, int ix, int iy, int iz, int num, int 
 
 A_INT32 Ar9300calFreqTGTLegacyOFDMSet(int *value, int ix, int iy, int iz, int num, int iBand)
 {
-	char buff[1024];
+	//char buff[1024];
 	A_UINT8 bin;
 	int i, maxnum, iv=0;
 	if (iBand==band_BG)
@@ -2310,7 +2319,7 @@ A_INT32 Ar9300ctlFreqSet(int *value, int ix, int iy, int iz, int num, int iBand)
 A_INT32 Ar9300ctlPowerSet(double *value, int ix, int iy, int iz, int num, int iBand)
 {
 	u_int8_t  value6;
-	A_UINT8 bin;
+	//A_UINT8 bin;
 	int i, j, j0, iCtl, iEdge, iv=0;
 	if (iBand==band_BG) {
 		iCtl = OSPREY_NUM_CTLS_2G;
@@ -2344,7 +2353,7 @@ A_INT32 Ar9300ctlPowerSet(double *value, int ix, int iy, int iz, int num, int iB
 A_INT32 Ar9300ctlFlagSet(int *value, int ix, int iy, int iz, int num, int iBand)
 {
 	u_int8_t  value2;
-	A_UINT8 bin;
+	//A_UINT8 bin;
 	int i, j, j0, iCtl, iEdge, iv=0;
 	if (iBand==band_BG) {
 		iCtl = OSPREY_NUM_CTLS_2G;
@@ -2381,7 +2390,7 @@ A_INT32 Ar9300ctlFlagSet(int *value, int ix, int iy, int iz, int num, int iBand)
 int Ar9300NoiseFloorSet(int frequency, int ichain, int nf)
 {
 	int fx;
-	int it;
+	//int it;
     ar9300_eeprom_t *eep;
     u_int8_t *pCalPier;
     OSP_CAL_DATA_PER_FREQ_OP_LOOP *pCalPierStruct;
@@ -2442,7 +2451,7 @@ int Ar9300NoiseFloorSet(int frequency, int ichain, int nf)
 int Ar9300NoiseFloorPowerSet(int frequency, int ichain, int nfpower)
 {
 	int fx;
-	int it;
+	//int it;
     ar9300_eeprom_t *eep;
     u_int8_t *pCalPier;
     OSP_CAL_DATA_PER_FREQ_OP_LOOP *pCalPierStruct;
@@ -2501,7 +2510,7 @@ int Ar9300NoiseFloorPowerSet(int frequency, int ichain, int nfpower)
 int Ar9300NoiseFloorTemperatureSet(int frequency, int ichain, int temperature)
 {
 	int fx;
-	int it;
+	//int it;
     ar9300_eeprom_t *eep;
     u_int8_t *pCalPier;
     OSP_CAL_DATA_PER_FREQ_OP_LOOP *pCalPierStruct;

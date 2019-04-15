@@ -21,7 +21,7 @@ enum _DeviceCalibrationDataType
 	DeviceCalibrationDataEeprom,
 	DeviceCalibrationDataOtp,
 	DeviceCalibrationDataDontLoad,
-        DeviceCalibrationDataFile,
+    DeviceCalibrationDataFile,
 	DeviceCalibrationDataDram,
 	DeviceCalibrationDataOtpDryRun,
 };
@@ -740,6 +740,7 @@ struct _TlvDeviceFunction
 };
 extern DEVICEDLLSPEC void TlvDeviceFunctionReset(void);
 extern DEVICEDLLSPEC int TlvDeviceFunctionSelect(struct _TlvDeviceFunction *device);
+extern int DEVICEDLLSPEC DevicePllScreen(void);
 typedef int (*_tlvCallback)(unsigned char*, int, unsigned char*, unsigned long*);
 
 #endif /* _DEVICE_H_ */

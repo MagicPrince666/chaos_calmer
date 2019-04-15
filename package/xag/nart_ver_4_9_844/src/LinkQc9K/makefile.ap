@@ -1,5 +1,5 @@
 OUTPUT_DIR=Linux
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 CFLAGS += -I$(ART_ROOT)/common \
 	  -I$(ART_ROOT)/libtlv/include \

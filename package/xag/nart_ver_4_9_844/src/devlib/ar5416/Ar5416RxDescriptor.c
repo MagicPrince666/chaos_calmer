@@ -157,15 +157,15 @@ static int Ar5416RxDescriptorPrint(void *block, char *buffer, int max)
 	struct Ar5416RxDescriptor *dr=(struct Ar5416RxDescriptor *)block;
 	int lc, nc;
 
-	lc=SformatOutput(buffer,max-1,"`%x`", dr->link_ptr);
+	lc=SformatOutput(buffer,max-1,"`%lx`", dr->link_ptr);
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", dr->buf_ptr);
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`", dr->buf_ptr);
 	if(nc>0)
 	{
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", dr->res);
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`", dr->res);
 	if(nc>0)
 	{
 		lc+=nc;
@@ -205,7 +205,7 @@ static int Ar5416RxDescriptorPrint(void *block, char *buffer, int max)
 		lc+=nc;
 	}
 
-	nc=SformatOutput(&buffer[lc],max-lc-1,"%x`", dr->rcv_timestamp);
+	nc=SformatOutput(&buffer[lc],max-lc-1,"%lx`", dr->rcv_timestamp);
 	if(nc>0)
 	{
 		lc+=nc;

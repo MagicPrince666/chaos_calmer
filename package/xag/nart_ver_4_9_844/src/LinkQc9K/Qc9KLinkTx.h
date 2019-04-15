@@ -22,3 +22,5 @@ extern LINKDLLSPEC int Qc9KLinkTxDataStartCmd(int freq, int cenFreqUsed, int tpc
 extern LINKDLLSPEC int Qc9KLinkTxComplete(int timeout, int (*ison)(), int (*done)(), int chipTemperature, int calibrate);
 
 #endif //_QC9K_LINK_TX_H_
+
+

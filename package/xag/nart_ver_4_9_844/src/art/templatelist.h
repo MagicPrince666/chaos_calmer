@@ -1,4 +1,5 @@
-
+#ifndef _TEMPLATELIST_H_
+#define _TEMPLATELIST_H_
 
 #define MALLOWED 100
 
@@ -174,3 +175,5 @@ static struct _ParameterList TemplateSectionParameter[]=
         
 #define TEMPLATE_SECTION(MALLOWED) {TemplateSection,{"section",0,0},"section(s) to commit",'z',0,MALLOWED,1,1,0,0,&TemplateSectionDefault,  \
         sizeof(TemplateSectionParameter)/sizeof(TemplateSectionParameter[0]),TemplateSectionParameter}
+
+#endif

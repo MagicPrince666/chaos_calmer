@@ -34,6 +34,7 @@
 
 #include "Qc98xxEepromStructGet.h"
 #include "Qc98xxEepromStruct.h"
+#include "Qc98xxEepromSave.h"
 #include "Qc98xxmEep.h"
 #include "Qc9KDevice.h"
 #include "Device.h"

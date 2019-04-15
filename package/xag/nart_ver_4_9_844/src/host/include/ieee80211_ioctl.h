@@ -22,6 +22,7 @@
 #ifndef _NET80211_IEEE80211_IOCTL_H_
 #define _NET80211_IEEE80211_IOCTL_H_
 
+#include <stdint.h>
 /*
  * IEEE 802.11 ioctls.
  */
@@ -59,153 +60,153 @@
  * Per/node (station) statistics available when operating as an AP.
  */
 struct ieee80211_nodestats {
-	u_int32_t	ns_rx_data;		/* rx data frames */
-	u_int32_t	ns_rx_mgmt;		/* rx management frames */
-	u_int32_t	ns_rx_ctrl;		/* rx control frames */
-	u_int32_t	ns_rx_ucast;		/* rx unicast frames */
-	u_int32_t	ns_rx_mcast;		/* rx multi/broadcast frames */
-	u_int64_t	ns_rx_bytes;		/* rx data count (bytes) */
-	u_int64_t	ns_rx_beacons;		/* rx beacon frames */
-	u_int32_t	ns_rx_proberesp;	/* rx probe response frames */
+	uint32_t	ns_rx_data;		/* rx data frames */
+	uint32_t	ns_rx_mgmt;		/* rx management frames */
+	uint32_t	ns_rx_ctrl;		/* rx control frames */
+	uint32_t	ns_rx_ucast;		/* rx unicast frames */
+	uint32_t	ns_rx_mcast;		/* rx multi/broadcast frames */
+	uint64_t	ns_rx_bytes;		/* rx data count (bytes) */
+	uint64_t	ns_rx_beacons;		/* rx beacon frames */
+	uint32_t	ns_rx_proberesp;	/* rx probe response frames */
 
-	u_int32_t	ns_rx_dup;		/* rx discard 'cuz dup */
-	u_int32_t	ns_rx_noprivacy;	/* rx w/ wep but privacy off */
-	u_int32_t	ns_rx_wepfail;		/* rx wep processing failed */
-	u_int32_t	ns_rx_demicfail;	/* rx demic failed */
-	u_int32_t	ns_rx_decap;		/* rx decapsulation failed */
-	u_int32_t	ns_rx_defrag;		/* rx defragmentation failed */
-	u_int32_t	ns_rx_disassoc;		/* rx disassociation */
-	u_int32_t	ns_rx_deauth;		/* rx deauthentication */
-    u_int32_t   ns_rx_action;       /* rx action */
-	u_int32_t	ns_rx_decryptcrc;	/* rx decrypt failed on crc */
-	u_int32_t	ns_rx_unauth;		/* rx on unauthorized port */
-	u_int32_t	ns_rx_unencrypted;	/* rx unecrypted w/ privacy */
+	uint32_t	ns_rx_dup;		/* rx discard 'cuz dup */
+	uint32_t	ns_rx_noprivacy;	/* rx w/ wep but privacy off */
+	uint32_t	ns_rx_wepfail;		/* rx wep processing failed */
+	uint32_t	ns_rx_demicfail;	/* rx demic failed */
+	uint32_t	ns_rx_decap;		/* rx decapsulation failed */
+	uint32_t	ns_rx_defrag;		/* rx defragmentation failed */
+	uint32_t	ns_rx_disassoc;		/* rx disassociation */
+	uint32_t	ns_rx_deauth;		/* rx deauthentication */
+    uint32_t   ns_rx_action;       /* rx action */
+	uint32_t	ns_rx_decryptcrc;	/* rx decrypt failed on crc */
+	uint32_t	ns_rx_unauth;		/* rx on unauthorized port */
+	uint32_t	ns_rx_unencrypted;	/* rx unecrypted w/ privacy */
 
-	u_int32_t	ns_tx_data;		/* tx data frames */
-	u_int32_t	ns_tx_mgmt;		/* tx management frames */
-	u_int32_t	ns_tx_ucast;		/* tx unicast frames */
-	u_int32_t	ns_tx_mcast;		/* tx multi/broadcast frames */
-	u_int64_t	ns_tx_bytes;		/* tx data count (bytes) */
-	u_int32_t	ns_tx_probereq;		/* tx probe request frames */
-	u_int32_t	ns_tx_uapsd;		/* tx on uapsd queue */
+	uint32_t	ns_tx_data;		/* tx data frames */
+	uint32_t	ns_tx_mgmt;		/* tx management frames */
+	uint32_t	ns_tx_ucast;		/* tx unicast frames */
+	uint32_t	ns_tx_mcast;		/* tx multi/broadcast frames */
+	uint64_t	ns_tx_bytes;		/* tx data count (bytes) */
+	uint32_t	ns_tx_probereq;		/* tx probe request frames */
+	uint32_t	ns_tx_uapsd;		/* tx on uapsd queue */
 
-	u_int32_t	ns_tx_novlantag;	/* tx discard 'cuz no tag */
-	u_int32_t	ns_tx_vlanmismatch;	/* tx discard 'cuz bad tag */
+	uint32_t	ns_tx_novlantag;	/* tx discard 'cuz no tag */
+	uint32_t	ns_tx_vlanmismatch;	/* tx discard 'cuz bad tag */
 #ifdef ATH_SUPPORT_IQUE
-	u_int32_t	ns_tx_dropblock;	/* tx discard 'cuz headline block */
+	uint32_t	ns_tx_dropblock;	/* tx discard 'cuz headline block */
 #endif
 
-	u_int32_t	ns_tx_eosplost;		/* uapsd EOSP retried out */
+	uint32_t	ns_tx_eosplost;		/* uapsd EOSP retried out */
 
-	u_int32_t	ns_ps_discard;		/* ps discard 'cuz of age */
+	uint32_t	ns_ps_discard;		/* ps discard 'cuz of age */
 
-	u_int32_t	ns_uapsd_triggers;	     /* uapsd triggers */
-	u_int32_t	ns_uapsd_duptriggers;	 /* uapsd duplicate triggers */
-	u_int32_t	ns_uapsd_ignoretriggers; /* uapsd duplicate triggers */
-	u_int32_t	ns_uapsd_active;         /* uapsd duplicate triggers */
-	u_int32_t	ns_uapsd_triggerenabled; /* uapsd duplicate triggers */
+	uint32_t	ns_uapsd_triggers;	     /* uapsd triggers */
+	uint32_t	ns_uapsd_duptriggers;	 /* uapsd duplicate triggers */
+	uint32_t	ns_uapsd_ignoretriggers; /* uapsd duplicate triggers */
+	uint32_t	ns_uapsd_active;         /* uapsd duplicate triggers */
+	uint32_t	ns_uapsd_triggerenabled; /* uapsd duplicate triggers */
 
 	/* MIB-related state */
-	u_int32_t	ns_tx_assoc;		/* [re]associations */
-	u_int32_t	ns_tx_assoc_fail;	/* [re]association failures */
-	u_int32_t	ns_tx_auth;		/* [re]authentications */
-	u_int32_t	ns_tx_auth_fail;	/* [re]authentication failures*/
-	u_int32_t	ns_tx_deauth;		/* deauthentications */
-	u_int32_t	ns_tx_deauth_code;	/* last deauth reason */
-	u_int32_t	ns_tx_disassoc;		/* disassociations */
-	u_int32_t	ns_tx_disassoc_code;	/* last disassociation reason */
-	u_int32_t	ns_psq_drops;		/* power save queue drops */
+	uint32_t	ns_tx_assoc;		/* [re]associations */
+	uint32_t	ns_tx_assoc_fail;	/* [re]association failures */
+	uint32_t	ns_tx_auth;		/* [re]authentications */
+	uint32_t	ns_tx_auth_fail;	/* [re]authentication failures*/
+	uint32_t	ns_tx_deauth;		/* deauthentications */
+	uint32_t	ns_tx_deauth_code;	/* last deauth reason */
+	uint32_t	ns_tx_disassoc;		/* disassociations */
+	uint32_t	ns_tx_disassoc_code;	/* last disassociation reason */
+	uint32_t	ns_psq_drops;		/* power save queue drops */
 };
 
 /*
  * Summary statistics.
  */
 struct ieee80211_stats {
-	u_int32_t	is_rx_badversion;	/* rx frame with bad version */
-	u_int32_t	is_rx_tooshort;		/* rx frame too short */
-	u_int32_t	is_rx_wrongbss;		/* rx from wrong bssid */
-	u_int32_t	is_rx_dup;		/* rx discard 'cuz dup */
-	u_int32_t	is_rx_wrongdir;		/* rx w/ wrong direction */
-	u_int32_t	is_rx_mcastecho;	/* rx discard 'cuz mcast echo */
-	u_int32_t	is_rx_notassoc;		/* rx discard 'cuz sta !assoc */
-	u_int32_t	is_rx_noprivacy;	/* rx w/ wep but privacy off */
-	u_int32_t	is_rx_unencrypted;	/* rx w/o wep and privacy on */
-	u_int32_t	is_rx_wepfail;		/* rx wep processing failed */
-	u_int32_t	is_rx_decap;		/* rx decapsulation failed */
-	u_int32_t	is_rx_mgtdiscard;	/* rx discard mgt frames */
-	u_int32_t	is_rx_ctl;		/* rx discard ctrl frames */
-	u_int32_t	is_rx_beacon;		/* rx beacon frames */
-	u_int32_t	is_rx_rstoobig;		/* rx rate set truncated */
-	u_int32_t	is_rx_elem_missing;	/* rx required element missing*/
-	u_int32_t	is_rx_elem_toobig;	/* rx element too big */
-	u_int32_t	is_rx_elem_toosmall;	/* rx element too small */
-	u_int32_t	is_rx_elem_unknown;	/* rx element unknown */
-	u_int32_t	is_rx_badchan;		/* rx frame w/ invalid chan */
-	u_int32_t	is_rx_chanmismatch;	/* rx frame chan mismatch */
-	u_int32_t	is_rx_nodealloc;	/* rx frame dropped */
-	u_int32_t	is_rx_ssidmismatch;	/* rx frame ssid mismatch  */
-	u_int32_t	is_rx_auth_unsupported;	/* rx w/ unsupported auth alg */
-	u_int32_t	is_rx_auth_fail;	/* rx sta auth failure */
-	u_int32_t	is_rx_auth_countermeasures;/* rx auth discard 'cuz CM */
-	u_int32_t	is_rx_assoc_bss;	/* rx assoc from wrong bssid */
-	u_int32_t	is_rx_assoc_notauth;	/* rx assoc w/o auth */
-	u_int32_t	is_rx_assoc_capmismatch;/* rx assoc w/ cap mismatch */
-	u_int32_t	is_rx_assoc_norate;	/* rx assoc w/ no rate match */
-	u_int32_t	is_rx_assoc_badwpaie;	/* rx assoc w/ bad WPA IE */
-	u_int32_t	is_rx_deauth;		/* rx deauthentication */
-	u_int32_t	is_rx_disassoc;		/* rx disassociation */
-    u_int32_t   is_rx_action;       /* rx action mgt */
-	u_int32_t	is_rx_badsubtype;	/* rx frame w/ unknown subtype*/
-	u_int32_t	is_rx_nobuf;		/* rx failed for lack of buf */
-	u_int32_t	is_rx_decryptcrc;	/* rx decrypt failed on crc */
-	u_int32_t	is_rx_ahdemo_mgt;	/* rx discard ahdemo mgt frame*/
-	u_int32_t	is_rx_bad_auth;		/* rx bad auth request */
-	u_int32_t	is_rx_unauth;		/* rx on unauthorized port */
-	u_int32_t	is_rx_badkeyid;		/* rx w/ incorrect keyid */
-	u_int32_t	is_rx_ccmpreplay;	/* rx seq# violation (CCMP) */
-	u_int32_t	is_rx_ccmpformat;	/* rx format bad (CCMP) */
-	u_int32_t	is_rx_ccmpmic;		/* rx MIC check failed (CCMP) */
-	u_int32_t	is_rx_tkipreplay;	/* rx seq# violation (TKIP) */
-	u_int32_t	is_rx_tkipformat;	/* rx format bad (TKIP) */
-	u_int32_t	is_rx_tkipmic;		/* rx MIC check failed (TKIP) */
-	u_int32_t	is_rx_tkipicv;		/* rx ICV check failed (TKIP) */
-	u_int32_t	is_rx_badcipher;	/* rx failed 'cuz key type */
-	u_int32_t	is_rx_nocipherctx;	/* rx failed 'cuz key !setup */
-	u_int32_t	is_rx_acl;		/* rx discard 'cuz acl policy */
-	u_int32_t	is_rx_ffcnt;		/* rx fast frames */
-	u_int32_t	is_rx_badathtnl;   	/* driver key alloc failed */
-	u_int32_t	is_tx_nobuf;		/* tx failed for lack of buf */
-	u_int32_t	is_tx_nonode;		/* tx failed for no node */
-	u_int32_t	is_tx_unknownmgt;	/* tx of unknown mgt frame */
-	u_int32_t	is_tx_badcipher;	/* tx failed 'cuz key type */
-	u_int32_t	is_tx_nodefkey;		/* tx failed 'cuz no defkey */
-	u_int32_t	is_tx_noheadroom;	/* tx failed 'cuz no space */
-	u_int32_t	is_tx_ffokcnt;		/* tx fast frames sent success */
-	u_int32_t	is_tx_fferrcnt;		/* tx fast frames sent success */
-	u_int32_t	is_scan_active;		/* active scans started */
-	u_int32_t	is_scan_passive;	/* passive scans started */
-	u_int32_t	is_node_timeout;	/* nodes timed out inactivity */
-	u_int32_t	is_crypto_nomem;	/* no memory for crypto ctx */
-	u_int32_t	is_crypto_tkip;		/* tkip crypto done in s/w */
-	u_int32_t	is_crypto_tkipenmic;	/* tkip en-MIC done in s/w */
-	u_int32_t	is_crypto_tkipdemic;	/* tkip de-MIC done in s/w */
-	u_int32_t	is_crypto_tkipcm;	/* tkip counter measures */
-	u_int32_t	is_crypto_ccmp;		/* ccmp crypto done in s/w */
-	u_int32_t	is_crypto_wep;		/* wep crypto done in s/w */
-	u_int32_t	is_crypto_setkey_cipher;/* cipher rejected key */
-	u_int32_t	is_crypto_setkey_nokey;	/* no key index for setkey */
-	u_int32_t	is_crypto_delkey;	/* driver key delete failed */
-	u_int32_t	is_crypto_badcipher;	/* unknown cipher */
-	u_int32_t	is_crypto_nocipher;	/* cipher not available */
-	u_int32_t	is_crypto_attachfail;	/* cipher attach failed */
-	u_int32_t	is_crypto_swfallback;	/* cipher fallback to s/w */
-	u_int32_t	is_crypto_keyfail;	/* driver key alloc failed */
-	u_int32_t	is_crypto_enmicfail;	/* en-MIC failed */
-	u_int32_t	is_ibss_capmismatch;	/* merge failed-cap mismatch */
-	u_int32_t	is_ibss_norate;		/* merge failed-rate mismatch */
-	u_int32_t	is_ps_unassoc;		/* ps-poll for unassoc. sta */
-	u_int32_t	is_ps_badaid;		/* ps-poll w/ incorrect aid */
-	u_int32_t	is_ps_qempty;		/* ps-poll w/ nothing to send */
+	uint32_t	is_rx_badversion;	/* rx frame with bad version */
+	uint32_t	is_rx_tooshort;		/* rx frame too short */
+	uint32_t	is_rx_wrongbss;		/* rx from wrong bssid */
+	uint32_t	is_rx_dup;		/* rx discard 'cuz dup */
+	uint32_t	is_rx_wrongdir;		/* rx w/ wrong direction */
+	uint32_t	is_rx_mcastecho;	/* rx discard 'cuz mcast echo */
+	uint32_t	is_rx_notassoc;		/* rx discard 'cuz sta !assoc */
+	uint32_t	is_rx_noprivacy;	/* rx w/ wep but privacy off */
+	uint32_t	is_rx_unencrypted;	/* rx w/o wep and privacy on */
+	uint32_t	is_rx_wepfail;		/* rx wep processing failed */
+	uint32_t	is_rx_decap;		/* rx decapsulation failed */
+	uint32_t	is_rx_mgtdiscard;	/* rx discard mgt frames */
+	uint32_t	is_rx_ctl;		/* rx discard ctrl frames */
+	uint32_t	is_rx_beacon;		/* rx beacon frames */
+	uint32_t	is_rx_rstoobig;		/* rx rate set truncated */
+	uint32_t	is_rx_elem_missing;	/* rx required element missing*/
+	uint32_t	is_rx_elem_toobig;	/* rx element too big */
+	uint32_t	is_rx_elem_toosmall;	/* rx element too small */
+	uint32_t	is_rx_elem_unknown;	/* rx element unknown */
+	uint32_t	is_rx_badchan;		/* rx frame w/ invalid chan */
+	uint32_t	is_rx_chanmismatch;	/* rx frame chan mismatch */
+	uint32_t	is_rx_nodealloc;	/* rx frame dropped */
+	uint32_t	is_rx_ssidmismatch;	/* rx frame ssid mismatch  */
+	uint32_t	is_rx_auth_unsupported;	/* rx w/ unsupported auth alg */
+	uint32_t	is_rx_auth_fail;	/* rx sta auth failure */
+	uint32_t	is_rx_auth_countermeasures;/* rx auth discard 'cuz CM */
+	uint32_t	is_rx_assoc_bss;	/* rx assoc from wrong bssid */
+	uint32_t	is_rx_assoc_notauth;	/* rx assoc w/o auth */
+	uint32_t	is_rx_assoc_capmismatch;/* rx assoc w/ cap mismatch */
+	uint32_t	is_rx_assoc_norate;	/* rx assoc w/ no rate match */
+	uint32_t	is_rx_assoc_badwpaie;	/* rx assoc w/ bad WPA IE */
+	uint32_t	is_rx_deauth;		/* rx deauthentication */
+	uint32_t	is_rx_disassoc;		/* rx disassociation */
+    uint32_t   is_rx_action;       /* rx action mgt */
+	uint32_t	is_rx_badsubtype;	/* rx frame w/ unknown subtype*/
+	uint32_t	is_rx_nobuf;		/* rx failed for lack of buf */
+	uint32_t	is_rx_decryptcrc;	/* rx decrypt failed on crc */
+	uint32_t	is_rx_ahdemo_mgt;	/* rx discard ahdemo mgt frame*/
+	uint32_t	is_rx_bad_auth;		/* rx bad auth request */
+	uint32_t	is_rx_unauth;		/* rx on unauthorized port */
+	uint32_t	is_rx_badkeyid;		/* rx w/ incorrect keyid */
+	uint32_t	is_rx_ccmpreplay;	/* rx seq# violation (CCMP) */
+	uint32_t	is_rx_ccmpformat;	/* rx format bad (CCMP) */
+	uint32_t	is_rx_ccmpmic;		/* rx MIC check failed (CCMP) */
+	uint32_t	is_rx_tkipreplay;	/* rx seq# violation (TKIP) */
+	uint32_t	is_rx_tkipformat;	/* rx format bad (TKIP) */
+	uint32_t	is_rx_tkipmic;		/* rx MIC check failed (TKIP) */
+	uint32_t	is_rx_tkipicv;		/* rx ICV check failed (TKIP) */
+	uint32_t	is_rx_badcipher;	/* rx failed 'cuz key type */
+	uint32_t	is_rx_nocipherctx;	/* rx failed 'cuz key !setup */
+	uint32_t	is_rx_acl;		/* rx discard 'cuz acl policy */
+	uint32_t	is_rx_ffcnt;		/* rx fast frames */
+	uint32_t	is_rx_badathtnl;   	/* driver key alloc failed */
+	uint32_t	is_tx_nobuf;		/* tx failed for lack of buf */
+	uint32_t	is_tx_nonode;		/* tx failed for no node */
+	uint32_t	is_tx_unknownmgt;	/* tx of unknown mgt frame */
+	uint32_t	is_tx_badcipher;	/* tx failed 'cuz key type */
+	uint32_t	is_tx_nodefkey;		/* tx failed 'cuz no defkey */
+	uint32_t	is_tx_noheadroom;	/* tx failed 'cuz no space */
+	uint32_t	is_tx_ffokcnt;		/* tx fast frames sent success */
+	uint32_t	is_tx_fferrcnt;		/* tx fast frames sent success */
+	uint32_t	is_scan_active;		/* active scans started */
+	uint32_t	is_scan_passive;	/* passive scans started */
+	uint32_t	is_node_timeout;	/* nodes timed out inactivity */
+	uint32_t	is_crypto_nomem;	/* no memory for crypto ctx */
+	uint32_t	is_crypto_tkip;		/* tkip crypto done in s/w */
+	uint32_t	is_crypto_tkipenmic;	/* tkip en-MIC done in s/w */
+	uint32_t	is_crypto_tkipdemic;	/* tkip de-MIC done in s/w */
+	uint32_t	is_crypto_tkipcm;	/* tkip counter measures */
+	uint32_t	is_crypto_ccmp;		/* ccmp crypto done in s/w */
+	uint32_t	is_crypto_wep;		/* wep crypto done in s/w */
+	uint32_t	is_crypto_setkey_cipher;/* cipher rejected key */
+	uint32_t	is_crypto_setkey_nokey;	/* no key index for setkey */
+	uint32_t	is_crypto_delkey;	/* driver key delete failed */
+	uint32_t	is_crypto_badcipher;	/* unknown cipher */
+	uint32_t	is_crypto_nocipher;	/* cipher not available */
+	uint32_t	is_crypto_attachfail;	/* cipher attach failed */
+	uint32_t	is_crypto_swfallback;	/* cipher fallback to s/w */
+	uint32_t	is_crypto_keyfail;	/* driver key alloc failed */
+	uint32_t	is_crypto_enmicfail;	/* en-MIC failed */
+	uint32_t	is_ibss_capmismatch;	/* merge failed-cap mismatch */
+	uint32_t	is_ibss_norate;		/* merge failed-rate mismatch */
+	uint32_t	is_ps_unassoc;		/* ps-poll for unassoc. sta */
+	uint32_t	is_ps_badaid;		/* ps-poll w/ incorrect aid */
+	uint32_t	is_ps_qempty;		/* ps-poll w/ nothing to send */
 };
 #endif
 
@@ -228,17 +229,17 @@ struct ieee80211_stats {
  more than IEEE80211_KEYBUF_SIZE.
  */
 struct ieee80211req_key {
-	u_int8_t	ik_type;	/* key/cipher type */
-	u_int8_t	ik_pad;
-	u_int16_t	ik_keyix;	/* key index */
-	u_int8_t	ik_keylen;	/* key length in bytes */
-	u_int8_t	ik_flags;
+	uint8_t	ik_type;	/* key/cipher type */
+	uint8_t	ik_pad;
+	uint16_t	ik_keyix;	/* key index */
+	uint8_t	ik_keylen;	/* key length in bytes */
+	uint8_t	ik_flags;
 /* NB: IEEE80211_KEY_XMIT and IEEE80211_KEY_RECV defined elsewhere */
 #define	IEEE80211_KEY_DEFAULT	0x80	/* default xmit key */
-	u_int8_t	ik_macaddr[IEEE80211_ADDR_LEN];
-	u_int64_t	ik_keyrsc;	/* key receive sequence counter */
-	u_int64_t	ik_keytsc;	/* key transmit sequence counter */
-	u_int8_t	ik_keydata[IEEE80211_KEYBUF_SIZE+IEEE80211_MICBUF_SIZE];
+	uint8_t	ik_macaddr[IEEE80211_ADDR_LEN];
+	uint64_t	ik_keyrsc;	/* key receive sequence counter */
+	uint64_t	ik_keytsc;	/* key transmit sequence counter */
+	uint8_t	ik_keydata[IEEE80211_KEYBUF_SIZE+IEEE80211_MICBUF_SIZE];
 };
 
 /*
@@ -246,8 +247,8 @@ struct ieee80211req_key {
  * to IEEE80211_KEYIX_NONE when deleting a unicast key.
  */
 struct ieee80211req_del_key {
-	u_int8_t	idk_keyix;	/* key index */
-	u_int8_t	idk_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	idk_keyix;	/* key index */
+	uint8_t	idk_macaddr[IEEE80211_ADDR_LEN];
 };
 
 /*
@@ -257,7 +258,7 @@ struct ieee80211req_del_key {
  * ap (to effect a station).
  */
 struct ieee80211req_mlme {
-	u_int8_t	im_op;		/* operation to perform */
+	uint8_t	im_op;		/* operation to perform */
 #define	IEEE80211_MLME_ASSOC		1	/* associate station */
 #define	IEEE80211_MLME_DISASSOC		2	/* disassociate station */
 #define	IEEE80211_MLME_DEAUTH		3	/* deauthenticate station */
@@ -267,23 +268,23 @@ struct ieee80211req_mlme {
 #define IEEE80211_MLME_CLEAR_STATS	7	/* clear station statistic */
 #define IEEE80211_MLME_AUTH	        8	/* auth resp to station */
 #define IEEE80211_MLME_REASSOC	        9	/* reassoc to station */
-	u_int8_t	im_ssid_len;	/* length of optional ssid */
-	u_int16_t	im_reason;	/* 802.11 reason code */
-	u_int16_t	im_seq;	        /* seq for auth */
-	u_int8_t	im_macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	im_ssid[IEEE80211_NWID_LEN];
-	u_int8_t        im_optie[IEEE80211_MAX_OPT_IE];
-	u_int16_t       im_optie_len;
+	uint8_t	im_ssid_len;	/* length of optional ssid */
+	uint16_t	im_reason;	/* 802.11 reason code */
+	uint16_t	im_seq;	        /* seq for auth */
+	uint8_t	im_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	im_ssid[IEEE80211_NWID_LEN];
+	uint8_t        im_optie[IEEE80211_MAX_OPT_IE];
+	uint16_t       im_optie_len;
 };
 
 /*
  * request to add traffic stream for an associated station.
  */
 struct ieee80211req_ts {
-	u_int8_t    macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t    tspec_ie[IEEE80211_MAX_OPT_IE];
-	u_int8_t    tspec_ielen;
-	u_int8_t    res;
+	uint8_t    macaddr[IEEE80211_ADDR_LEN];
+	uint8_t    tspec_ie[IEEE80211_MAX_OPT_IE];
+	uint8_t    tspec_ielen;
+	uint8_t    res;
 };
 
 /*
@@ -305,14 +306,14 @@ enum {
  * scanning.
  */
 struct ieee80211req_chanlist {
-	u_int8_t	ic_channels[IEEE80211_CHAN_BYTES];
+	uint8_t	ic_channels[IEEE80211_CHAN_BYTES];
 };
 
 /*
  * Get the active channel list info.
  */
 struct ieee80211req_chaninfo {
-	u_int	ic_nchans;
+	uint32_t	ic_nchans;
 	struct ieee80211_channel ic_chans[IEEE80211_CHAN_MAX];
 };
 
@@ -327,21 +328,21 @@ enum {
  * Resource request for adding Traffic stream
  */
 struct ieee80211req_res_addts {
-	u_int8_t	tspecie[IEEE80211_MAX_OPT_IE];
-	u_int8_t	status;
+	uint8_t	tspecie[IEEE80211_MAX_OPT_IE];
+	uint8_t	status;
 };
 /*
  * Resource request for adding station node
  */
 struct ieee80211req_res_addnode {
-	u_int8_t	auth_alg;
+	uint8_t	auth_alg;
 };
 /*
  * Resource request from app
  */
 struct ieee80211req_res {
-	u_int8_t	macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	type;
+	uint8_t	macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	type;
         union {
             struct ieee80211req_res_addts addts;
             struct ieee80211req_res_addnode addnode;
@@ -352,11 +353,11 @@ struct ieee80211req_res {
  * Retrieve the WPA/RSN information element for an associated station.
  */
 struct ieee80211req_wpaie {
-	u_int8_t	wpa_macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	wpa_ie[IEEE80211_MAX_OPT_IE];
-	u_int8_t    rsn_ie[IEEE80211_MAX_OPT_IE];
+	uint8_t	wpa_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	wpa_ie[IEEE80211_MAX_OPT_IE];
+	uint8_t    rsn_ie[IEEE80211_MAX_OPT_IE];
 #ifdef ATH_WPS_IE
-	u_int8_t    wps_ie[IEEE80211_MAX_OPT_IE];
+	uint8_t    wps_ie[IEEE80211_MAX_OPT_IE];
 #endif /* ATH_WPS_IE */
 };
 
@@ -364,8 +365,8 @@ struct ieee80211req_wpaie {
  * Retrieve the WSC information element for an associated station.
  */
 struct ieee80211req_wscie {
-	u_int8_t	wsc_macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	wsc_ie[IEEE80211_MAX_WSC_IE];
+	uint8_t	wsc_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	wsc_ie[IEEE80211_MAX_WSC_IE];
 };
 
 
@@ -375,8 +376,8 @@ struct ieee80211req_wscie {
 struct ieee80211req_sta_stats {
 	union {
 		/* NB: explicitly force 64-bit alignment */
-		u_int8_t	macaddr[IEEE80211_ADDR_LEN];
-		u_int64_t	pad;
+		uint8_t	macaddr[IEEE80211_ADDR_LEN];
+		uint64_t	pad;
 	} is_u;
 	struct ieee80211_nodestats is_stats;
 };
@@ -386,46 +387,46 @@ struct ieee80211req_sta_stats {
  * to retrieve other data like stats, unicast key, etc.
  */
 struct ieee80211req_sta_info {
-	u_int16_t	isi_len;		/* length (mult of 4) */
-	u_int16_t	isi_freq;		/* MHz */
-    u_int32_t   isi_flags;      /* channel flags */
-	u_int16_t	isi_state;		/* state flags */
-	u_int8_t	isi_authmode;		/* authentication algorithm */
+	uint16_t	isi_len;		/* length (mult of 4) */
+	uint16_t	isi_freq;		/* MHz */
+    uint32_t   isi_flags;      /* channel flags */
+	uint16_t	isi_state;		/* state flags */
+	uint8_t	isi_authmode;		/* authentication algorithm */
 	int8_t	    	isi_rssi;
-	u_int16_t	isi_capinfo;		/* capabilities */
-	u_int8_t	isi_athflags;		/* Atheros capabilities */
-	u_int8_t	isi_erp;		/* ERP element */
-	u_int8_t	isi_ps;	    	/* psmode */
-	u_int8_t	isi_macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	isi_nrates;
+	uint16_t	isi_capinfo;		/* capabilities */
+	uint8_t	isi_athflags;		/* Atheros capabilities */
+	uint8_t	isi_erp;		/* ERP element */
+	uint8_t	isi_ps;	    	/* psmode */
+	uint8_t	isi_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	isi_nrates;
 						/* negotiated rates */
-	u_int8_t	isi_rates[IEEE80211_RATE_MAXSIZE];
-	u_int8_t	isi_txrate;		/* index to isi_rates[] */
-    u_int32_t   isi_txratekbps; /* tx rate in Kbps, for 11n */
-	u_int16_t	isi_ie_len;		/* IE length */
-	u_int16_t	isi_associd;		/* assoc response */
-	u_int16_t	isi_txpower;		/* current tx power */
-	u_int16_t	isi_vlan;		/* vlan tag */
-	u_int16_t	isi_txseqs[17];		/* seq to be transmitted */
-	u_int16_t	isi_rxseqs[17];		/* seq previous for qos frames*/
-	u_int16_t	isi_inact;		/* inactivity timer */
-	u_int8_t	isi_uapsd;		/* UAPSD queues */
-	u_int8_t	isi_opmode;		/* sta operating mode */
-	u_int8_t	isi_cipher;
-        u_int32_t 	isi_assoc_time;         /* sta association time */
+	uint8_t	isi_rates[IEEE80211_RATE_MAXSIZE];
+	uint8_t	isi_txrate;		/* index to isi_rates[] */
+    uint32_t   isi_txratekbps; /* tx rate in Kbps, for 11n */
+	uint16_t	isi_ie_len;		/* IE length */
+	uint16_t	isi_associd;		/* assoc response */
+	uint16_t	isi_txpower;		/* current tx power */
+	uint16_t	isi_vlan;		/* vlan tag */
+	uint16_t	isi_txseqs[17];		/* seq to be transmitted */
+	uint16_t	isi_rxseqs[17];		/* seq previous for qos frames*/
+	uint16_t	isi_inact;		/* inactivity timer */
+	uint8_t	isi_uapsd;		/* UAPSD queues */
+	uint8_t	isi_opmode;		/* sta operating mode */
+	uint8_t	isi_cipher;
+        uint32_t 	isi_assoc_time;         /* sta association time */
 	struct timespec	isi_tr069_assoc_time;	/* sta association time in timespec format */
 
 
-    u_int16_t   isi_htcap;      /* HT capabilities */
-    u_int32_t   isi_rxratekbps; /* rx rate in Kbps */
+    uint16_t   isi_htcap;      /* HT capabilities */
+    uint32_t   isi_rxratekbps; /* rx rate in Kbps */
                                 /* We use this as a common variable for legacy rates
                                    and lln. We do not attempt to make it symmetrical
                                    to isi_txratekbps and isi_txrate, which seem to be
                                    separate due to legacy code. */
 	/* XXX frag state? */
 	/* variable length IE data */
-    u_int8_t isi_maxrate_per_client; /* Max rate per client */
-	u_int16_t   isi_stamode;        /* Wireless mode for connected sta */
+    uint8_t isi_maxrate_per_client; /* Max rate per client */
+	uint16_t   isi_stamode;        /* Wireless mode for connected sta */
 };
 
 enum {
@@ -440,8 +441,8 @@ enum {
 struct ieee80211req_sta_req {
 	union {
 		/* NB: explicitly force 64-bit alignment */
-		u_int8_t	macaddr[IEEE80211_ADDR_LEN];
-		u_int64_t	pad;
+		uint8_t	macaddr[IEEE80211_ADDR_LEN];
+		uint64_t	pad;
 	} is_u;
 	struct ieee80211req_sta_info info[1];	/* variable length */
 };
@@ -450,8 +451,8 @@ struct ieee80211req_sta_req {
  * Get/set per-station tx power cap.
  */
 struct ieee80211req_sta_txpow {
-	u_int8_t	it_macaddr[IEEE80211_ADDR_LEN];
-	u_int8_t	it_txpow;
+	uint8_t	it_macaddr[IEEE80211_ADDR_LEN];
+	uint8_t	it_txpow;
 };
 
 /*
@@ -468,20 +469,20 @@ struct ieee80211req_sta_txpow {
  * Scan result data returned for IEEE80211_IOC_SCAN_RESULTS.
  */
 struct ieee80211req_scan_result {
-	u_int16_t	isr_len;		/* length (mult of 4) */
-	u_int16_t	isr_freq;		/* MHz */
-	u_int32_t	isr_flags;		/* channel flags */
-	u_int8_t	isr_noise;
-	u_int8_t	isr_rssi;
-	u_int8_t	isr_intval;		/* beacon interval */
-	u_int16_t	isr_capinfo;		/* capabilities */
-	u_int8_t	isr_erp;		/* ERP element */
-	u_int8_t	isr_bssid[IEEE80211_ADDR_LEN];
-	u_int8_t	isr_nrates;
-	u_int8_t	isr_rates[IEEE80211_RATE_MAXSIZE];
-	u_int8_t	isr_ssid_len;		/* SSID length */
-	u_int16_t	isr_ie_len;		/* IE length */
-	u_int8_t	isr_pad[4];
+	uint16_t	isr_len;		/* length (mult of 4) */
+	uint16_t	isr_freq;		/* MHz */
+	uint32_t	isr_flags;		/* channel flags */
+	uint8_t	isr_noise;
+	uint8_t	isr_rssi;
+	uint8_t	isr_intval;		/* beacon interval */
+	uint16_t	isr_capinfo;		/* capabilities */
+	uint8_t	isr_erp;		/* ERP element */
+	uint8_t	isr_bssid[IEEE80211_ADDR_LEN];
+	uint8_t	isr_nrates;
+	uint8_t	isr_rates[IEEE80211_RATE_MAXSIZE];
+	uint8_t	isr_ssid_len;		/* SSID length */
+	uint16_t	isr_ie_len;		/* IE length */
+	uint8_t	isr_pad[4];
 	/* variable length SSID followed by IE data */
 };
 
@@ -534,19 +535,19 @@ enum {
 };
 
 typedef struct ieee80211req_acs_r{
-    u_int32_t index;
-    u_int32_t data_size;
+    uint32_t index;
+    uint32_t data_size;
     void *data_addr;
 }ieee80211req_acs_t;
 
 typedef struct ieee80211_user_chanlist_r {
-    u_int8_t  n_chan;
-    u_int8_t *chan;
+    uint8_t  n_chan;
+    uint8_t *chan;
 } ieee80211_user_chanlist_t;
 
 typedef struct ieee80211_rrm_sta_info {
-    u_int16_t count; /* In application layer this variable is used to store the STA count and in the driver it is used as an index */
-    u_int8_t *dest_addr;
+    uint16_t count; /* In application layer this variable is used to store the STA count and in the driver it is used as an index */
+    uint8_t *dest_addr;
 }ieee80211_rrm_sta_info_t;
 
 /*
@@ -573,17 +574,17 @@ typedef enum _ieee80211_tr069_cmd_ {
 }ieee80211_tr069_cmd;
 
 typedef struct {
-	u_int32_t value;
+	uint32_t value;
 	int value_array[TR069MAXPOWERRANGE];
 }ieee80211_tr069_txpower_range;
 
 typedef struct{
-    u_int8_t         chanid;
+    uint8_t         chanid;
     struct timespec chan_time;
 }ieee80211_chanlhist_t;
 
 typedef struct{
-    u_int8_t act_index;
+    uint8_t act_index;
     ieee80211_chanlhist_t chanlhist[IEEE80211_CHAN_MAXHIST+1];
 }ieee80211_channelhist_t;
 
@@ -593,14 +594,14 @@ typedef struct{
  * filled in
  */
 typedef struct{
-    u_int32_t data_size;
+    uint32_t data_size;
     ieee80211_tr069_cmd cmdid;
     void *data_addr;
 }ieee80211req_tr069_t;
 
 struct ieee80211req_athdbg {
-    u_int8_t cmd;
-    u_int8_t dstmac[IEEE80211_ADDR_LEN];
+    uint8_t cmd;
+    uint8_t dstmac[IEEE80211_ADDR_LEN];
     union {
         int param[4];
         ieee80211_rrm_beaconreq_info_t bcnrpt;
@@ -622,9 +623,9 @@ struct ieee80211req_athdbg {
         ieee80211_bsteering_rssi_req_t bsteering_rssi_req;
         ieee80211_bsteering_overload_req_t bsteering_overload_req;
 #endif
-        u_int8_t bsteering_enable;
-        u_int8_t bsteering_overload;
-        u_int8_t bsteering_rssi_num_samples;
+        uint8_t bsteering_enable;
+        uint8_t bsteering_overload;
+        uint8_t bsteering_rssi_num_samples;
     } data;
 };
 
@@ -1172,70 +1173,70 @@ enum {
 #endif
 
 struct ieee80211_p2p_go_neg {
-    u_int8_t peer_addr[IEEE80211_ADDR_LEN];
-    u_int8_t own_interface_addr[IEEE80211_ADDR_LEN];
-    u_int16_t force_freq;
-    u_int8_t go_intent;
+    uint8_t peer_addr[IEEE80211_ADDR_LEN];
+    uint8_t own_interface_addr[IEEE80211_ADDR_LEN];
+    uint16_t force_freq;
+    uint8_t go_intent;
     char pin[9];
 } __attribute__ ((packed));
 
 struct ieee80211_p2p_prov_disc {
-    u_int8_t peer_addr[IEEE80211_ADDR_LEN];
-    u_int16_t config_methods;
+    uint8_t peer_addr[IEEE80211_ADDR_LEN];
+    uint16_t config_methods;
 } __attribute__ ((packed));
 
 struct ieee80211_p2p_serv_disc_resp {
-    u_int16_t freq;
-    u_int8_t dst[IEEE80211_ADDR_LEN];
-    u_int8_t dialog_token;
+    uint16_t freq;
+    uint8_t dst[IEEE80211_ADDR_LEN];
+    uint8_t dialog_token;
     /* followed by response TLVs */
 } __attribute__ ((packed));
 
 struct ieee80211_p2p_go_noa {
-    u_int8_t  num_iterations;   /* Number of iterations (equal 1 if one shot)
+    uint8_t  num_iterations;   /* Number of iterations (equal 1 if one shot)
                                    and 1-254 if periodic) and 255 for continuous */
-    u_int16_t offset_next_tbtt; /* offset in msec from next tbtt */
-    u_int16_t duration;         /* duration in msec */
+    uint16_t offset_next_tbtt; /* offset in msec from next tbtt */
+    uint16_t duration;         /* duration in msec */
 } __attribute__ ((packed));
 
 struct ieee80211_p2p_set_channel {
-    u_int32_t freq;
-    u_int32_t req_id;
-    u_int32_t channel_time;
+    uint32_t freq;
+    uint32_t req_id;
+    uint32_t channel_time;
 } __attribute__ ((packed));
 
 struct ieee80211_p2p_send_action {
-    u_int32_t freq;
-    u_int8_t dst_addr[IEEE80211_ADDR_LEN];
-    u_int8_t src_addr[IEEE80211_ADDR_LEN];
-    u_int8_t bssid[IEEE80211_ADDR_LEN];
+    uint32_t freq;
+    uint8_t dst_addr[IEEE80211_ADDR_LEN];
+    uint8_t src_addr[IEEE80211_ADDR_LEN];
+    uint8_t bssid[IEEE80211_ADDR_LEN];
     /* Followed by Action frame payload */
 } __attribute__ ((packed));
 
 struct ieee80211_send_action_cb {
-    u_int8_t dst_addr[IEEE80211_ADDR_LEN];
-    u_int8_t src_addr[IEEE80211_ADDR_LEN];
-    u_int8_t bssid[IEEE80211_ADDR_LEN];
-    u_int8_t ack;
+    uint8_t dst_addr[IEEE80211_ADDR_LEN];
+    uint8_t src_addr[IEEE80211_ADDR_LEN];
+    uint8_t bssid[IEEE80211_ADDR_LEN];
+    uint8_t ack;
     /* followed by frame body */
 } __attribute__ ((packed));
 
 /* Optional parameters for IEEE80211_IOC_SCAN_REQ */
 struct ieee80211_scan_req {
 #define MAX_SCANREQ_FREQ 16
-    u_int32_t freq[MAX_SCANREQ_FREQ];
-    u_int8_t num_freq;
-    u_int8_t num_ssid;
-    u_int16_t ie_len;
+    uint32_t freq[MAX_SCANREQ_FREQ];
+    uint8_t num_freq;
+    uint8_t num_ssid;
+    uint16_t ie_len;
 #define MAX_SCANREQ_SSID 4
-    u_int8_t ssid[MAX_SCANREQ_SSID][32];
-    u_int8_t ssid_len[MAX_SCANREQ_SSID];
+    uint8_t ssid[MAX_SCANREQ_SSID][32];
+    uint8_t ssid_len[MAX_SCANREQ_SSID];
     /* followed by ie_len octets of IEs to add to Probe Request frames */
 } __attribute__ ((packed));
 
 struct ieee80211_ioc_channel {
-    u_int32_t phymode; /* enum ieee80211_phymode */
-    u_int32_t channel; /* IEEE channel number */
+    uint32_t phymode; /* enum ieee80211_phymode */
+    uint32_t channel; /* IEEE channel number */
 } __attribute__ ((packed));
 
 #define LINUX_PVT_SET_VENDORPARAM       (SIOCDEVPRIVATE+0)
@@ -1259,11 +1260,11 @@ struct ieee80211_ioc_channel {
 
 struct ieee80211_clone_params {
 	char		icp_name[IFNAMSIZ];	/* device name */
-	u_int16_t	icp_opmode;		/* operating mode */
-	u_int16_t	icp_flags;		/* see below */
-    u_int8_t icp_bssid[IEEE80211_ADDR_LEN];    /* optional mac/bssid address */
+	uint16_t	icp_opmode;		/* operating mode */
+	uint16_t	icp_flags;		/* see below */
+    uint8_t icp_bssid[IEEE80211_ADDR_LEN];    /* optional mac/bssid address */
         int32_t         icp_vapid;             /* vap id for MAC addr req */
-    u_int8_t icp_mataddr[IEEE80211_ADDR_LEN];    /* optional MAT address */
+    uint8_t icp_mataddr[IEEE80211_ADDR_LEN];    /* optional MAT address */
 };
 #define	    IEEE80211_CLONE_BSSID       0x0001		/* allocate unique mac/bssid */
 #define	    IEEE80211_NO_STABEACONS	    0x0002		/* Do not setup the station beacon timers */
@@ -1283,15 +1284,15 @@ enum{
     IEEE80211_APPIE_FRAME_WNM        = 8
 };
 struct ieee80211req_getset_appiebuf {
-    u_int32_t app_frmtype; /*management frame type for which buffer is added*/
-    u_int32_t app_buflen;  /*application supplied buffer length */
-    u_int8_t  app_buf[];
+    uint32_t app_frmtype; /*management frame type for which buffer is added*/
+    uint32_t app_buflen;  /*application supplied buffer length */
+    uint8_t  app_buf[];
 };
 
 struct ieee80211req_mgmtbuf {
-    u_int8_t  macaddr[IEEE80211_ADDR_LEN]; /* mac address to be sent */
-    u_int32_t buflen;  /*application supplied buffer length */
-    u_int8_t  buf[];
+    uint8_t  macaddr[IEEE80211_ADDR_LEN]; /* mac address to be sent */
+    uint32_t buflen;  /*application supplied buffer length */
+    uint8_t  buf[];
 };
 
 /* the following definations are used by application to set filter
@@ -1310,28 +1311,28 @@ enum {
 };
 
 struct ieee80211req_set_filter {
-      u_int32_t app_filterype; /* management frame filter type */
+      uint32_t app_filterype; /* management frame filter type */
 };
 
 
 struct ieee80211_wlanconfig_nawds {
-    u_int8_t num;
-    u_int8_t mode;
-    u_int8_t defcaps;
-    u_int8_t override;
-    u_int8_t mac[IEEE80211_ADDR_LEN];
-    u_int8_t caps;
+    uint8_t num;
+    uint8_t mode;
+    uint8_t defcaps;
+    uint8_t override;
+    uint8_t mac[IEEE80211_ADDR_LEN];
+    uint8_t caps;
 };
 
 struct ieee80211_wlanconfig_hmwds {
-    u_int8_t  wds_ni_macaddr[IEEE80211_ADDR_LEN];
-    u_int16_t wds_macaddr_cnt;
-    u_int8_t  wds_macaddr[0];
+    uint8_t  wds_ni_macaddr[IEEE80211_ADDR_LEN];
+    uint16_t wds_macaddr_cnt;
+    uint8_t  wds_macaddr[0];
 };
 
 struct ieee80211_wlanconfig_ald_sta {
-    u_int8_t  macaddr[IEEE80211_ADDR_LEN];
-    u_int32_t enable;
+    uint8_t  macaddr[IEEE80211_ADDR_LEN];
+    uint32_t enable;
 };
 
 struct ieee80211_wlanconfig_ald {
@@ -1341,23 +1342,23 @@ struct ieee80211_wlanconfig_ald {
 };
 
 struct ieee80211_wlanconfig_wnm_bssmax {
-    u_int16_t idleperiod;
+    uint16_t idleperiod;
 };
 
 struct ieee80211_wlanconfig_wds {
-    u_int8_t destmac[IEEE80211_ADDR_LEN];
-    u_int8_t peermac[IEEE80211_ADDR_LEN];
-    u_int32_t flags;
+    uint8_t destmac[IEEE80211_ADDR_LEN];
+    uint8_t peermac[IEEE80211_ADDR_LEN];
+    uint32_t flags;
 };
 
 struct ieee80211_wlanconfig_hmmc {
-    u_int32_t ip;
-    u_int32_t mask;
+    uint32_t ip;
+    uint32_t mask;
 };
 
 struct ieee80211_wlanconfig_setmaxrate {
-    u_int8_t mac[IEEE80211_ADDR_LEN];
-    u_int8_t maxrate;
+    uint8_t mac[IEEE80211_ADDR_LEN];
+    uint8_t maxrate;
 };
 
 #define TFS_MAX_FILTER_LEN 50
@@ -1390,10 +1391,10 @@ typedef enum {
 } IEEE80211_WNM_TCLAS_VERSION;
 
 struct clas3 {
-    u_int16_t filter_offset;
-    u_int32_t filter_len;
-    u_int8_t  filter_value[TFS_MAX_FILTER_LEN];
-    u_int8_t  filter_mask[TFS_MAX_FILTER_LEN];
+    uint16_t filter_offset;
+    uint32_t filter_len;
+    uint8_t  filter_value[TFS_MAX_FILTER_LEN];
+    uint8_t  filter_mask[TFS_MAX_FILTER_LEN];
 } __packed;
 
 #ifndef IEEE80211_IPV4_LEN
@@ -1404,34 +1405,34 @@ struct clas3 {
 #define IEEE80211_IPV6_LEN 16
 #endif
 struct clas4_v4 {
-    u_int8_t     version;
-    u_int8_t     source_ip[IEEE80211_IPV4_LEN];
-    u_int8_t     reserved1[IEEE80211_IPV6_LEN - IEEE80211_IPV4_LEN];
-    u_int8_t     dest_ip[IEEE80211_IPV4_LEN];
-    u_int8_t     reserved2[IEEE80211_IPV6_LEN - IEEE80211_IPV4_LEN];
-    u_int16_t    source_port;
-    u_int16_t    dest_port;
-    u_int8_t     dscp;
-    u_int8_t     protocol;
-    u_int8_t     reserved;
-    u_int8_t     reserved3[2];
+    uint8_t     version;
+    uint8_t     source_ip[IEEE80211_IPV4_LEN];
+    uint8_t     reserved1[IEEE80211_IPV6_LEN - IEEE80211_IPV4_LEN];
+    uint8_t     dest_ip[IEEE80211_IPV4_LEN];
+    uint8_t     reserved2[IEEE80211_IPV6_LEN - IEEE80211_IPV4_LEN];
+    uint16_t    source_port;
+    uint16_t    dest_port;
+    uint8_t     dscp;
+    uint8_t     protocol;
+    uint8_t     reserved;
+    uint8_t     reserved3[2];
 }__packed;
 
 struct clas4_v6 {
-    u_int8_t     version;
-    u_int8_t     source_ip[IEEE80211_IPV6_LEN];
-    u_int8_t     dest_ip[IEEE80211_IPV6_LEN];
-    u_int16_t    source_port;
-    u_int16_t    dest_port;
-    u_int8_t     dscp;
-    u_int8_t     next_header;
-    u_int8_t     flow_label[3];
+    uint8_t     version;
+    uint8_t     source_ip[IEEE80211_IPV6_LEN];
+    uint8_t     dest_ip[IEEE80211_IPV6_LEN];
+    uint16_t    source_port;
+    uint16_t    dest_port;
+    uint8_t     dscp;
+    uint8_t     next_header;
+    uint8_t     flow_label[3];
 }__packed;
 
 struct tfsreq_tclas_element {
-    u_int8_t classifier_type;
-    u_int8_t classifier_mask;
-    u_int8_t priority;
+    uint8_t classifier_type;
+    uint8_t classifier_mask;
+    uint8_t priority;
     union {
         struct clas3 clas3;
         union {
@@ -1442,64 +1443,64 @@ struct tfsreq_tclas_element {
 } __packed;
 
 struct tfsreq_subelement {
-    u_int32_t num_tclas_elements;
-    u_int8_t tclas_processing;
+    uint32_t num_tclas_elements;
+    uint8_t tclas_processing;
     struct tfsreq_tclas_element tclas[TFS_MAX_TCLAS_ELEMENTS];
 } __packed;
 
 struct ieee80211_wlanconfig_wnm_tfs_req {
-    u_int8_t tfsid;
-    u_int8_t actioncode;
-    u_int8_t num_subelements;
+    uint8_t tfsid;
+    uint8_t actioncode;
+    uint8_t num_subelements;
     struct tfsreq_subelement subelement[TFS_MAX_SUBELEMENTS];
 } __packed;
 
 
 
 struct ieee80211_wlanconfig_wnm_tfs {
-    u_int8_t num_tfsreq;
+    uint8_t num_tfsreq;
     struct ieee80211_wlanconfig_wnm_tfs_req  tfs_req[TFS_MAX_REQUEST];
 } __packed;
 
 struct tfsresp_element {
-	u_int8_t tfsid;
-    u_int8_t status;
+	uint8_t tfsid;
+    uint8_t status;
 } __packed;
 
 struct ieee80211_wnm_tfsresp {
-    u_int8_t num_tfsresp;
+    uint8_t num_tfsresp;
     struct tfsresp_element  tfs_resq[TFS_MAX_RESPONSE];
 } __packed;
 
 typedef struct  ieee80211_wnm_rate_identifier_s {
-    u_int8_t mask;
-    u_int8_t mcs_idx;
-    u_int16_t rate;
+    uint8_t mask;
+    uint8_t mcs_idx;
+    uint16_t rate;
 }__packed ieee80211_wnm_rate_identifier_t;
 
 struct fmsresp_fms_subele_status {
-    u_int8_t status;
-    u_int8_t del_itvl;
-    u_int8_t max_del_itvl;
-    u_int8_t fmsid;
-    u_int8_t fms_counter;
+    uint8_t status;
+    uint8_t del_itvl;
+    uint8_t max_del_itvl;
+    uint8_t fmsid;
+    uint8_t fms_counter;
     ieee80211_wnm_rate_identifier_t rate_id;
-    u_int8_t mcast_addr[6];
+    uint8_t mcast_addr[6];
 };
 
 struct fmsresp_tclas_subele_status {
-    u_int8_t fmsid;
-    u_int8_t ismcast;
-    u_int32_t mcast_ipaddr;
+    uint8_t fmsid;
+    uint8_t ismcast;
+    uint32_t mcast_ipaddr;
     ieee80211_tclas_processing tclasprocess;
-    u_int32_t num_tclas_elements;
+    uint32_t num_tclas_elements;
     struct tfsreq_tclas_element tclas[TFS_MAX_TCLAS_ELEMENTS];
 };
 
 struct fmsresp_element {
-    u_int8_t fms_token;
-    u_int8_t num_subelements;
-    u_int8_t subelement_type;
+    uint8_t fms_token;
+    uint8_t num_subelements;
+    uint8_t subelement_type;
     union {
         struct fmsresp_fms_subele_status fms_subele_status[FMS_MAX_TCLAS_ELEMENTS];
         struct fmsresp_tclas_subele_status tclas_subele_status[FMS_MAX_SUBELEMENTS];
@@ -1507,27 +1508,27 @@ struct fmsresp_element {
 };
 
 struct ieee80211_wnm_fmsresp {
-    u_int8_t num_fmsresp;
+    uint8_t num_fmsresp;
     struct fmsresp_element  fms_resp[FMS_MAX_RESPONSE];
 };
 
 struct fmsreq_subelement {
-    u_int8_t del_itvl;
-    u_int8_t max_del_itvl;
-    u_int8_t tclas_processing;
-    u_int32_t num_tclas_elements;
+    uint8_t del_itvl;
+    uint8_t max_del_itvl;
+    uint8_t tclas_processing;
+    uint32_t num_tclas_elements;
     ieee80211_wnm_rate_identifier_t rate_id;
     struct tfsreq_tclas_element tclas[FMS_MAX_TCLAS_ELEMENTS];
 } __packed;
 
 struct ieee80211_wlanconfig_wnm_fms_req {
-    u_int8_t fms_token;
-    u_int8_t num_subelements;
+    uint8_t fms_token;
+    uint8_t num_subelements;
     struct fmsreq_subelement subelement[FMS_MAX_SUBELEMENTS];
 } __packed;
 
 struct ieee80211_wlanconfig_wnm_fms {
-    u_int8_t num_fmsreq;
+    uint8_t num_fmsreq;
     struct ieee80211_wlanconfig_wnm_fms_req  fms_req[FMS_MAX_REQUEST];
 } __packed;
 
@@ -1537,9 +1538,9 @@ enum {
 };
 
 struct ieee80211_wlanconfig_wnm_tim {
-    u_int8_t interval;
-    u_int8_t enable_highrate;
-    u_int8_t enable_lowrate;
+    uint8_t interval;
+    uint8_t enable_highrate;
+    uint8_t enable_lowrate;
 } __packed;
 
 struct ieee80211_wlanconfig_wnm {
@@ -1641,48 +1642,48 @@ enum {
 #define IEEE80211_VAP_PROFILE_MAX_VAPS 16
 
 struct rssi_info {
-    u_int8_t avg_rssi;
-    u_int8_t valid_mask;
+    uint8_t avg_rssi;
+    uint8_t valid_mask;
     int8_t   rssi_ctrl[MAX_CHAINS];
     int8_t   rssi_ext[MAX_CHAINS];
 };
 
 struct ieee80211vap_profile  {
     char name[IFNAMSIZ];
-    u_int32_t opmode;
-    u_int32_t phymode;
+    uint32_t opmode;
+    uint32_t phymode;
     char  ssid[IEEE80211_NWID_LEN];
-    u_int32_t bitrate;
-    u_int32_t beacon_interval;
-    u_int32_t txpower;
-    u_int32_t txpower_flags;
+    uint32_t bitrate;
+    uint32_t beacon_interval;
+    uint32_t txpower;
+    uint32_t txpower_flags;
     struct rssi_info bcn_rssi;
     struct rssi_info rx_rssi;
-    u_int8_t  vap_mac[IEEE80211_ADDR_LEN];
-    u_int32_t  rts_thresh;
-    u_int8_t  rts_disabled;
-    u_int8_t  rts_fixed;
-    u_int32_t frag_thresh;
-    u_int8_t frag_disabled;
-    u_int8_t frag_fixed;
-    u_int32_t   sec_method;
-    u_int32_t   cipher;
-    u_int8_t wep_key[4][256];
-    u_int8_t wep_key_len[4];
-    u_int8_t  maclist[IEEE80211_VAP_PROFILE_NUM_ACL][IEEE80211_ADDR_LEN];
-   	u_int8_t  node_acl;
+    uint8_t  vap_mac[IEEE80211_ADDR_LEN];
+    uint32_t  rts_thresh;
+    uint8_t  rts_disabled;
+    uint8_t  rts_fixed;
+    uint32_t frag_thresh;
+    uint8_t frag_disabled;
+    uint8_t frag_fixed;
+    uint32_t   sec_method;
+    uint32_t   cipher;
+    uint8_t wep_key[4][256];
+    uint8_t wep_key_len[4];
+    uint8_t  maclist[IEEE80211_VAP_PROFILE_NUM_ACL][IEEE80211_ADDR_LEN];
+   	uint8_t  node_acl;
     int  num_node;
-    u_int8_t wds_enabled;
-    u_int8_t wds_addr[IEEE80211_ADDR_LEN];
-    u_int32_t wds_flags;
+    uint8_t wds_enabled;
+    uint8_t wds_addr[IEEE80211_ADDR_LEN];
+    uint32_t wds_flags;
 };
 
 struct ieee80211_profile {
-    u_int8_t radio_name[IFNAMSIZ];
-    u_int8_t channel;
-    u_int32_t freq;
-    u_int16_t cc;
-    u_int8_t  radio_mac[IEEE80211_ADDR_LEN];
+    uint8_t radio_name[IFNAMSIZ];
+    uint8_t channel;
+    uint32_t freq;
+    uint16_t cc;
+    uint8_t  radio_mac[IEEE80211_ADDR_LEN];
     struct ieee80211vap_profile vap_profile[IEEE80211_VAP_PROFILE_MAX_VAPS];
     int num_vaps;
 };

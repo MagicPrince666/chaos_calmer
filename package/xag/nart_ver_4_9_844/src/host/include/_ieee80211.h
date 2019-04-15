@@ -22,6 +22,7 @@
 #include "ieee80211_band_steering_api.h"
 #endif
 #include "ieee80211_phytype.h"
+#include <stdint.h>
 
 /* These defines should match the table from ah_internal.h */
 typedef enum {
@@ -118,8 +119,8 @@ enum ieee80211_fixed_rate_mode {
 /* Holds the fixed rate information for each VAP */
 struct ieee80211_fixed_rate {
     enum ieee80211_fixed_rate_mode  mode;
-    u_int32_t                       series;
-    u_int32_t                       retries;
+    uint32_t                       series;
+    uint32_t                       retries;
 };
 
 /*
@@ -161,17 +162,17 @@ enum ieee80211_scanmode {
  * Channels are specified by frequency and attributes.
  */
 struct ieee80211_channel {
-    u_int16_t       ic_freq;        /* setting in Mhz */
-    u_int32_t       ic_flags;       /* see below */
-    u_int8_t        ic_flagext;     /* see below */
-    u_int8_t        ic_ieee;        /* IEEE channel number */
+    uint16_t       ic_freq;        /* setting in Mhz */
+    uint32_t       ic_flags;       /* see below */
+    uint8_t        ic_flagext;     /* see below */
+    uint8_t        ic_ieee;        /* IEEE channel number */
     int8_t          ic_maxregpower; /* maximum regulatory tx power in dBm */
     int8_t          ic_maxpower;    /* maximum tx power in dBm */
     int8_t          ic_minpower;    /* minimum tx power in dBm */
-    u_int8_t        ic_regClassId;  /* regClassId of this channel */ 
-    u_int8_t        ic_antennamax;  /* antenna gain max from regulatory */
-    u_int8_t        ic_vhtop_ch_freq_seg1;         /* Channel Center frequency */
-    u_int8_t        ic_vhtop_ch_freq_seg2;         /* Channel Center frequency applicable
+    uint8_t        ic_regClassId;  /* regClassId of this channel */ 
+    uint8_t        ic_antennamax;  /* antenna gain max from regulatory */
+    uint8_t        ic_vhtop_ch_freq_seg1;         /* Channel Center frequency */
+    uint8_t        ic_vhtop_ch_freq_seg2;         /* Channel Center frequency applicable
                                                   * for 80+80MHz mode of operation */ 
 };
 
@@ -484,32 +485,32 @@ struct ieee80211_channel_list {
 
 
 struct ieee80211_rateset {
-    u_int8_t                rs_nrates;
-    u_int8_t                rs_rates[IEEE80211_RATE_MAXSIZE];
+    uint8_t                rs_nrates;
+    uint8_t                rs_rates[IEEE80211_RATE_MAXSIZE];
 };
 
 struct ieee80211_beacon_info{
-    u_int8_t    essid[IEEE80211_NWID_LEN+1];
-    u_int8_t    esslen;
-    u_int8_t	rssi_ctl_0;
-    u_int8_t	rssi_ctl_1;
-    u_int8_t	rssi_ctl_2;
+    uint8_t    essid[IEEE80211_NWID_LEN+1];
+    uint8_t    esslen;
+    uint8_t	rssi_ctl_0;
+    uint8_t	rssi_ctl_1;
+    uint8_t	rssi_ctl_2;
     int         numchains;
 };
 
 struct ieee80211_ibss_peer_list{
-    u_int8_t    bssid[6];
+    uint8_t    bssid[6];
 };
 
 struct ieee80211_roam {
     int8_t                  rssi11a;        /* rssi thresh for 11a bss */
     int8_t                  rssi11b;        /* for 11g sta in 11b bss */
     int8_t                  rssi11bOnly;    /* for 11b sta */
-    u_int8_t                pad1;
-    u_int8_t                rate11a;        /* rate thresh for 11a bss */
-    u_int8_t                rate11b;        /* for 11g sta in 11b bss */
-    u_int8_t                rate11bOnly;    /* for 11b sta */
-    u_int8_t                pad2;
+    uint8_t                pad1;
+    uint8_t                rate11a;        /* rate thresh for 11a bss */
+    uint8_t                rate11b;        /* for 11g sta in 11b bss */
+    uint8_t                rate11bOnly;    /* for 11b sta */
+    uint8_t                pad2;
 };
 
 #define IEEE80211_TID_SIZE      17 /* total number of TIDs */
@@ -541,20 +542,20 @@ enum ieee80211_nawds_param {
 };
 
 struct ieee80211_mib_cycle_cnts {
-    u_int32_t   tx_frame_count;
-    u_int32_t   rx_frame_count;
-    u_int32_t   rx_clear_count;
-    u_int32_t   cycle_count;
-    u_int8_t    is_rx_active;
-    u_int8_t    is_tx_active;
+    uint32_t   tx_frame_count;
+    uint32_t   rx_frame_count;
+    uint32_t   rx_clear_count;
+    uint32_t   cycle_count;
+    uint8_t    is_rx_active;
+    uint8_t    is_tx_active;
 };
 
 struct ieee80211_chanutil_info {
-    u_int32_t    rx_clear_count;
-    u_int32_t    cycle_count;
-    u_int8_t     value;
-    u_int32_t    beacon_count;
-    u_int8_t     beacon_intervals;
+    uint32_t    rx_clear_count;
+    uint32_t    cycle_count;
+    uint8_t     value;
+    uint32_t    beacon_count;
+    uint8_t     beacon_intervals;
 };
 
 #endif /* __NET80211__IEEE80211_H_ */

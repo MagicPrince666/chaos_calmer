@@ -10,7 +10,7 @@ ifeq ($(GDB),1)
     CFLAGS += -g
 endif
 
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 CFLAGS += -D_MLD -DHTC_RAW_INTERFACE -DNART_BUILD -DCUSTOMER_REL -DWMI_PIPE  \
     -DQC98XXDLL 
@@ -30,6 +30,7 @@ CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/devlib/AR6K_common \
 	-I$(ART_ROOT)/devlib/QC9K_common \
 	-I$(ART_ROOT)/wlan \
+    -I$(ART_ROOT)/wlan/nartlinux \
 	-I$(ART_ROOT)/../../../apps/art/modules/include \
 	-I$(ART_ROOT)/driver/linux/modules/include \
 	-I$(ART_ROOT)/os/Linux
@@ -40,8 +41,6 @@ CFLAGS += \
 	-I$(ART_ROOT)/host/include \
 	-I$(ART_ROOT)/libtlv/include \
 	-I$(ART_ROOT)/libtlv/libtlvutil \
-        -I$(ART_ROOT)/../../../perf_pwr_offload/drivers/target/include/ \
-        -I$(ART_ROOT)/../../../perf_pwr_offload/drivers/include/
 	
 VPATH = $(ART_ROOT)/art \
 	$(ART_ROOT)/common \

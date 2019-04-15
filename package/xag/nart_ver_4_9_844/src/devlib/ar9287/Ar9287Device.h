@@ -1,3 +1,5 @@
+#ifndef _AR9287DEVICE_h_
+#define _AR9287DEVICE_h_
 
 #include "ah.h"
 
@@ -20,3 +22,6 @@ extern AR9287DLLSPEC int Ar9287DeviceSelect(void);
 extern AR9287DLLSPEC int Ar9287SetCommand(int client);
 
 extern AR9287DLLSPEC int Ar9287GetCommand(int client);
+extern bool ar9287_calibration_data_read_flash(struct ath_hal *ah, long address,u_int8_t *buffer, int many);
+
+#endif

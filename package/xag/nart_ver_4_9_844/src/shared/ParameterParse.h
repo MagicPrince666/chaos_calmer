@@ -1,4 +1,5 @@
-
+#ifndef _PARAMETER_PARSE_H_
+#define _PARAMETER_PARSE_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -42,3 +43,4 @@ extern PARSEDLLSPEC int ParseStringAndSetRates(int input, char *name, int max, i
 
 extern PARSEDLLSPEC void ParseParameterReplacement(char * (*f)(char *name, char *buffer, int max));
 
+#endif 

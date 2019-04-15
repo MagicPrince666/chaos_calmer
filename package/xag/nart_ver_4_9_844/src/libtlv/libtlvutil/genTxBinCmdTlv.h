@@ -1,6 +1,9 @@
 #if !defined(_GEN_TXBIN_CMDTLV_H)
 #define  _GEN_TXBIN_CMDTLV_H
 
+//#include "ah_osdep.h"
+//typedef unsigned int            A_UINT32;
+
 #ifdef _WINDOWS
     #ifdef LIBTLVUTIL_DLL
 		#define LIBTLVUTILDLLSPEC __declspec(dllexport)

@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -21,15 +20,20 @@
 #include "rate_constants.h"
 #include "vrate_constants.h"
 #include "UserPrint.h"
+//#include "ah_osdep.h"
+#include <stdint.h>
 
 #define MBUFFER 1024
 #define MAX_DATA_LENGTH  512
 
-#define SWAP32(_x) ((u_int32_t)(                       \
-                    (((const u_int8_t *)(&_x))[0]) |        \
-                    (((const u_int8_t *)(&_x))[1]<< 8) |    \
-                    (((const u_int8_t *)(&_x))[2]<<16) |    \
-                    (((const u_int8_t *)(&_x))[3]<<24)))
+//#define SWAP32(_x) __bswap32(_x)
+
+#define SWAP32(_x) ((uint32_t)(                       \
+                    (((const uint8_t *)(&_x))[0]) |        \
+                    (((const uint8_t *)(&_x))[1]<< 8) |    \
+                    (((const uint8_t *)(&_x))[2]<<16) |    \
+                    (((const uint8_t *)(&_x))[3]<<24)))
+
 extern void Qc98xx_swap_eeprom(QC98XX_EEPROM *eep);
 
 extern A_UINT32 fwBoardDataAddress;
@@ -171,7 +175,7 @@ void PrintQc98xxBaseHeader(int client, const BASE_EEP_HEADER *pBaseEepHeader, co
     }
     else //v2
     {
-	    SformatOutput(buffer, MBUFFER-1, " | txrxGain        see Modal Section |  pwrTableOffset          %d        |",
+	    SformatOutput(buffer, MBUFFER-1, " | txrxGain       0x%02x see Modal Section |  pwrTableOffset          %d        |",
     	    pBaseEepHeader->txrxgain, pBaseEepHeader->pwrTableOffset);
     }
     ErrorPrint(NartOther, buffer);

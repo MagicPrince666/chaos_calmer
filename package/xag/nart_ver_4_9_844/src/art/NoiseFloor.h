@@ -1,4 +1,5 @@
-
+#ifndef _NOISEFLOOR_H_
+#define _NOISEFLOOR_H_
 
 extern void NoiseFloorCommand(int client);
 
@@ -14,3 +15,5 @@ extern int NoiseFloorLoad(int *nfc, int *nfe, int nfn);
 extern int NoiseFloorFetch(int *nfc, int *nfe, int nfn);
 
 extern void NoiseFloorParameterSplice(struct _ParameterList *list);
+
+#endif

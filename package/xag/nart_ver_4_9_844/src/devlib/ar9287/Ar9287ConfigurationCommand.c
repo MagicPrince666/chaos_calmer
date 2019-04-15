@@ -117,7 +117,7 @@ static void ReturnSigned(char *command, char *name, char *atext, int *value, int
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -143,7 +143,7 @@ static void ReturnUnsigned(char *command, char *name, char *atext, int *value, i
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -169,7 +169,7 @@ static void ReturnHex(char *command, char *name, char *atext, int *value, int nv
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -195,7 +195,7 @@ static void ReturnDouble(char *command, char *name, char *atext, double *value, 
 			lc+=nc;
 		}
 	}
-	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|",value[it]);
+	nc=SformatOutput(&buffer[lc],MBUFFER-lc-1,"|");
     buffer[MBUFFER-1]=0;
 	ErrorPrint(NartData,buffer);
 }
@@ -454,7 +454,8 @@ static void ReturnGet(int ix, int iy, int iz, int status, int *done, int *error,
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -490,7 +491,7 @@ static void ReturnGet(int ix, int iy, int iz, int status, int *done, int *error,
 	}
 }
 
-static void ReturnGetl(int ix, int iy, int iz, int status, int *done, int *error, int ip, int index, long *value, int num)
+static void ReturnGetl(int ix, int iy, int iz, int status, int *done, int *error, int ip, int index, int *value, int num)
 {
 	char atext[MBUFFER];
 
@@ -499,7 +500,8 @@ static void ReturnGetl(int ix, int iy, int iz, int status, int *done, int *error
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -544,7 +546,8 @@ static void ReturnGetf(int ix, int iy, int iz, int status, int *done, int *error
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -594,7 +597,8 @@ static void ConfigSets(int *done, int *error, int ip, int index, int ix, int iy,
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -662,7 +666,8 @@ static void ConfigfSets(int *done, int *error, int ip, int index, int ix, int iy
 				//
 				if(ix<0)
 				{
-					SformatOutput(atext,MBUFFER-1,"");
+					//SformatOutput(atext,MBUFFER-1,"\0");
+					memset(atext, 0, MBUFFER-1);
 					ix=0;
 					iy=0;
 					iz=0;
@@ -822,7 +827,7 @@ AR9287DLLSPEC int Ar9287SetCommand(int client)
 	char *text;
 	int status;
 	int ix, iy, iz;
-	unsigned long lvalue, addr; 
+	unsigned int lvalue, addr; 
 	int parseStatus;
 	char atext[MBUFFER];
 
@@ -1171,10 +1176,10 @@ AR9287DLLSPEC int Ar9287GetCommand(int client)
     int value[MAXVALUE]; 
 	u_int8_t  value2[AR9287_EEPROM_MODAL_SPURS][2];
 	double fvalue[MAXVALUE]; 
-	unsigned int uvalue[MAXVALUE]; 
+	int uvalue[MAXVALUE]; 
 	char cvalue[MAXVALUE];
 	short svalue[MAXVALUE];
-	long lvalue[MAXVALUE];
+	int lvalue[MAXVALUE];
 	char buffer[MBUFFER];
 	int status;
 	int ix, iy, iz, num=0;

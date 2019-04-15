@@ -1,4 +1,5 @@
-
+#ifndef _ERRORCOMMAND_H_
+#define _ERRORCOMMAND_H_
 
 
 #ifdef _WINDOWS
@@ -19,3 +20,4 @@ extern PARSEDLLSPEC void ErrorCommand();
 
 extern PARSEDLLSPEC void ErrorParameterSplice(struct _ParameterList *list);
 
+#endif

@@ -45,7 +45,7 @@
 extern struct ath_hal *AH;
 
 extern void  ar9300SwapEeprom(ar9300_eeprom_t *eep);
-
+void ar9300_swap_eeprom(ar9300_eeprom_t *eep);
 
 static int CompressPairs(char *input, int size, char *output, int max)
 {
@@ -94,7 +94,7 @@ static int CompressBlock(char *input, char *source, int size, char *output, int 
             //
             if(input[last]==0)
             {
-                if((last==size-1) || (last==size-2 && input[last+1]==0) || input[last+1]==0 && input[last+2]==0)
+                if((last==size-1) || (last==size-2 && input[last+1]==0) || (input[last+1]==0 && input[last+2]==0))
                 {
                     break;
                 }
@@ -290,9 +290,9 @@ static void CheckCompression(char *mptr, int msize, char *dptr, int it,
 {
     int ib;
     int osize;
-    int overhead;
-    int first, last;
-    int length;
+    //int overhead;
+    //int first, last;
+    //int length;
     char difference[MOUTPUT], output[MOUTPUT];
 
     for(ib=0; ib<msize; ib++)
@@ -402,10 +402,10 @@ int Ar9300EepromReportAddress(void (*print)(char *format, ...), int all, int cpt
     int it;
     u_int16_t checksum, mchecksum;
 	ar9300_eeprom_t mptr[MCHECK], *xptr;
-	char *ptr;
+	//char *ptr;
 	int mcount;
 	int mdataSize;
-	int restored=0;
+	//int restored=0;
 
 	mcount=0;
 	//
@@ -708,14 +708,14 @@ static int Ar9300EepromSave()
     int it;
     ar9300_eeprom_t *dptr;
     int dsize;
-    int first;
-    int last;
-    int ib;
+    //int first;
+    //int last;
+    //int ib;
     int bsize;
     int breference;
     int balgorithm;
-    int offset[MVALUE],value[MVALUE];
-    int overhead;
+    //int offset[MVALUE],value[MVALUE];
+    //int overhead;
     ar9300_eeprom_t xptr;
     int nextaddress;
     int major, minor;

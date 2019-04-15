@@ -41,6 +41,8 @@
 #include <sys/types.h>
 #endif
 
+#include <stdint.h>
+#include <string.h>
 #include "asf_amem.h"
 
 /*
@@ -72,6 +74,7 @@
 #endif
 
 #include <linux/errno.h>
+#include <stdint.h>
 
 /*
  * When building the HAL proper we use no GPL-contaminated include
@@ -91,7 +94,7 @@ typedef unsigned char u_int8_t;
 typedef unsigned short u_int16_t;
 typedef unsigned int u_int32_t;
 #ifndef __LINUX_MIPS64_ARCH__
-typedef unsigned long long u_int64_t;
+typedef uint64_t u_int64_t;
 #endif
 
 #ifndef __LINUX_MIPS64_ARCH__
@@ -121,6 +124,8 @@ typedef enum {
     true = 1,
 } bool;
 
+
+
 #endif
 #ifndef _STDINT_H
 /* Must explictly set a 64-bit target for uinptr_t to be 64-bit correct */
@@ -131,10 +136,12 @@ typedef enum {
         		typedef unsigned long long  uintptr_t;
 		#endif
     #else
-        #include <linux/version.h>
-        #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24)) || (!defined (_LINUX_TYPES_H)) || (CFG_64BIT == 1)
-	     typedef unsigned int        uintptr_t;
-	#endif
+        //#include <linux/version.h>
+        //#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24)) || (!defined (_LINUX_TYPES_H)) || (CFG_64BIT == 1)
+	    // typedef unsigned int        uintptr_t;
+	    //#endif
+        typedef unsigned int        uintptr_t;
+        //#define uintptr_t uint32_t
     #endif
 #endif
 
@@ -149,7 +156,7 @@ typedef enum {
 typedef void* HAL_SOFTC;
 typedef void* HAL_BUS_HANDLE;
 typedef void* HAL_ADAPTER_HANDLE;
-typedef u_int32_t HAL_BUS_ADDR;         /* XXX architecture dependent */
+typedef uint32_t HAL_BUS_ADDR;         /* XXX architecture dependent */
 typedef void* HAL_BUS_TAG;
 
 /* 
@@ -176,41 +183,41 @@ typedef struct hal_bus_context {
 
 struct ath_hal;
 struct hal_reg_parm {
-    u_int8_t             halPciePowerSaveEnable;             // Program Serdes; Use ASPM
-    u_int8_t             halPcieL1SKPEnable;                 // Enable L1 SKP workaround
-    u_int32_t            halPciePowerReset;
-    u_int8_t             halPcieClockReq;
-    u_int32_t            halPcieWaen;
-    u_int8_t             halPcieRestore;
-    u_int8_t             halPcieAspmCfg;                     // for L1 ASPM Configuration
-    u_int8_t             htEnable;			     // Enable/disable 11n mode
-    u_int32_t            ofdmTrigLow;
-    u_int32_t            ofdmTrigHigh;
-    u_int32_t            cckTrigHigh;
-    u_int32_t            cckTrigLow;
-    u_int32_t            enableANI;
-    u_int8_t             noiseImmunityLvl;
-    u_int32_t            ofdmWeakSigDet;
-    u_int32_t            cckWeakSigThr;
-    u_int8_t             spurImmunityLvl;
-    u_int8_t             firStepLvl;
+    uint8_t             halPciePowerSaveEnable;             // Program Serdes; Use ASPM
+    uint8_t             halPcieL1SKPEnable;                 // Enable L1 SKP workaround
+    uint32_t            halPciePowerReset;
+    uint8_t             halPcieClockReq;
+    uint32_t            halPcieWaen;
+    uint8_t             halPcieRestore;
+    uint8_t             halPcieAspmCfg;                     // for L1 ASPM Configuration
+    uint8_t             htEnable;			     // Enable/disable 11n mode
+    uint32_t            ofdmTrigLow;
+    uint32_t            ofdmTrigHigh;
+    uint32_t            cckTrigHigh;
+    uint32_t            cckTrigLow;
+    uint32_t            enableANI;
+    uint8_t             noiseImmunityLvl;
+    uint32_t            ofdmWeakSigDet;
+    uint32_t            cckWeakSigThr;
+    uint8_t             spurImmunityLvl;
+    uint8_t             firStepLvl;
     int8_t               rssiThrHigh;
     int8_t               rssiThrLow;
-    u_int16_t            diversityControl;                // Enable/disable antenna diversity
-    u_int16_t            antennaSwitchSwap; 
-    u_int32_t            forceBias;
-    u_int32_t            forceBiasAuto;
+    uint16_t            diversityControl;                // Enable/disable antenna diversity
+    uint16_t            antennaSwitchSwap; 
+    uint32_t            forceBias;
+    uint32_t            forceBiasAuto;
 #ifdef ATH_SUPERG_DYNTURBO
-    u_int8_t             disableTurboG;
+    uint8_t             disableTurboG;
 #endif        
-    u_int8_t             serializeRegMode;
-    u_int8_t             defaultAntCfg;
-    u_int32_t            fastClockEnable;
-    u_int32_t            hwMfpSupport;
+    uint8_t             serializeRegMode;
+    uint8_t             defaultAntCfg;
+    uint32_t            fastClockEnable;
+    uint32_t            hwMfpSupport;
     int                  calInFlash;
 #ifdef ATH_SUPPORT_TxBF        
-    u_int8_t             CVTimeOut;
-    u_int16_t            TxBFCtl;
+    uint8_t             CVTimeOut;
+    uint16_t            TxBFCtl;
 #endif
 };
 
@@ -218,9 +225,11 @@ struct hal_reg_parm {
 #define NULL 0
 #endif
 
+extern  void* __ahdecl ath_hal_ioremap(uintptr_t addr, uint32_t len);
+
 #define OS_MEMZERO(_a, _n)  memset((_a), 0, (_n))
-#define OS_DELAY(_n)    ath_hal_delay(_n)
-#define OS_MEMCPY(_d, _s, _n)   ath_hal_memcpy(_d,_s,_n)
+#define OS_DELAY(_n)    usleep(_n)
+#define OS_MEMCPY(_d, _s, _n)   memcpy(_d,_s,_n)
 #define OS_REMAP(_addr, _len)       ath_hal_ioremap(_addr, _len)
 #define OS_MEMSET(_buf, _ch, _len) memset(_buf, _ch, _len)
 
@@ -236,19 +245,17 @@ struct hal_reg_parm {
 extern  void __ahdecl ath_hal_delay(int);
 
 
-
-extern  void* __ahdecl ath_hal_ioremap(uintptr_t addr, u_int32_t len);
 #ifdef AR9100
 #   define OS_REMAP(_ignore, _addr, _len)       ath_hal_ioremap(_addr, _len)
 extern void ath_hal_ahb_mac_reset(void);
-extern void ath_hal_get_chip_revisionid(u_int32_t *);
+extern void ath_hal_get_chip_revisionid(uint32_t *);
 #else
 #   define OS_REMAP(_addr, _len)       ath_hal_ioremap(_addr, _len)
 #endif
 
 #define OS_MEMZERO(_a, _n)  ath_hal_memzero((_a), (_n))
 extern void __ahdecl ath_hal_memzero(void *, size_t);
-#define OS_MEMCPY(_d, _s, _n)   ath_hal_memcpy(_d,_s,_n)
+//#define OS_MEMCPY(_d, _s, _n)   ath_hal_memcpy(_d,_s,_n)
 #define OS_MEMSET(_buf, _ch, _len) memset(_buf, _ch, _len)
 extern void * __ahdecl ath_hal_memcpy(void *, const void *, size_t);
 
@@ -256,7 +263,7 @@ extern void * __ahdecl ath_hal_memcpy(void *, const void *, size_t);
 #define abs(_a)     __builtin_abs(_a)
 #endif
 
-extern  u_int32_t __ahdecl ath_hal_getuptime(struct ath_hal *);
+extern  uint32_t __ahdecl ath_hal_getuptime(struct ath_hal *);
 
 #endif
 
@@ -271,18 +278,28 @@ extern  u_int32_t __ahdecl ath_hal_getuptime(struct ath_hal *);
  * This could be optimized but since we only use it for
  * a few registers there's little reason to do so.
  */
-static inline u_int32_t
-__bswap32(u_int32_t _x)
+/*
+static inline uint32_t
+__bswap32(uint32_t _x)
 {
-    return ((u_int32_t)(
-          (((const u_int8_t *)(&_x))[0]    ) |
-          (((const u_int8_t *)(&_x))[1]<< 8) |
-          (((const u_int8_t *)(&_x))[2]<<16) |
-          (((const u_int8_t *)(&_x))[3]<<24))
+    return ((uint32_t)(
+          (((const uint8_t *)(&_x))[0]    ) |
+          (((const uint8_t *)(&_x))[1]<< 8) |
+          (((const uint8_t *)(&_x))[2]<<16) |
+          (((const uint8_t *)(&_x))[3]<<24))
     );
 }
-#define __bswap16(_x) ( (u_int16_t)( (((const u_int8_t *)(&_x))[0] ) |\
-                         ( ( (const u_int8_t *)( &_x ) )[1]<< 8) ) )
+*/
+
+#define __bswap32(_x) ((uint32_t)(                       \
+                    (((const uint8_t *)(&_x))[0]) |        \
+                    (((const uint8_t *)(&_x))[1]<< 8) |    \
+                    (((const uint8_t *)(&_x))[2]<<16) |    \
+                    (((const uint8_t *)(&_x))[3]<<24)))
+
+#define __bswap16(_x) ( (uint16_t)( (((const uint8_t *)(&_x))[0] ) |\
+                         ( ( (const uint8_t *)( &_x ) )[1]<< 8) ) )
+
 #else
 #define __bswap32(_x)   (_x)
 #define __bswap16(_x)   (_x)
@@ -318,45 +335,45 @@ __bswap32(u_int32_t _x)
  */
 #define _OS_REG_WRITE(_ah, _reg, _val) do {             \
     writel((_val),                                      \
-            (uint32_t)((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))); \
+            (uint32_t)((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))); \
 } while(0)
 #define _OS_REG_READ(_ah, _reg) \
-        readl((uint32_t)(volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
+        readl((uint32_t)(volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
 
 #elif defined(ENDIAN_SWAP)
 #define _OS_REG_WRITE(_ah, _reg, _val) do {                 \
-            *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = \
+            *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = \
             __bswap32((_val)); \
 } while (0)
 #define _OS_REG_READ(_ah, _reg) \
-            __bswap32(*((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))) 
+            __bswap32(*((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))) 
 
 #elif defined (__LINUX_MIPS32_ARCH__) || defined (__LINUX_MIPS64_ARCH__)
 #define _OS_REG_WRITE(_ah, _reg, _val) \
-    *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val)
+    *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val)
 #define _OS_REG_READ(_ah, _reg) \
-    *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
+    *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
 
 #else
 #define _OS_REG_WRITE(_ah, _reg, _val) do {                 \
     if ( (_reg) >= 0x4000 && (_reg) < 0x5000)               \
-        *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) =      \
+        *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) =      \
             __bswap32((_val));                  \
     else                                    \
-        *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val);  \
+        *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val);  \
 } while (0)
 #define _OS_REG_READ(_ah, _reg) \
     (((_reg) >= 0x4000 && (_reg) < 0x5000) ? \
-        __bswap32(*((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))) : \
-        *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))))
+        __bswap32(*((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))) : \
+        *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))))
 #endif /*__LINUX_ARM_ARCH__*/
 
 #else /* AH_LITTLE_ENDIAN */
 #define _OS_REG_WRITE(_ah, _reg, _val) do { \
-    *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val); \
+    *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg))) = (_val); \
 } while (0)
 #define _OS_REG_READ(_ah, _reg) \
-    *((volatile u_int32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
+    *((volatile uint32_t *)(AH_PRIVATE(_ah)->ah_sh + (_reg)))
 #endif /* AH_BYTE_ORDER */
 
 #endif /* QCA_PARTNER_PLATFORM */
@@ -395,7 +412,7 @@ __bswap32(u_int32_t _x)
                     "%s: Error:REG_WRITE_BUFFER musat be enabled!\n",                \
                     __func__)                                                       
 
-extern void __ahdecl ath_hal_wmi_ps_set_state(struct ath_hal *ah, u_int16_t mode);
+extern void __ahdecl ath_hal_wmi_ps_set_state(struct ath_hal *ah, uint16_t mode);
 
 #define HTC_SET_PS_STATE(_ah, _mode)do { \
     ath_hal_wmi_ps_set_state(_ah, _mode); \
@@ -408,8 +425,8 @@ extern void __ahdecl ath_hal_wmi_ps_set_state(struct ath_hal *ah, u_int16_t mode
 #define OS_REG_READ(_ah, _reg)      ath_hal_reg_read(_ah, _reg)
 
 extern  void __ahdecl ath_hal_reg_write(struct ath_hal *ah,
-        u_int reg, u_int32_t val);
-extern  u_int32_t __ahdecl ath_hal_reg_read(struct ath_hal *ah, u_int reg);
+        u_int reg, uint32_t val);
+extern  uint32_t __ahdecl ath_hal_reg_read(struct ath_hal *ah, u_int reg);
 #else
 /* inline register operations */
 #define OS_REG_WRITE(_ah, _reg, _val)   _OS_REG_WRITE(_ah, _reg, _val)
@@ -417,7 +434,7 @@ extern  u_int32_t __ahdecl ath_hal_reg_read(struct ath_hal *ah, u_int reg);
 #endif /* AH_DEBUG || AH_REGFUNC || AH_DEBUG_ALQ */
 
 #ifdef AH_DEBUG_ALQ
-extern  void __ahdecl OS_MARK(struct ath_hal *, u_int id, u_int32_t value);
+extern  void __ahdecl OS_MARK(struct ath_hal *, u_int id, uint32_t value);
 #else
 #define OS_MARK(_ah, _id, _v)
 #endif
@@ -433,14 +450,14 @@ extern  void __ahdecl OS_MARK(struct ath_hal *, u_int id, u_int32_t value);
  *     compiled with the default calling convetion and are not called
  *     from within the HAL.
  */
-typedef u_int32_t (*HAL_BUS_CONFIG_READER)(HAL_SOFTC sc, u_int32_t offset, void *pBuffer, u_int32_t length);
+typedef uint32_t (*HAL_BUS_CONFIG_READER)(HAL_SOFTC sc, uint32_t offset, void *pBuffer, uint32_t length);
 
 struct ath_hal_callback {
     /* Callback Functions */
     HAL_BUS_CONFIG_READER read_pci_config_space;
 };
 
-extern  struct ath_hal *_ath_hal_attach(u_int16_t devid, 
+extern  struct ath_hal *_ath_hal_attach(uint16_t devid, 
                                         HAL_ADAPTER_HANDLE osdev,
                                         HAL_SOFTC,
                                         HAL_BUS_CONTEXT *bus_context,
@@ -453,9 +470,9 @@ extern  void ath_hal_detach(struct ath_hal *);
 /*
  * Atomic interface
  */
-typedef u_int32_t os_atomic_t;
+typedef uint32_t os_atomic_t;
 
-//#define OS_ATOMIC_READ(_patomic_arg)           (*(_patomic_arg))
+#define OS_ATOMIC_READ(_patomic_arg)           (*(_patomic_arg))
 //#define OS_ATOMIC_SET(_patomic_arg, v)         InterlockedExchange(_patomic_arg, (v))
 //#define OS_ATOMIC_ADD(v, _patomic_arg)         InterlockedExchangeAdd(_patomic_arg, (v))
 #define OS_ATOMIC_INC(_patomic_arg)            ((*_patomic_arg)++)
@@ -473,8 +490,8 @@ typedef u_int32_t os_atomic_t;
 #endif
 
 #ifdef IOCTL_REG_ACCESS 
-u_int32_t hwSysRegRead ( u_int16_t devIndex, u_int32_t offset );
-void hwSysRegWrite ( u_int16_t devIndex, u_int32_t  offset, u_int32_t  value );
+uint32_t hwSysRegRead ( uint16_t devIndex, uint32_t offset );
+void hwSysRegWrite ( uint16_t devIndex, uint32_t  offset, uint32_t  value );
 extern int instance;
 #undef  _OS_REG_READ
 #undef  _OS_REG_WRITE

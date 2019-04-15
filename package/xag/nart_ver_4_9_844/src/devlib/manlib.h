@@ -455,8 +455,8 @@ typedef struct {
 } CTL_POWER_INFO;
 
 /**************************************************************************************/
-/* These definitions need to go somewhere where they can be shared between app & driver
-/* others are used in user space only but have "exact" counterparts in the driver
+// These definitions need to go somewhere where they can be shared between app & driver
+// others are used in user space only but have "exact" counterparts in the driver
 /**************************************************************************************/
 /**********BAA: BEGIN HAL definitions shared with the driver ***********/
 #if defined(ANWI_HAL_DRV)

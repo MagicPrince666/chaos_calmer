@@ -242,7 +242,7 @@ static int Qc9KEepromPrintIt(unsigned char *data, int type, int size, int length
 	int iuse;
 	int rr;
 	char comma[10];
-	static rate_index=0;
+	static int rate_index = 0;
 	static int target_powers[24];
 	strcpy(comma,",");
 	comma[1]=0;
@@ -414,7 +414,7 @@ static int Qc9KEepromPrintIt(unsigned char *data, int type, int size, int length
 			            nc=SformatOutput(&buffer[lc],max-lc-1,"%u",(voff+(unsigned int)vuse)&0xffff);
 						break;
 		            case 'c':
-			            nc=SformatOutput(&buffer[lc],max-lc-1,"%2c",(voff+(unsigned int)vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff);
+			            nc=SformatOutput(&buffer[lc],max-lc-1,"%c%c",(voff+(unsigned int)vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff);
 						break;
 					default:
 		            case 'x':
@@ -458,7 +458,7 @@ static int Qc9KEepromPrintIt(unsigned char *data, int type, int size, int length
 			            nc=SformatOutput(&buffer[lc],max-lc-1,"%g",voff+vf[it]);
 						break;
 		            case 'c':
-			            nc=SformatOutput(&buffer[lc],max-lc-1,"%4c",(voff+vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff,((voff+(unsigned int)vuse)>>16)&0xff,((voff+(unsigned int)vuse)>>24)&0xff);
+			            nc=SformatOutput(&buffer[lc],max-lc-1,"%c%c%c%c",(voff+vuse)&0xff,((voff+(unsigned int)vuse)>>8)&0xff,((voff+(unsigned int)vuse)>>16)&0xff,((voff+(unsigned int)vuse)>>24)&0xff);
 						break;
 					default:
 		            case 'x':

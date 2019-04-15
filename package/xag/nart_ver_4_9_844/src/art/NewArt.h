@@ -1,3 +1,5 @@
+#ifndef _NEWART_H_
+#define _NEWART_H_
 
 extern int CommandRead();
 
@@ -44,3 +46,5 @@ extern void SetStrTerminationChar( char tc );
 extern char GetStrterminationChar();
 
 #define DIAG_TERM_CHAR 0x7E
+
+#endif

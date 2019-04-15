@@ -47,6 +47,7 @@
 #include "ah_internal.h"
 #include "ah_devid.h"
 #include "ah_eeprom.h"
+#include "ah_osdep.h"
 
 #if AH_DEBUG || AH_PRINT_FILTER
 /* HAL custom print function */
@@ -415,6 +416,7 @@ ath_hal_attach(u_int16_t devid, HAL_ADAPTER_HANDLE osdev, HAL_SOFTC sc,
 bool __ahdecl
  ath_hal_setvendor(struct ath_hal *ah, u_int32_t vendor)
  {
+    //AH_PRIVATE(ah)->ah_vendor = (HAL_VENDORS)vendor;
     AH_PRIVATE(ah)->ah_vendor = vendor;
     return true;
  }
@@ -1291,12 +1293,12 @@ ath_hal_setcapability(struct ath_hal *ah, HAL_CAPABILITY_TYPE type,
 /* 
  * Common support for getDiagState method.
  */
-
+//#define uintptr_t u_int64_t
 static u_int __ahdecl
 ath_hal_getregdump(struct ath_hal *ah, const HAL_REGRANGE *regs,
     void *dstbuf, int space)
 {
-    u_int32_t *dp = dstbuf;
+    u_int32_t *dp = (u_int32_t *)dstbuf;
     int i;
 
     for (i = 0; space >= 2*sizeof(u_int32_t); i++) {

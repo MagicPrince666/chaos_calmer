@@ -1,3 +1,5 @@
+#ifndef _USERPRINT_H_
+#define _USERPRINT_H_
 
 #include <stdio.h>
 
@@ -51,3 +53,4 @@ extern PARSEDLLSPEC void UserPrintSocket(struct _Socket *socket);
 //
 extern PARSEDLLSPEC void UserPrintFunction(void (*print)(char *buffer));
 
+#endif

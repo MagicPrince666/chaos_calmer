@@ -34,14 +34,14 @@ PARSEDLLSPEC void MyDelay(int ms)
 //#ifdef OSPREY
 	if(ms<=0) ms=1;
 //#endif
-#ifdef MDK_AP
-	milliSleep(ms);
-#elif defined(__APPLE__)
-	usleep(ms);
-#elif defined(LINUX)
+//#ifdef MDK_AP
+//	milliSleep(ms);
+//#elif defined(__APPLE__)
+//	usleep(ms);
+//#elif defined(LINUX)
     usleep(ms*1000);
-#else
-	Sleep(ms);
-#endif	
+//#else
+//	Sleep(ms);
+//#endif	
 }
 

@@ -1,4 +1,5 @@
-
+#ifndef _KEYBOARD_H_
+#define _KEYBOARD_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -25,4 +26,4 @@ extern PARSEDLLSPEC int KeyboardReadWait(char *buffer, int maxlen);
 //
 extern PARSEDLLSPEC int KeyboardRead(char *buffer, int maxlen);
 
-
+#endif

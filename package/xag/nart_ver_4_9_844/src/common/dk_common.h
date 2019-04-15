@@ -104,7 +104,7 @@ typedef void * DRV_HANDLE;
 #define TRUE 1
 #define FALSE 0
 #define A_MALLOC(a) (malloc(a))
-#define A_FREE(a) (free(a))
+//#define A_FREE(a) (free(a))
 #ifdef A_STRCPY
 #undef A_STRCPY
 #define A_STRCPY(a,b) (memcpy((a), (b), sizeof((b))))

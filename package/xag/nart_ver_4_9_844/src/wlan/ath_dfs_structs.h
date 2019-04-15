@@ -17,7 +17,9 @@
 
 #ifndef _DFS__STRUCTS_H_
 #define _DFS__STRUCTS_H_
+
 #include <adf_os_mem.h>
+#include <string.h>
 
 /*
  * For the dfs_nol_clist_update() method - this is the
@@ -179,7 +181,7 @@ struct ath_dfs_phyerr_param {
 static inline void ath_dfs_phyerr_param_copy(struct ath_dfs_phyerr_param *dst,
     struct ath_dfs_phyerr_param *src)
 {
-	adf_os_mem_copy(dst, src, sizeof(*dst));
+	memcpy(dst, src, sizeof(*dst));
 }
 
 static inline void ath_dfs_phyerr_init_noval(struct ath_dfs_phyerr_param *pe)

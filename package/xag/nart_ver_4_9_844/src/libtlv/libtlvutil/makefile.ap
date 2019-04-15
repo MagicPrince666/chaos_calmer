@@ -5,14 +5,14 @@ CFLAGS += -DDEBUG -DTEST_STANDALONE -D_HOST_SIM_TESTING -D_FOR_HOST_TESTING
 
 CFLAGS += -I$(ART_ROOT)/libtlv/include \
         -I$(ART_ROOT)/libtlv/outputTemplate \
-	-I$(ART_ROOT)/common \
-        -I$(ART_ROOT)/include/systemtools/common \
+		-I$(ART_ROOT)/common \
+        -I$(WORKAREA)/include/systemtools/common \
 
 CFLAGS += -fPIC
 
 SRCS = genTxBinCmdTlv.c cmdParmsTemplate.c parseRxBinCmdTlv.c testUtil.c
 
-OBJS    :=  $(patsubst %.c,$(OUTPUT_DIR)/%.o,$(SRCS))
+OBJS    := $(patsubst %.c,$(OUTPUT_DIR)/%.o,$(SRCS))
 
 LIB 	:= $(OUTPUT_DIR)/libtlvutil.so
 LDFLAGS := -shared

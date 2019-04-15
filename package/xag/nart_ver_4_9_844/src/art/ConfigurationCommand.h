@@ -1,4 +1,5 @@
-
+#ifndef _CONFIGURATIONCOMMAND_H_
+#define _CONFIGURATIONCOMMAND_H_
 
 
 //
@@ -54,3 +55,4 @@ extern void ConfigurationSetCalTGTCommand(int client);
 
 extern void ConfigurationGetCalTGTCommand(int client);
 
+#endif

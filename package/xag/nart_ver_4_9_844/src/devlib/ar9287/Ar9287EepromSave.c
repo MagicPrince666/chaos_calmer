@@ -294,6 +294,8 @@ extern AR9287DLLSPEC int Ar9287CalibrationDataGet(void)
 	return ar5416_calibration_data_get(AH);
 }
 
+extern int32_t ar5416_eeprom_size(struct ath_hal *ah);
+//#include "Ar9287Device.h"
 A_INT32 Ar9287ConfigurationSave(void) 
 {
 	unsigned char header[4];

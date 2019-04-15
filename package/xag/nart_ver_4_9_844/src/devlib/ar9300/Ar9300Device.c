@@ -220,6 +220,12 @@ int Ar9300ChannelCalculate(int *frequency, int *option, int mchannel)
    	return nchannel;
 }
 
+static int Ar9300_TuningCaps(int caps)
+{
+	FieldWrite("ch0_XTAL.xtal_capindac", caps);
+	FieldWrite("ch0_XTAL.xtal_capoutdac", caps);
+	return 0;
+}
 
 int Ar9300TuningCapsSet(int caps)
 {
@@ -253,14 +259,14 @@ int Ar9300TransmitCarrier(unsigned int txchain)
 
 	return 0;
 }
-
+/*
 static void Ar9300CarrierOnlyClear(void)
 {
 	FieldWrite("ch0_rxtx3.dacfullscale",0);
 	FieldWrite("ch1_rxtx3.dacfullscale",0);
 	FieldWrite("ch2_rxtx3.dacfullscale",0);
 }
-
+*/
 AR9300DLLSPEC int Ar9300TxChainMany(void)
 {
 
@@ -627,10 +633,10 @@ AR9300DLLSPEC int Ar9300FlashRead(unsigned int address, unsigned char *buffer, i
 
 AR9300DLLSPEC int Ar9300FlashWrite(unsigned int address, unsigned char *buffer, int many)
 {
-    unsigned int eepAddr;
-    unsigned int byteAddr;
-    unsigned short svalue, word;
-    int i;
+    //unsigned int eepAddr;
+    //unsigned int byteAddr;
+    //unsigned short svalue, word;
+    //int i;
 
 #ifdef MDK_AP
 	if(((address)<0)||((address+many)>AR9300_EEPROM_SIZE-1)){
@@ -638,7 +644,7 @@ AR9300DLLSPEC int Ar9300FlashWrite(unsigned int address, unsigned char *buffer, 
 	}
 
 //    if(calData == CALDATA_FLASH ){
-        int fd, it;
+        int fd;
         if((fd = open("/dev/caldata", O_RDWR)) < 0) {
             perror("Could not open flash\n");
             return 1 ;
@@ -1044,8 +1050,8 @@ AR9300DLLSPEC int Ar9300PllSceen(void)
     HAL_CHANNEL channel;
     int average = 50;
     int i = 0;
-    int shutdownState = 0;
-    unsigned int rtcState = 0, pllState = 0, vc_meas0 = 0;
+    //int shutdownState = 0;
+    unsigned int vc_meas0 = 0;
     int min = 0, max = 0;
     int start,end;
 
@@ -1325,8 +1331,8 @@ int Ar9300Attach(int devid, int calmem)
 	unsigned char header[compression_header_length];
 
 	int start,end;
-	int it;
-    char buffer[MBUFFER];
+	//int it;
+    //char buffer[MBUFFER];
 	int caluse;
 	int eepsize;
     int status;
@@ -1559,21 +1565,22 @@ AR9300DLLSPEC int Ar9300Reset(int frequency, unsigned int txchain, unsigned int 
 {
 
 	HAL_CHANNEL channel;
-	int start,end;
+	//int start,end;
 	int error;
 	HAL_OPMODE opmode;
 	HAL_HT_MACMODE htmode;
     HAL_HT_EXTPROTSPACING exprotspacing;
 	HAL_BOOL bChannelChange;
 	int isscan;
-	int tnf[1];
+	//int tnf[1];
 	int rx_cal_mask,tx_chain_mask;
 	struct ath_hal_9300 *ahp = AH9300(AH);
 
 	//
 	// do it
 	//
-	start=TimeMillisecond();
+	//start=
+	TimeMillisecond();
 	//
 	// station card
 	// how do we do AP??
@@ -1712,7 +1719,8 @@ AR9300DLLSPEC int Ar9300Reset(int frequency, unsigned int txchain, unsigned int 
 	{
 		error= -1;
 	}
-	end=TimeMillisecond();
+	//end=
+	TimeMillisecond();
 
 
 	return error;
@@ -1771,12 +1779,14 @@ int Ar9300IsEmbeddedArt(void)
     return 0;
 }
 
+char buffer[MBUFFER];
+
 char *Ar9300IniVersion(int devid)
 {
-    char buffer[MBUFFER];
+	printf("xag %s devid=0x%04x\n",__func__, devid);
     switch (devid)
         {
-                case AR9300_DEVID_AR9340:
+            case AR9300_DEVID_AR9340:
 			{
 #ifdef INI_VERSION_AR9340
 				strcpy(buffer,INI_VERSION_AR9340);
@@ -1785,7 +1795,7 @@ char *Ar9300IniVersion(int devid)
 				return "Undefined";
 			}
                         break;
-                case AR9300_DEVID_AR955X:
+            case AR9300_DEVID_AR955X:
 			{
 #ifdef INI_VERSION_AR955X
 				strcpy(buffer,INI_VERSION_AR955X);
@@ -1794,7 +1804,7 @@ char *Ar9300IniVersion(int devid)
 				return "Undefined";
 			}
                         break;
-				case AR9300_DEVID_AR956X:
+			case AR9300_DEVID_AR956X:
 			{
 #ifdef INI_VERSION_qca956x
 				strcpy(buffer,INI_VERSION_qca956x);
@@ -1803,7 +1813,7 @@ char *Ar9300IniVersion(int devid)
 				return "Undefined";
 			}
 						break;
-                case AR9300_DEVID_AR953X:
+            case AR9300_DEVID_AR953X:
 			{
 #ifdef INI_VERSION_AR953X
 				strcpy(buffer,INI_VERSION_AR953X);

@@ -856,7 +856,7 @@ int Ar9300TxDescriptorControlPrint(void *block, char *buffer, int max)
 			lc+=nc;
 		}
 
-		nc=SformatOutput(&buffer[lc],max-lc-1,"%x %x %x %x %x`", 	
+		nc=SformatOutput(&buffer[lc],max-lc-1,"%x %x %x %x %x %x`", 	
 			dr->ness,
 			dr->not_sounding,
 			dr->rts_htc_trq,
@@ -1023,7 +1023,7 @@ int Ar9300TxDescriptorStatusPrint(void *block, char *buffer, int max)
 //
 AR9300DLLSPEC int Ar9300TxDescriptorPrint(void *block, char *buffer, int max)
 {
-	struct Ar9300TxDescriptorStatus *dr=(struct Ar9300TxDescriptorStatus *)block;
+	//struct Ar9300TxDescriptorStatus *dr=(struct Ar9300TxDescriptorStatus *)block;
 
 	if(Ar9300TxDescriptorStatusValid(block))
 	{
@@ -1456,7 +1456,7 @@ AR9300DLLSPEC unsigned int Ar9300TxDescriptorTxRate3(void *block)
 
 AR9300DLLSPEC int Ar9300TxDescriptorTxRateSet(void *block, unsigned int rate)
 {
-	struct Ar9300TxDescriptorControl *dr=(struct Ar9300TxDescriptorControl *)block;
+	//struct Ar9300TxDescriptorControl *dr=(struct Ar9300TxDescriptorControl *)block;
 
 	if(Ar9300TxDescriptorControlValid(block))
 	{

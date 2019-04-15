@@ -64,7 +64,7 @@ typedef struct osprey_txgain_tbl {
 
 #define MAX_SIZE_OSPREY_TX_GAIN_TABLE        32
 
-static int openLoopPwrCntl;			// WHO SETS THIS???
+//static int openLoopPwrCntl;			// WHO SETS THIS???
 static OSPREY_TXGAIN_TBL ospreyGainTable[MAX_SIZE_OSPREY_TX_GAIN_TABLE];
 
 #define GAIN_OVERRIDE       0xffff
@@ -81,13 +81,13 @@ static OSPREY_TXGAIN_TBL ospreyGainTable[MAX_SIZE_OSPREY_TX_GAIN_TABLE];
 static int generateOspreyTxGainTblFromCfg(unsigned int modeMask, int *pGainTableSize)
 {
     char fieldName[50];
-    int currentMode;
+    //int currentMode;
 	int i;
 
     //
 	// we only compute the values for the current mode
 	//
-    currentMode=0;
+    //currentMode=0;
 
 	//read gain table size
 	if(FieldRead("tx_gain_table_max", (unsigned int *)pGainTableSize) == -1) 
@@ -143,7 +143,7 @@ static int ForceSingleGainTableOsprey(int mode, int requestedGain)
 	unsigned int dac_gain = 0;
 	OSPREY_TXGAIN_TBL *pGainTbl = NULL;
 	int gainTableSize;
-	int offset=0;
+	//int offset=0;
 
     generateOspreyTxGainTblFromCfg(0x3, &gainTableSize);
 
@@ -563,9 +563,9 @@ AR9300DLLSPEC int Ar9300TransmitGainSet(int mode, int txgain)
 
 AR9300DLLSPEC int Ar9300TransmitGainRead(int entry, unsigned int *rvalue, int *value, int max)
 {
-	unsigned int dac_gain = 0;
+	//unsigned int dac_gain = 0;
 	OSPREY_TXGAIN_TBL *pGainTbl = NULL;
-	int offset=0;
+	//int offset=0;
     int pGainTableSize;
 
     generateOspreyTxGainTblFromCfg(0x3,&pGainTableSize);
@@ -674,9 +674,9 @@ AR9300DLLSPEC int Ar9300TxGainTableRead_AddressValue(unsigned int address, int i
   strcpy(fName,fPtr);
   SformatOutput(rfName,256-1, "%s.%s",rName, fName);
   if (idx == -1)
-	  return(FieldReadNoMask(rfName,value));
+	  return(FieldReadNoMask(rfName,(unsigned int *)value));
   else
-	return(FieldRead(rfName,value));
+	return(FieldRead(rfName,(unsigned int *)value));
 }
 
 AR9300DLLSPEC int Ar9300TransmitGainWrite(int entry, int *value, int nvalue)

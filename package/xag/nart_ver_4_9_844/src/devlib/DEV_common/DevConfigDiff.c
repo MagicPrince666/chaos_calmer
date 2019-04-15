@@ -217,7 +217,7 @@ int GenAdd (CONFIG_DIFF **Head, CONFIG_DIFF **Tail, A_UINT16 offset, A_UINT8 siz
 	}
 	return 0;
 }
-
+#include "DevDeviceFunction.h"
 //
 // execute all of the configuration differences
 //

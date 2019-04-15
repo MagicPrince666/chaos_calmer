@@ -570,8 +570,8 @@ PARSEDLLSPEC int Swords(char *text,
     char paren[MAX_PAREN];				// changed from int, 090714
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     if(text==0) return -1;
 
@@ -581,8 +581,8 @@ PARSEDLLSPEC int Swords(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -666,8 +666,8 @@ PARSEDLLSPEC int ScountWords(char *text,
     char paren[MAX_PAREN];			// changed from int, 090712
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     if(text==0) return -1;
 
@@ -677,8 +677,8 @@ PARSEDLLSPEC int ScountWords(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -763,8 +763,8 @@ PARSEDLLSPEC int SwordsNoNest(char *text,
     char paren[MAX_PAREN];
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     if(text==0) return -1;
 
@@ -774,8 +774,8 @@ PARSEDLLSPEC int SwordsNoNest(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -863,8 +863,8 @@ PARSEDLLSPEC int SextractNoNest(char *text,
     char paren[MAX_PAREN];
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     Sempty(word);
 
@@ -876,8 +876,8 @@ PARSEDLLSPEC int SextractNoNest(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -974,8 +974,8 @@ PARSEDLLSPEC int Sextract(char *text,
     char paren[MAX_PAREN];
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     Sempty(word);
 
@@ -987,8 +987,8 @@ PARSEDLLSPEC int Sextract(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -1082,8 +1082,8 @@ PARSEDLLSPEC int SblankWord(char *text,
     char paren[MAX_PAREN];
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     if(text==0) return -1;
 
@@ -1093,8 +1093,8 @@ PARSEDLLSPEC int SblankWord(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {
@@ -1186,8 +1186,8 @@ PARSEDLLSPEC int SblankSeparator(char *text,
     char paren[MAX_PAREN];
     int group;
     int ngrouper;
-    int nescaper;
-    int nseparator;
+    //int nescaper;
+    //int nseparator;
 
     if(text==0) return -1;
 
@@ -1197,8 +1197,8 @@ PARSEDLLSPEC int SblankSeparator(char *text,
     nparen=0;
     tlength=Slength(text);
     ngrouper=Slength(grouper)/2;
-    nseparator=Slength(separator);
-    nescaper=Slength(escaper);
+    //nseparator=Slength(separator);
+    //nescaper=Slength(escaper);
 
     for(tplace=0; tplace<tlength; tplace++)
     {

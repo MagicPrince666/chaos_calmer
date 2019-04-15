@@ -1,4 +1,5 @@
-
+#ifndef _TIMEMILLISECOND_H_
+#define _TIMEMILLISECOND_H_
 //#ident  "ACI $Id: //depot/sw/branches/art2_main_per_cs/src/art2/shared/TimeMillisecond.h#1 $, $Header: //depot/sw/branches/art2_main_per_cs/src/art2/shared/TimeMillisecond.h#1 $"
 
 
@@ -16,5 +17,5 @@
 
 extern PARSEDLLSPEC int TimeMillisecond();
 
-
+#endif
 

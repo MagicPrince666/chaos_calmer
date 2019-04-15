@@ -1,4 +1,5 @@
-
+#ifndef _LINK_H_
+#define _LINK_H_
 
 extern void CarrierTransmit(int client);
 
@@ -15,3 +16,5 @@ extern void LinkParameterSplice(struct _ParameterList *list);
 
 extern void RfBbTestPointParameterSplice(struct _ParameterList *list);
 extern void RfBbTestPoint(int client);
+
+#endif

@@ -1691,10 +1691,10 @@ void ar9287_eepromDump(int client, ar9287_eeprom_t *pEepStruct)
 
         SformatOutput(buffer, MBUFFER-1," |======================2GHz Modal Header======================|");
         //SendIt(client,buffer);
-        SformatOutput(buffer, MBUFFER-1," |  Ant Chain 0  0x%08lX     |  Ant Chain 1  0x%08lX     |",
+        SformatOutput(buffer, MBUFFER-1," |  Ant Chain 0  0x%08X     |  Ant Chain 1  0x%08X     |",
                  pModal->antCtrlChain[0], pModal->antCtrlChain[1]);
         //SendIt(client,buffer);
-        SformatOutput(buffer, MBUFFER-1," |  Antenna Common  0x%08lX  |  Antenna Gain Chain 0   %3d  |",
+        SformatOutput(buffer, MBUFFER-1," |  Antenna Common  0x%08X  |  Antenna Gain Chain 0   %3d  |",
                  pModal->antCtrlCommon, pModal->antennaGainCh[0]);
         //SendIt(client,buffer);
         SformatOutput(buffer, MBUFFER-1," |  Antenna Gain Chain 1   %3d  |  Switch Settling        %3d  |",
@@ -2205,7 +2205,8 @@ void ar9287_eepromDump(int client, ar9287_eeprom_t *pEepStruct)
             //SendIt(client,buffer);
         }
     }
-    SformatOutput(buffer, MBUFFER-1,"");
+    //SformatOutput(buffer, MBUFFER-1,"\0");
+    memset(buffer, 0, MBUFFER-1);
     //SendIt(client,buffer);
 
     /* Print Band Edge Powers */

@@ -1,4 +1,5 @@
-
+#ifndef _CALIBRATE_H_
+#define _CALIBRATE_H_
 
 //
 // save any information required to support calibration
@@ -30,3 +31,4 @@ extern int CalibrateClear();
 
 extern void CalibrateStatsHeader(int client);
 
+#endif

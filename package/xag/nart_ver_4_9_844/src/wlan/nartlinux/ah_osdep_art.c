@@ -16,6 +16,8 @@
 
 #include "opt_ah.h"
 #include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 
 #ifndef EXPORT_SYMTAB
 #define EXPORT_SYMTAB
@@ -743,7 +745,7 @@ static int init_ath_hal(void)
 **  \return RV
 */
 
-exit_ath_hal(void)
+void exit_ath_hal(void)
 {
     printf("HAL:: %s: driver unloaded\n", dev_info);
 }

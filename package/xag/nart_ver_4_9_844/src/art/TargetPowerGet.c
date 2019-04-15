@@ -75,7 +75,8 @@ void TargetPowerGetCommand(int client)
 	int it, nfrequency, frequency[MLOOP];
 	int ir, nrate, rate[MRATE];
 	double tp;
-	int rlegacy,rht20,rht40,rerror,ngot,extra;
+	int rlegacy,rht20,rht40,rerror,ngot;
+	char extra;
 	int nvalue;
 	//
 	// install default parameter values

@@ -15,6 +15,7 @@
 #include "ah.h"
 #include "ah_internal.h"
 #include "ah_devid.h"
+//#include "ah_osdep.h"
 #ifdef AH_DEBUG
 #include "ah_desc.h"                    /* NB: for HAL_PHYERR* */
 #endif

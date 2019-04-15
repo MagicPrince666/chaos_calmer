@@ -25,6 +25,7 @@
 #include "ErrorPrint.h"
 #include "CardError.h"
 #include "ParameterSelect.h"
+#include "UserPrint.h"
 
 
 #include "AnwiDriverInterface.h"

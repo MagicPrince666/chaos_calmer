@@ -519,7 +519,7 @@ int getCalibrationGain(int ichain)
 	return CalibrateGain[ichain][CalibrateAttempt[ichain]];
 }
 
-int getChainMask(ich)
+int getChainMask(int ich)
 {
 	int calChain, jch;
 	int cdiff;
@@ -713,3 +713,4 @@ int calibration_one(double power, int ichain)
 	}
 	return 0;
 }
+

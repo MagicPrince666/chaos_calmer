@@ -454,7 +454,7 @@ static void PrintIt(char *format, ...)
 
 FIELDDLLSPEC int GetAll(void (*print)(char *format, ...), int all)
 {
-	char *block[10];
+	unsigned char *block[10];
 
 	if(print!=0)
 	{

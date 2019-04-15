@@ -7,6 +7,7 @@
 
 #include "art_utf_common.h"
 #include "LinkStat.h"
+#include "Device.h"
 
 //static int RateLast = -1;		// keep track of last rate for debug UserPrint
 //static int RateInterleave=0;

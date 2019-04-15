@@ -409,6 +409,9 @@ typedef struct ospreyEeprom {
 #if AH_BYTE_ORDER == AH_BIG_ENDIAN
 
 #define AR9300_EEPROM_MAGIC         0x5aa5
+#define SWAP16(_x) __bswap16(_x)
+#define SWAP32(_x) __bswap32(_x)
+/*
 #define SWAP16(_x) ( (u_int16_t)( (((const u_int8_t *)(&_x))[0] ) |\
                      ( ( (const u_int8_t *)( &_x ) )[1]<< 8) ) )
 
@@ -417,7 +420,7 @@ typedef struct ospreyEeprom {
                     (((const u_int8_t *)(&_x))[1]<< 8) |    \
                     (((const u_int8_t *)(&_x))[2]<<16) |    \
                     (((const u_int8_t *)(&_x))[3]<<24)))
-
+*/
 #else // AH_BYTE_ORDER
 
 #define AR9300_EEPROM_MAGIC         0xa55a
@@ -699,7 +702,7 @@ extern bool ar9300_calibration_data_read(struct ath_hal *ah, long address, u_int
 extern int32_t ar9300_eeprom_size(struct ath_hal *ah);
 extern int32_t ar9300_otp_size(struct ath_hal *ah);
 extern bool ar9300_calibration_data_read_array(struct ath_hal *ah, int address, u_int8_t *buffer, int many);
-
+extern void ar9300_eeprom_template_swap(void);
 
 
 #if defined(WIN32) || defined(WIN64)

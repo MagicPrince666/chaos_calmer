@@ -20,8 +20,8 @@ OUTPUT_DIR=Linux_qc98xx
 #LD = $(TOOL_PREFIX)gcc
 #STRIP = $(TOOL_PREFIX)strip
 
-LD	:= ld 
-CC	:= gcc
+#LD	:= ld 
+#CC	:= gcc
 
 DEBUG = 1
 ifeq ($(DEBUG),1)
@@ -32,7 +32,7 @@ ifeq ($(GDB),1)
     CFLAGS += -g
 endif
 
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 
 CFLAGS += -DLinux -DLINUX -DSOC_LINUX -DART_BUILD -DARCH_BIG_ENDIAN \
@@ -44,13 +44,13 @@ CFLAGS += -I$(ART2_ROOT)/art \
 	-I$(ART2_ROOT)/HAL/HAL_9.3.0/common/lmac/hal \
 	-I$(ART2_ROOT)/shared \
 	-I$(ART2_ROOT)/devlib \
-    	-I$(ART2_ROOT)/driver/linux/modules/include \
+    -I$(ART2_ROOT)/driver/linux/modules/include \
 	-I$(ART2_ROOT)/common \
 	-I$(ART2_ROOT)/common/include \
 	-I$(ART2_ROOT)/client/include \
 	-I$(ART2_ROOT)/devlib/qc98xx \
 	-I$(ART2_ROOT)/devlib/DEV_common \
-        -I$(ART2_ROOT)/devlib/QC9K_common \
+    -I$(ART2_ROOT)/devlib/QC9K_common \
 
 #ifeq ($(ART2_BUILD_NOT_FROM_ART2_MAIN),1)
 CFLAGS += \

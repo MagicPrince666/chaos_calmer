@@ -1,5 +1,5 @@
 OUTPUT_DIR=Linux_ar9300
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 
 CFLAGS += -DAR9300DLL -DNART_SCORPION_SUPPORT -DAH_SUPPORT_SCORPION -DAH_SUPPORT_HONEYBEE -DAH_SUPPORT_DRAGONFLY
@@ -12,12 +12,12 @@ VPATH = $(ART_ROOT)/art \
 	$(ART_ROOT)/devlib \
 	$(ART_ROOT)/devlib/ar9300 \
 	$(ART_ROOT)/shared \
-	$(ART_ROOT)/wlan/ \
+	$(ART_ROOT)/wlan \
 	$(ART_ROOT)/wlan/nartlinux \
 	$(ART_ROOT)/wlan/ar9300 \
 	$(ART_ROOT)/HALdll_proj/common \
 	$(ART_ROOT)/HALdll_proj/HAL_art \
-	$(ART_ROOT)/HALdll_proj/AR9300_9-3-1 \ #0903
+	$(ART_ROOT)/HALdll_proj/AR9300_9-3-1 
 
 CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/wlan/ \
@@ -26,7 +26,7 @@ CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/wlan/ar9300 \
 	-I$(ART_ROOT)/shared \
 	-I$(ART_ROOT)/devlib \
-    -I$(ART_ROOT)/driver/linux/modules/include \
+        -I$(ART_ROOT)/driver/linux/modules/include \
 	-I$(ART_ROOT)/common \
 	-I$(ART_ROOT)/common/include \
 	-I$(ART_ROOT)/client/include \

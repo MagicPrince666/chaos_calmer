@@ -1,3 +1,5 @@
+#ifndef _HELPCOMMAND_H_
+#define _HELPCOMMAND_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -15,3 +17,5 @@ extern PARSEDLLSPEC void HelpCommand(struct _ParameterList *list, int nlist);
 
 
 extern PARSEDLLSPEC void HelpParameterSplice(struct _ParameterList *list);
+
+#endif

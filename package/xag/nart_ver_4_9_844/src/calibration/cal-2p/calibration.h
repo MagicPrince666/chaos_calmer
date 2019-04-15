@@ -1,7 +1,10 @@
+#ifndef __CALIBRATION_H__
+#define	__CALIBRATION_H__
+
 #define MCHAIN 3
 
-#define GAIN_CHANN_MAX_2G	3
-#define GAIN_CHANN_MAX_5G	8
+#define GAIN_CHANN_MAX_2G 3
+#define GAIN_CHANN_MAX_5G 8
 
 struct _Cal
 {
@@ -68,4 +71,6 @@ extern int calibration_one(double power, int ichain);
 extern int calibration_next(double power, int ichain);
 extern int updateGain(int *calPoint, int ichain);
 extern int updateGainM(int *calPoint, int ichain);
+
+#endif
 

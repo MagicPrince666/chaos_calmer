@@ -9,6 +9,7 @@
  */
 
 #include "opt_ah.h"
+#include <stdio.h>
 
 #ifdef AH_SUPPORT_AR9300
 

@@ -1,4 +1,5 @@
-
+#ifndef _HELP_H_
+#define _HELP_H_
 
 
 #ifdef _WINDOWS
@@ -26,3 +27,5 @@ extern PARSEDLLSPEC int Help(char *name, void (*print)(char *buffer));
 // print a list of topics in the help file
 //
 extern PARSEDLLSPEC int HelpIndex(void (*print)(char *buffer));
+
+#endif

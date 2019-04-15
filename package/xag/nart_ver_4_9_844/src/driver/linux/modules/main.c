@@ -65,6 +65,7 @@ extern void dk_dev_exit(void);
 extern INT32 get_chip_id(INT32 cli_id,INT32 offset,INT32 size,INT32 *ret_val);
 int init_wmac_device(void);
 
+//#define USE_PLATFORM_FRAMEWORK 0
 #ifdef AP83
 #ifdef USE_PLATFORM_FRAMEWORK
 #include <wlan/ah_devid.h>
@@ -331,7 +332,7 @@ static INT32 __init dk_module_init(void)
 int init_wmac_device()
 {
 
-        VOID *dev;
+    VOID *dev;
 	UINT32 baseaddr[MAX_BARS];
 	UINT32 len[MAX_BARS];
 	UINT32 irq;
@@ -354,7 +355,7 @@ for (iIndex=0; iIndex<1; iIndex++) { // assume that only one wmac
       if (len[iIndex] == 0) break;
     }
     numBars = iIndex;
-    irq=2;
+    irq=5;
 
 #ifdef USE_PLATFORM_FRAMEWORK
     irq = get_wmac_irq(sIndex);

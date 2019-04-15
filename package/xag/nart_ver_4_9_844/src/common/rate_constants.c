@@ -410,18 +410,21 @@ int AdjustCenterFreqBasedOnRateAndBandwidth(int frequency, int *rate, int bandwi
 	int offFreq = 0; 
  
 	if (rate[2]>0) {  //  HT40 
-	  if (InVHT40CenterFreq(frequency)) 
+	  if (InVHT40CenterFreq(frequency)){
 	    if (bandwidth<0) 
 		  offFreq = -10; 
 	    else 
 		  offFreq =  10; 
+	  }
 	} else 
 	if (rate[4]>0) {  // VHT40 
-	  if (InVHT40CenterFreq(frequency)) 
+	  if (InVHT40CenterFreq(frequency))
+	  { 
 	    if (bandwidth<=0) 
 		  offFreq = -10; 
 	    else 
 		  offFreq =  10; 
+	  }
 	} else 
 	if (rate[5]>0) {  // VHT80 
 		if (InVHT80CenterFreq(frequency)) { 
@@ -444,7 +447,7 @@ enum {
 	HT_MINUS = -1, 
     HT_PLUS = 1 
 }; 
- 
+/* 
 static int InVHT40Freq(int frequency, A_BOOL ht40) 
 { 
   switch (frequency) { 
@@ -481,7 +484,7 @@ static int InVHT40Freq(int frequency, A_BOOL ht40)
 	default  : return 0; 
   } 
 } 
- 
+
 static int InVHT80Freq(int frequency) 
 { 
   switch (frequency) { 
@@ -516,7 +519,7 @@ static int InVHT80Freq(int frequency)
 	default  : return 0; 
   } 
 } 
- 
+*/ 
 int AdjustFreqBasedOnRateAndBandwidth(int frequency, int *rate, int bandwidth, int bCenFreqUsed) 
 { 
 #define BW_HT40_MINUS  (-40)

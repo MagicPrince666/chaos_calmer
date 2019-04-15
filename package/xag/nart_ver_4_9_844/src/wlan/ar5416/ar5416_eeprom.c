@@ -43,7 +43,7 @@
  */
 
 #include "opt_ah.h"
-
+#include <stdio.h>
 #ifdef AH_SUPPORT_AR5416
 
 #include "ah.h"
@@ -133,8 +133,7 @@ int32_t ar5416_calibration_data_address_get(struct ath_hal *ah)
  * 1024 and 2048 are normal sizes. 
  * 0 means there is no eeprom. 
  */ 
-int32_t 
-ar5416_eeprom_size(struct ath_hal *ah)
+int32_t ar5416_eeprom_size(struct ath_hal *ah)
 {
     u_int16_t data;
     /*
@@ -928,7 +927,7 @@ ar5416SetTargetPower(struct ath_hal *ah,
 	}
 }
 
-ar5416SetTargetPowerFromEeprom(struct ath_hal *ah)
+int ar5416SetTargetPowerFromEeprom(struct ath_hal *ah)
 {
     struct ath_hal_5416 *ahp = AH5416(ah);
     struct ath_hal_private *ahpriv = AH_PRIVATE(ah);

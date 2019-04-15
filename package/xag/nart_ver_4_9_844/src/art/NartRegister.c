@@ -476,7 +476,7 @@ void RegisterWriteCommand(int client)
 						{
 							if(_ResponseStyle==ResponseStyleVerbose)
 							{
-								nc=SformatOutput(&ebuffer[lc],MBUFFER-lc-1,"bad write to address %lx, ",address+it*sizeof(value));
+								nc=SformatOutput(&ebuffer[lc],MBUFFER-lc-1,"bad write to address %x, ",address+it*sizeof(value));
 								if(nc>0)
 								{
 									lc+=nc;
@@ -1493,7 +1493,7 @@ void FieldStickyList(int client)
 
         for (i = 0; i < count; ++i)
         {
-            SformatOutput(buffer,MBUFFER-1,"%s%08lx|%lu|%ld|", buffer, value[i],value[i],sign[i]);
+            SformatOutput(buffer,MBUFFER-1,"%s%08x|%u|%d|", buffer, value[i],value[i],sign[i]);
         }
 		ErrorPrint(NartData,buffer);
 	}

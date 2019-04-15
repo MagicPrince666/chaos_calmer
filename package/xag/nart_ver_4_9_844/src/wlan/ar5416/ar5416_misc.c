@@ -43,6 +43,7 @@
  */
 
 #include "opt_ah.h"
+#include <stdio.h>
 
 #ifdef AH_SUPPORT_AR5416
 
@@ -3229,7 +3230,7 @@ void ar5416_reset_nav(struct ath_hal *ah)
 	/*check NAV register */
 	regval = OS_REG_READ(ah, AR_NAV);
 	if ((regval != 0xdeadbeef) && (regval > 0x7fff)) {
-		printk("%s: abnormal nav value found 0x%x\n", __func__, regval);
+		printf("%s: abnormal nav value found 0x%x\n", __func__, regval);
 		OS_REG_WRITE(ah, AR_NAV, 0);
 	}
 

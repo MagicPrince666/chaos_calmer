@@ -132,7 +132,7 @@ static void __init xag9342_setup(void)
 
 	// GMAC0 is connected to an AR8035 Gigabit PHY 
 	ath79_eth0_data.mii_bus_dev = &ath79_mdio0_device.dev;
-	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_-+RGMII;
+	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_RGMII;
 	ath79_eth0_data.phy_mask = BIT(0);
 	ath79_eth0_pll_data.pll_1000 = 0x03000000;
 	ath79_eth0_pll_data.pll_100 = 0x0101;

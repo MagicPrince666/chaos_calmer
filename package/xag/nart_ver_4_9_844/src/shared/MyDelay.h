@@ -1,5 +1,5 @@
-
-
+#ifndef _MYDELAY_H_
+#define _MYDELAY_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -11,6 +11,6 @@
 	#define PARSEDLLSPEC
 #endif
 
-
-
 extern PARSEDLLSPEC void MyDelay(int ms);
+
+#endif

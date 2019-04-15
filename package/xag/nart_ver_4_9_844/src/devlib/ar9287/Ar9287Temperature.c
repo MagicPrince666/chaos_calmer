@@ -7,7 +7,7 @@
 #undef REGW
 
 extern ar9287_eeprom_t *Ar9287EepromStructGet(void);
-extern int MyRegisterRead(unsigned long address, unsigned long *value);
+extern int MyRegisterRead(unsigned long address, unsigned int *value);
 extern int MyRegisterWrite(unsigned long address, unsigned long value);
 extern struct ath_hal *AH;
 
@@ -21,7 +21,7 @@ static int undeafRssiThr1a = 0;
 
 static unsigned long REGR(unsigned long devNum, unsigned long address)
 {
-	unsigned long value;
+	unsigned int value;
 
 	devNum=0;
 
@@ -59,17 +59,17 @@ int Ar9287VoltageGet(void)
 int Ar9287Deaf(int deaf) 
 {
     
-    unsigned long value;    
+    //unsigned long value;    
     //
     //If not currently in deaf mode Store off the existing field values so that can go back to undeaf mode
     //
     if (deafMode == 0) {
-        FieldRead("CCA.bb_thresh62", (unsigned long *)&undeafThresh62);
-        FieldRead("CCA1.bb_thresh62_ext", (unsigned long *) &undeafThresh62Ext);
-        FieldRead("TST_2.bb_force_agc_clear", (unsigned long *) &undeafForceAgcClear);
-        FieldRead("TIMING5.bb_cycpwr_thr1", (unsigned long *) &undeafCycpwrThr1);
-        FieldRead("AGC_EXT.bb_cycpwr_thr1_ext", (unsigned long *) &undeafCycpwrThr1Ext);
-        FieldRead("TIMING5.bb_rssi_thr1a", (unsigned long *) &undeafRssiThr1a);
+        FieldRead("CCA.bb_thresh62", (unsigned int *)&undeafThresh62);
+        FieldRead("CCA1.bb_thresh62_ext", (unsigned int *) &undeafThresh62Ext);
+        FieldRead("TST_2.bb_force_agc_clear", (unsigned int *) &undeafForceAgcClear);
+        FieldRead("TIMING5.bb_cycpwr_thr1", (unsigned int *) &undeafCycpwrThr1);
+        FieldRead("AGC_EXT.bb_cycpwr_thr1_ext", (unsigned int *) &undeafCycpwrThr1Ext);
+        FieldRead("TIMING5.bb_rssi_thr1a", (unsigned int *) &undeafRssiThr1a);
 
     }
 

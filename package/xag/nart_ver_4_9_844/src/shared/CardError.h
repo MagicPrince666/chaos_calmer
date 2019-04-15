@@ -1,5 +1,5 @@
-
-
+#ifndef _CARDERROR_H_
+#define _CARDERROR_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -103,3 +103,4 @@ enum
 
 extern PARSEDLLSPEC void CardErrorInit(void);
 
+#endif

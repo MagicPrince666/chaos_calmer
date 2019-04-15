@@ -13,6 +13,7 @@
 
 #define MPWORD 3
 
+#pragma pack (1)
 struct _ParameterList
 {
     int code;			// code returned by ParameterSelect()
@@ -29,7 +30,7 @@ struct _ParameterList
 	int nspecial;
 	struct _ParameterList *special;
 };
-
+#pragma pack ()
 //
 // returns 1 if the paramter type is valid. returns 0 otherwise.
 //

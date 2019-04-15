@@ -1,5 +1,5 @@
 
-
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1176,7 +1176,8 @@ static int ParseInput(int client)
 	int index;
 	int code;			
 	int pattern[MPATTERN];
-	int rlegacy,rht20,rht40,/*rvht20,rvht40,rvht80,*/extra;
+	int rlegacy,rht20,rht40/*rvht20,rvht40,rvht80,*/;
+	char extra;
 	int nvalue;
 	int rerror;
 	double dpcdac;

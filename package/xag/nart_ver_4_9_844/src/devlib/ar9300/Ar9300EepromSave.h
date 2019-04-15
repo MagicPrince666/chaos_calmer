@@ -1,6 +1,5 @@
-
-
-
+#ifndef _AR9300EEPROMSAVE_H_
+#define _AR9300EEPROMSAVE_H_
 
 //
 // check saved calibration information
@@ -49,3 +48,5 @@ extern AR9300DLLSPEC int Ar9300ConfigurationRestore(void);
 // returns lowest free memory address
 //
 int Ar9300EepromUsed(void);
+
+#endif

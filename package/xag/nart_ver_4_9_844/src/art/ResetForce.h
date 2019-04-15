@@ -1,3 +1,5 @@
+#ifndef _RESETFORSE_H_
+#define _RESETFORSE_H_
 
 #ifdef _WINDOWS
 #ifdef FIELDDLL
@@ -17,3 +19,5 @@ extern FIELDDLLSPEC void ResetForceClear();
 
 
 extern FIELDDLLSPEC int ResetForceGet();
+
+#endif

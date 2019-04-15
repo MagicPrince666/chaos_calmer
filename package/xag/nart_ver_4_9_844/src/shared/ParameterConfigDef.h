@@ -35,11 +35,6 @@ enum HTmode_enum
 	HT80,
 };
 
-static char* HTMode_str[] = {"CCK", "legacy_OFDM", "HT20", "HT40"};
-static char* cckDataRate_str[] = {"1L_5L", "5S", "11L", "11S"};
-static char* htDataRate_str[] = {"MCS0_8_16", "MCS1_3_9_11_17_19", "MCS4", "MCS5", "MCS6", "MCS7", "MCS12", "MCS13", "MCS14", "MCS15", "MCS20", "MCS21", "MCS22", "MCS23"};
-static char* legacyDataRate_str[] = {"6_24", "36", "48", "54"};
-
 // for set CalPier/get CalPier
 #define NUM_5G_CAL_PIERS		8
 #define NUM_2G_CAL_PIERS		3

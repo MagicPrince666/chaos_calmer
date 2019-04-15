@@ -1,5 +1,6 @@
 PWD := $(shell pwd)
 ART_ROOT=$(PWD)
+WORKAREA=$(PWD)
 
 DEVID = 98xx
 
@@ -34,6 +35,7 @@ OUTPUT_DIR=nartbuild
 #export STRIP
 export CFLAGS
 export ART_ROOT
+export WORKAREA
 
 all:
 	$(MAKE) -f makefile.nart libtlvtemplate

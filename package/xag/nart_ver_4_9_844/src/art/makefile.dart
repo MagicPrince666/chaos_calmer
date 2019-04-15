@@ -1,6 +1,6 @@
 OUTPUT_DIR=obj
 
-CFLAGS += -Wno-pointer-arith -Wno-extra -Wno-implicit
+CFLAGS += -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/common \
@@ -10,6 +10,7 @@ CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/devlib/ar5416 \
 	-I$(ART_ROOT)/devlib/ar9287 \
 	-I$(ART_ROOT)/wlan/hal \
+	-I$(ART_ROOT)/wlan \
 	-I$(ART_ROOT)/wlan/include \
 	-I$(ART_ROOT)/wlan/hal/ar5416 \
 	-I$(ART_ROOT)/wlan/hal/nartlinux \

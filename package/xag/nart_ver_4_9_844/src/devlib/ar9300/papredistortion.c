@@ -27,9 +27,9 @@ extern struct ath_hal *AH;
 void LinkTransmitPAPD(struct ath_hal *ah, int chainNum)
 {
 	int rate = RATE_INDEX_HT20_MCS0;//32;
-  	char bssid[6] = {1,1,1,1,1,1};
- 	char mactx[6] = {2,2,2,2,2,2};
-	char junkAddr[6] = {0,0,0,0,0,0};
+  	unsigned char bssid[6] = {1,1,1,1,1,1};
+ 	unsigned char mactx[6] = {2,2,2,2,2,2};
+	unsigned char junkAddr[6] = {0,0,0,0,0,0};
 	unsigned char pattern[]={0};
 	int chiptemperature=0;
 	int PacketMany = 5;
@@ -54,9 +54,9 @@ void LinkTransmitPAPD(struct ath_hal *ah, int chainNum)
 void LinkTransmitPAPDWarmUp(int txchain)
 {
 	int rate = RATE_INDEX_HT20_MCS0;//32;
-  	char bssid[6] = {1,1,1,1,1,1};
- 	char mactx[6] = {2,2,2,2,2,2};
-	char junkAddr[6] = {0,0,0,0,0,0};
+  	unsigned char bssid[6] = {1,1,1,1,1,1};
+ 	unsigned char mactx[6] = {2,2,2,2,2,2};
+	unsigned char junkAddr[6] = {0,0,0,0,0,0};
 	unsigned char pattern[]={0};
 	int chiptemperature=0;
 	//
@@ -124,7 +124,7 @@ void ForceLinkReset()
 int papredistortionSingleTable(struct ath_hal *ah, HAL_CHANNEL *chan, int txChainMask)
 {
 	int chainNum;
-	unsigned int PA_table[24], smallSignalGain; 
+	//unsigned int PA_table[24], smallSignalGain; 
     int status = 0, disable_papd=1, chain_fail[3]={0,0,0};
     int paprd_retry_count;
 
@@ -150,7 +150,7 @@ int papredistortionSingleTable(struct ath_hal *ah, HAL_CHANNEL *chan, int txChai
 
 	for(chainNum=0; chainNum<3; chainNum++)
 	{
-		unsigned int i, desired_gain, gain_index;
+		//unsigned int i, desired_gain, gain_index;
 		if(txChainMask&(1<<chainNum)) 
 		{
 		    paprd_retry_count = 0;

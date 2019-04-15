@@ -18,3 +18,4 @@
 extern int LINKDLLSPEC Qc9KLinkSelect(void);
 
 #endif //_QC9K_LINK_H_
+

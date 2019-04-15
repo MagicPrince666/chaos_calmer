@@ -1,3 +1,6 @@
+#ifndef _ANWIDRIVERINTERFACE_H_
+#define _ANWIDRIVERINTERFACE_H_
+
 #ifdef _WINDOWS
 #ifdef ANWIDLL
 		#define ANWIDLLSPEC __declspec(dllexport)
@@ -8,13 +11,14 @@
 	#define ANWIDLLSPEC
 #include "ah_osdep.h"
 #ifdef __LINUX_MIPS64_ARCH__
-#include <linux/version.h>
+//#include <linux/version.h>
 #endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,2,0)
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,2,0)
 #if !defined(__LINUX_MIPS64_ARCH__) && !defined(__LINUX_ARM_ARCH__)
-typedef unsigned int        uintptr_t;
+//typedef unsigned int        uintptr_t;
+//#define uintptr_t u_int64_t
 #endif
-#endif
+//#endif
 #endif
 
 
@@ -62,7 +66,7 @@ extern ANWIDLLSPEC int MyFieldRead(unsigned int address, int low, int high, unsi
 extern ANWIDLLSPEC int MyFieldWrite(unsigned int address, int low, int high, unsigned int value);
 
 
-extern ANWIDLLSPEC uintptr_t MyMemoryBase(void);
+extern ANWIDLLSPEC int MyMemoryBase(void);
 
 
 extern ANWIDLLSPEC unsigned char *MyMemoryPtr(unsigned int address);
@@ -73,3 +77,4 @@ extern ANWIDLLSPEC int MyMemoryRead(unsigned int address, unsigned int *buffer, 
 
 extern ANWIDLLSPEC int MyMemoryWrite(unsigned int address, unsigned int *buffer, int many);
 
+#endif

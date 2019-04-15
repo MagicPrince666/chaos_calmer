@@ -798,7 +798,7 @@ static void ReturnDouble(char *command, char *name, double *value, int nvalue)
 
 static void CalfSet(int *done, int *error, int ip, int index, int (*_pSetCal)(double *value))
 {
-	int status;
+	//int status;
 	int ngot=0;
 	char *name;	
     double value[MAXVALUE]; 
@@ -806,19 +806,20 @@ static void CalfSet(int *done, int *error, int ip, int index, int (*_pSetCal)(do
 	name=CommandParameterName(ip);
 	ngot=ParseDoubleList(ip,name,value,&CalSetParameter[index]);
 	if(ngot>0) {
-		status=_pSetCal(value);	
+		//status=_pSetCal(value);
+		_pSetCal(value);	
 		ReturnDouble("set",CalSetParameter[index].word[0],value,ngot);
 	}
 }
 
 static void CalSet(int *done, int *error, int ip, int index, int (*_pSetCal)(int *value))
 {
-	int status;
+	//int status;
 	int ngot=0;
 	char *name;	
 	unsigned int uvalue[MAXVALUE]; 
 
-	status=0;
+	//status=0;
 	name=CommandParameterName(ip);
 	ngot=ParseIntegerList(ip,name,(int *)uvalue,&CalSetParameter[index]);
 	if(ngot>0) {
@@ -836,7 +837,7 @@ static void CalSet(int *done, int *error, int ip, int index, int (*_pSetCal)(int
 
 static void CalfSets(int *done, int *error, int ip, int index, int (*_pSetCal)(double *value, int ix))
 {
-	int status;
+	//int status;
 	int ngot=0;
 	char *name;	
     double value[MAXVALUE]; 
@@ -844,7 +845,8 @@ static void CalfSets(int *done, int *error, int ip, int index, int (*_pSetCal)(d
 	name=CommandParameterName(ip);
 	ngot=ParseDoubleList(ip,name,value,&CalSetParameter[index]);
 	if(ngot>0) {
-		status=_pSetCal(value, ngot);	
+		//status=_pSetCal(value, ngot);
+		_pSetCal(value, ngot);	
 		ReturnDouble("set",CalSetParameter[index].word[0],value,ngot);
 	}
 }
@@ -852,12 +854,12 @@ static void CalfSets(int *done, int *error, int ip, int index, int (*_pSetCal)(d
 
 static void CalSets(int *done, int *error, int ip, int index, int (*_pSetCal)(int *value, int ix))
 {
-	int status;
+	//int status;
 	int ngot=0;
 	char *name;	
 	unsigned int uvalue[MAXVALUE]; 
 
-	status=0;
+	//status=0;
 	name=CommandParameterName(ip);
 	ngot=ParseIntegerList(ip,name,(int *)uvalue,&CalSetParameter[index]);
 	if(ngot>0) {
@@ -1143,6 +1145,7 @@ CAL2P_API int Calibration_GetCommand(int client)
 					ErrorPrint(ParseBadParameter,name);
 					break;
 			}
+			printf("xag get %s status = %d",__func__,status);
 		}
 		else
 		{
@@ -1160,3 +1163,4 @@ CAL2P_API int Calibration_ParameterSplice(struct _ParameterList *list)
     list->special=&CalSetParameter[0];
 	return 0;
 }
+

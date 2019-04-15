@@ -21,7 +21,7 @@
 #include "linux_hw.h"
 #endif
 
-extern  *AH;
+extern  int *AH;
 static int devidSel=0;
 
 #define AR955X_ENT_OTP 0xb80600b4

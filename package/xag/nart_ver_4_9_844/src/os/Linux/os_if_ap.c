@@ -9,12 +9,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <signal.h>
 #include <ctype.h>
 #include <getopt.h>
 #include <err.h>
 #include <errno.h>
 #include <time.h>
+
+#include "os_if.h"
 
 /*
  * Linux uses __BIG_ENDIAN and __LITTLE_ENDIAN while BSD uses _foo
@@ -130,7 +133,7 @@ int cmd_end()
 	return 0;
 }
 
-void cmd_send (void *buf, int len, unsigned char responseNeeded )
+void cmd_send (unsigned char *buf, int len, unsigned char responseNeeded )
 {
     int error;
     unsigned int *responseCode;
@@ -141,7 +144,7 @@ void cmd_send (void *buf, int len, unsigned char responseNeeded )
     *(unsigned int *)buf = ATH_XIOCTL_UNIFIED_UTF_CMD;
     *((unsigned int *)buf + 1) = len;
 
-    initCfg.ifr.ifr_data = (void *)buf;
+    initCfg.ifr.ifr_data = (unsigned char *)buf;
 
     if (ioctl(initCfg.sock, SIOCIOCTLTX99, &initCfg.ifr) < 0) {
        err(1, "ioctl");
@@ -159,7 +162,7 @@ void cmd_send (void *buf, int len, unsigned char responseNeeded )
             memset(&responseBuf[0], 0, sizeof(responseBuf));
             *(unsigned int *)responseBuf = ATH_XIOCTL_UNIFIED_UTF_RSP;
 
-            initCfg.ifr.ifr_data = (void *)responseBuf;
+            initCfg.ifr.ifr_data = (unsigned char *)responseBuf;
 
             error = ioctl(initCfg.sock, SIOCIOCTLTX99, &initCfg.ifr);
             
@@ -175,9 +178,10 @@ void cmd_send (void *buf, int len, unsigned char responseNeeded )
                 break;
 
             }
-        responseCode = (unsigned int*)&initCfg.ifr.ifr_data[32];
-      //printf("%s:: responseCode = 0x%x\n", __func__,*responseCode);
-        if(*responseCode!=0) break;
+        //responseCode = (unsigned int*)&initCfg.ifr.ifr_data[32];//warning: dereferencing 'void *' pointer
+        responseCode = (unsigned int*)(initCfg.ifr.ifr_data + 32);
+        printf("xag %s:: responseCode = 0x%x\n", __func__,*responseCode);
+        if(*responseCode != 0) break;
         usleep(500);
 
 #if 0

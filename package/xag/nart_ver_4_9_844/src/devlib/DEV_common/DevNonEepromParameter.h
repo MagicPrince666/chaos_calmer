@@ -54,7 +54,7 @@ extern int DevLdpcGet();
 extern int DevSvidGet();
 extern int DevSsidGet();
 extern int DevRemoteWakeupGet();
-extern unsigned int DevFirmwareVersionGet(A_UCHAR *data);
+extern int DevFirmwareVersionGet(A_UCHAR *data);
 //extern int DevPsatPowerGet(double *value, int ix, int iy, int iz, int *num, int iBand);
 //extern int DevPsatDiffGet(double *value, int ix, int iy, int iz, int *num, int iBand);
 extern int DevNonCenterFreqAllowedGet();

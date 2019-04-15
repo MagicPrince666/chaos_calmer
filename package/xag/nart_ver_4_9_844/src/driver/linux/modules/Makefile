@@ -60,6 +60,6 @@ obj-m := art.o
 art-objs := dk_func.o client.o main.o dk_pci_bus.o dk_isr.o dk_event.o
 
 clean:
-	rm -rf *.o *.ko .*.cmd *mod.c .tmp_versions
+	rm -rf *.o *.ko .*.cmd *mod.c .tmp_versions *.symvers
 
 

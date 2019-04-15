@@ -69,7 +69,7 @@ struct Ar9300RxDescriptor
 	unsigned int rssi_ant10:8;
 
 #ifdef UNUSED
-	I think the order of these fields is backwards. That would mean they're
+	I think the order of these fields is backwards. That would mean they are
 	backwards up above in the other endian code too. 
 	This is an experiment to confirm. 11/29/2009 th
 
@@ -171,7 +171,7 @@ struct Ar9300RxDescriptor
 	unsigned int rssi_combined:8;
 
 #ifdef UNUSED
-	I think the order of these fields is backwards. That would mean they're
+	I think the order of these fields is backwards. That would mean they are
 	backwards up above in the other endian code too. 
 	This is an experiment to confirm. 11/29/2009 th
 

@@ -11,6 +11,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
 
 #include "wlantype.h"
 #include "wlanproto.h"
@@ -1544,7 +1548,7 @@ int Qc98xxWritePciConfigSpace(unsigned int offset, unsigned int value)
     return art_writePciConfigSpace(offset, value);
 }
 
-int Qc98xxDiagData( void *buf, unsigned int len, unsigned char *returnBuf, unsigned int *returnBufSize )
+int Qc98xxDiagData( unsigned char *buf, unsigned int len, unsigned char *returnBuf, unsigned int *returnBufSize )
 {
 	TRACE_START();
 
@@ -1921,6 +1925,10 @@ int Qc98xxtlvCalibrationInit(int mode)
 #endif
 	return 0;
 }
+int Qc98xxtlvCalibrationStart(void)
+{
+    return 0;
+}
 
 //=======================================================================
 static struct _TlvDeviceFunction _Qc98xx_TlvDevice =
@@ -1931,6 +1939,7 @@ static struct _TlvDeviceFunction _Qc98xx_TlvDevice =
 	Qc98xxtlvComplete,						//tlvComplete
 	Qc98xxtlvGetRspParam,					//tlvGetRspParam
 	Qc98xxtlvCalibrationInit,				//tlvCalibrationInit
+    Qc98xxtlvCalibrationStart,              //tlvCalibrationStart
 	Qc98xxtlvCalibration,					//tlvCalibration
 };
 

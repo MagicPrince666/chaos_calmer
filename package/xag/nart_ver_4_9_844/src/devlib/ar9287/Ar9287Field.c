@@ -44,7 +44,7 @@ int Ar9287RxChainSet(int rxChain)
     FieldWrite("CAL_MASK.bb_cal_chain_mask", rxChain & 0x7);
     return 1;
 }
-int Ar9287froce_dac_gain(unsigned long *value)
+int Ar9287froce_dac_gain(unsigned int *value)
 {
     FieldRead("bb_forced_dac_gain", value);	
     return 1;

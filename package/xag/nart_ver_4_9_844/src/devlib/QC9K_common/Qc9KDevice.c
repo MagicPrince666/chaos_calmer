@@ -236,7 +236,7 @@ int Qc9KMemoryRead(unsigned int address, unsigned int *buffer, int many)
 
 int Qc9KMemoryWrite(unsigned int address, unsigned int *buffer, int many)
 {
-	if (many <= sizeof(A_UINT32))
+	if (many <= sizeof(unsigned int))
 	{
 		art_mem32Write (address, *buffer);
 	}

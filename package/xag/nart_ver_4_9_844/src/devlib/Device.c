@@ -653,7 +653,7 @@ int DEVICEDLLSPEC DeviceOtpProgram(unsigned char *filename, int dummy, int verbo
 {
 	if(_Device.OtpProgram!=0)
 	{
-		return _Device.OtpProgram(filename, dummy, verbose);
+		return _Device.OtpProgram((char*)filename, dummy, verbose);
 	}
 	return -ErrorPrint(DeviceNoFunction,"DeviceOtpProgram");
 }

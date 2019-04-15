@@ -2,6 +2,7 @@
 #define CHIPIDENTIFY_H
 
 #include "ParameterSelect.h"
+#include "ah_devid.h"
 
 extern char *LoadDLL(char *dllName, int *devid);
 
@@ -56,6 +57,7 @@ struct _DevidToName
 };
 
 // the first hal dll to be choose for the devid
+
 static struct _DevidToName DevidToName[]=
 {
 	{ChipTest,"NoChip"},								// text based test device, no chip, no link
@@ -92,8 +94,8 @@ static char *HAL_Dll[]=
 // This define should be at wlan\ar9300\ar9300reg.h.
 // But sw10.1 do not suport this yet. Put it here to avoid compile error.
 // This can be deleted after hal code support AR_SREV_DRAGONFLY.
-#ifndef AR_SREV_DRAGONFLY
-#define AR_SREV_DRAGONFLY(_ah) 0
-#endif /* #ifndef AR_SREV_DRAGONFLY */
+//#ifndef AR_SREV_DRAGONFLY
+//#define AR_SREV_DRAGONFLY(_ah) 0
+//#endif /* #ifndef AR_SREV_DRAGONFLY */
 
 #endif /* CHIPIDENTIFY_H */

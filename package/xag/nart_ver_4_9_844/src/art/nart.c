@@ -1,6 +1,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+//#include <execinfo.h>
+#include <unistd.h>
 
 #include "smatch.h"
 #include "UserPrint.h"
@@ -14,8 +17,36 @@
 
 int isQDART=0;
 
+/*
+static void _signal_handler(int signum)  
+{  
+    void *array[10];  
+    size_t size;  
+    char **strings;  
+    size_t i;  
+  
+    signal(signum, SIG_DFL); // 还原默认的信号处理handler 
+  
+    size = backtrace (array, 10);  
+    strings = (char **)backtrace_symbols (array, size);  
+  
+    fprintf(stderr, "widebright received SIGSEGV! Stack trace:\n");  
+    for (i = 0; i < size; i++) {  
+        fprintf(stderr, "%d %s \n",i,strings[i]);  
+    }  
+      
+    free (strings);  
+    exit(1);  
+} 
+*/
+
 int main(int narg, char *arg[]) 
 {
+//	signal(SIGPIPE, _signal_handler);    // SIGPIPE，管道破裂。
+//	signal(SIGSEGV, _signal_handler);    // SIGSEGV，非法内存访问
+//	signal(SIGFPE, _signal_handler);     // SIGFPE，数学相关的异常，如被0除，浮点溢出，等等
+//	signal(SIGABRT, _signal_handler);    // SIGABRT，由调用abort函数产生，进程非正常退出
+
 	int iarg;
 	int console;
     int instance=0;

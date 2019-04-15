@@ -1,3 +1,5 @@
+#ifndef _STICKY_H_
+#define _STICKY_H_
 
 #ifdef _WINDOWS
 #ifdef FIELDDLL
@@ -112,7 +114,7 @@ extern FIELDDLLSPEC int StickyNext(int idx,unsigned int *address, int *low, int 
 
 extern FIELDDLLSPEC int StickyListToEeprom(int idx);
 
-
+#endif
 
 
 

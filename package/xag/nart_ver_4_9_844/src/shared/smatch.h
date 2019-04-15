@@ -1,12 +1,11 @@
-
-
 /*
  *
  *               Copyright (c) 1996-2000 Fantastic Data LLC
  *                           All Rights Reserved
  *
  */
-
+#ifndef _SMATCH_H_
+#define _SMATCH_H_
 
 
 
@@ -21,6 +20,7 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -263,5 +263,5 @@ extern PARSEDLLSPEC int StrimEnd(char *buffer);
 }
 #endif
 
-
+#endif
 

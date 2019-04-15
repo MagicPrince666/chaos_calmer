@@ -1,4 +1,5 @@
 OUTPUT_DIR=Linux
+CFLAGS += -Wall -Wno-pointer-arith -Wno-extra #-Wno-implicit
 
 CFLAGS += -I$(ART_ROOT)/art \
 	-I$(ART_ROOT)/shared \

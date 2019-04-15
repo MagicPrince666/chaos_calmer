@@ -80,7 +80,7 @@ int Ar9300SpectralScanEnable(void)
 
 	FieldWrite("BB_spectral_scan.spectral_scan_ena", 0x1);
 	{
-		int value;
+		unsigned int value;
 		FieldRead("BB_spectral_scan.spectral_scan_ena", &value);
 	}
 
@@ -97,7 +97,7 @@ int Ar9300SpectralScanDisable(void)
 
 
 #define MBUFFER 1024
-
+/*
 static void Ar9300SpectralScanDump(void *dr, unsigned int dptr)
 {
 	char buffer[MBUFFER];
@@ -126,7 +126,7 @@ static void Ar9300SpectralScanDump(void *dr, unsigned int dptr)
 	}
 	UserPrint("\n");
 }
-
+*/
 
 int Ar9300SpectralScanProcess(unsigned char *data, int ndata, int *spectrum, int max)
 {

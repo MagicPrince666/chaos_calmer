@@ -1,6 +1,6 @@
 
-extern instance;
+extern int instance;
 #ifdef LINUX
-extern pcie;
+extern int pcie;
 #endif
 

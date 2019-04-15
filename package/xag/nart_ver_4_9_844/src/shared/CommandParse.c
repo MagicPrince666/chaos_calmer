@@ -252,18 +252,22 @@ PARSEDLLSPEC void backwardSetCmdProcess(char *buffer)
 					pt1=strstr(buff, "(");	// get all the values between()in pt1
 					if ((pt=strstr(tmp, "="))) {	// get all before = int tmp
 						*pt=0;
-						if (!strstr(buffer, "ctlpwr")>0)
+						if (!strstr(buffer, "ctlpwr"))
 							SformatOutput(buffer,MBUFFER-1,"%s[%i]=%s", tmp,iIndex,pt1+1);
 						else {	// for ctlpwr, need to convert hex to float and /2.0 for old format (set ctlpwr2g=v.(0x3a,0x3a,0x3a,0x3a),ctl.2)
 							//ngot=sscanf(tmin, " %x %1c",&vmin,&extra);
-							int ngot=0, i;
+							//int ngot=0, i;
+                            int i;
 							int value[8];
 							float fvalue[8];
 							if (strstr(buffer, "ctlpwr2g")>0) {
 								strcpy(buff, pt1+1);
-								ngot=sscanf(buff, " 0x%x,0x%x,0x%x,0x%x", &value[0], &value[1], &value[2], &value[3]);
+								//ngot=sscanf(buff, " 0x%x,0x%x,0x%x,0x%x", &value[0], &value[1], &value[2], &value[3]);
+                                sscanf(buff, " 0x%x,0x%x,0x%x,0x%x", &value[0], &value[1], &value[2], &value[3]);
 							} else {
-								ngot=sscanf(buff, " 0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x", 
+								//ngot=sscanf(buff, " 0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x", 
+								//	&value[0], &value[1], &value[2], &value[3],&value[4], &value[5], &value[6], &value[7]);
+                                    sscanf(buff, " 0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x,0x%x", 
 									&value[0], &value[1], &value[2], &value[3],&value[4], &value[5], &value[6], &value[7]);
 							}
 							for (i=0; i<8; i++)
@@ -294,7 +298,9 @@ PARSEDLLSPEC void backwardSetCmdProcess(char *buffer)
 PARSEDLLSPEC int CommandParse(char *input)
 {
     char *ptr,*word,*pname,*pvalue,*sptr;
+#ifdef UNUSED
     int equal;
+#endif
     int done;
 	int group;
 	int gstart[1000];
@@ -407,7 +413,9 @@ PARSEDLLSPEC int CommandParse(char *input)
         // find end of name and put a NULL there.
         // no spaces allowed in names.
         //
+#ifdef UNUSED
         equal=0;
+#endif
         for( ; *ptr!=0 ; ptr++)
         {
 #ifdef UNUSED
@@ -424,7 +432,9 @@ PARSEDLLSPEC int CommandParse(char *input)
             {
 				if (*ptr==';')
 					noEqualSign = 1;
+#ifdef UNUSED
                 equal=1;
+#endif
                 *pname=0;
                 //
                 // trim spaces off the back end of the command word

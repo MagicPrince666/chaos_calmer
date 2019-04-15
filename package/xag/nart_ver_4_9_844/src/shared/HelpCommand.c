@@ -205,7 +205,7 @@ static void HelpTopicPrint(char *topic, int synopsis, int parameters, int descri
     int nlookup;
     int more;
 	int index;
-	int code;
+	//int code;
 	char *name;
 
     previous=0;
@@ -261,7 +261,7 @@ static void HelpTopicPrint(char *topic, int synopsis, int parameters, int descri
 		index=ParameterSelectIndex(word,list,nlist);
 		if(index>=0)
 		{
-			code=list[index].code;
+			//code=list[index].code;
 			name=list[index].word[0];
 			previous= &list[index];
 			nlist=list[index].nspecial;
@@ -269,7 +269,7 @@ static void HelpTopicPrint(char *topic, int synopsis, int parameters, int descri
 		}
 		else
 		{
-			code= -1;
+			//code= -1;
 			name=word;
 			list=0;
 			nlist=0;
@@ -321,7 +321,7 @@ PARSEDLLSPEC void HelpCommand(struct _ParameterList *inlist, int nlist)
 	int is,nshow,show[MSHOW];
 	char *topic[MTOPIC];
 	int it,ntopic;
-	int ntree,tree;
+	//int ntree,tree;
 	int error;
 	int synopsis,parameters,description;
 	int level,nlevel;
@@ -333,8 +333,8 @@ PARSEDLLSPEC void HelpCommand(struct _ParameterList *inlist, int nlist)
 	level=0;
 	nshow=1;
 	show[0]=HelpShowAll;
-	ntree= -1;
-	tree=0;
+	//ntree= -1;
+	//tree=0;
 	ntopic= 0;
 	error=0;
 	for(it=0; it<MTOPIC; it++)

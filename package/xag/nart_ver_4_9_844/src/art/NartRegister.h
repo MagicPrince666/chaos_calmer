@@ -1,4 +1,5 @@
-
+#ifndef _NARTREGISTER_H_
+#define _NARTREGISTER_H_
 
 
 extern void RegisterDebugParameterSplice(struct _ParameterList *list);
@@ -71,3 +72,5 @@ enum {
 	COEFF_TX_TYPE = 0,
 	COEFF_RX_TYPE
 };
+
+#endif

@@ -511,6 +511,8 @@ int Ar9287ConfigSpaceCommitFlash(int client)
     return 0;
 }
 
+#include "Ar9287Device.h"
+extern int32_t ar5416_eeprom_size(struct ath_hal *ah);
 int Ar9287ConfigSpaceCommit() 
 {
 	int cal_mem;

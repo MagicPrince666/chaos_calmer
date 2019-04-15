@@ -602,7 +602,7 @@ int Ar5416TransmitGainWrite(int entry, int *value, int nvalue)
 
 extern struct ath_hal *AH;
 
-extern ar5416SetTargetPowerFromEeprom(struct ath_hal *ah);
+extern int ar5416SetTargetPowerFromEeprom(struct ath_hal *ah);
 int Ar5416TargetPowerApply(int frequency)
 {
 	/* make sure forced gain is not set - HAL function will not do this */

@@ -62,7 +62,7 @@
 //
 // index for the ANWI driver stuff
 //
-static int DeviceIdUserInput = -1;
+static int DeviceIdUserInput = AR9300_DEVID_AR9340;
 
 //
 // keep track of whether we've done a reset. 
@@ -133,7 +133,7 @@ void CardUnloadDataSend(int client)
 	ErrorPrint(NartData,"|set|5GHz||");
 	ErrorPrint(NartData,"|set|4p9GHz||");
 	ErrorPrint(NartData,"|set|HalfRate||");
-	ErrorPrint(NartData,"|set|QuarterRate||");
+	ErrorPrint(NartData,"|set|QuarterRate| |");
 }
 
 
@@ -141,6 +141,7 @@ int CardRemove(int client)
 {	
 	if(!CardValid())
 	{
+		printf("xag load card error\n");
 		ErrorPrint(CardNoneLoaded);
 	}
 	//
@@ -168,10 +169,11 @@ int CardPllScreen(int client)
 	
 	if(!CardValid())
 	{
+		printf("xag load card error\n");
 		ErrorPrint(CardNoneLoaded);
 	}
 
-printf("\n => CardPllScreen \n");
+	printf("\n => CardPllScreen \n");
 
 	error=DevicePllScreen();
 
@@ -180,7 +182,7 @@ printf("\n => CardPllScreen \n");
 	//
 	SendDone(client);
 	
-printf("\n <= CardPllScreen \n");
+	printf("\n <= CardPllScreen \n");
 	return error;
 }
 
@@ -718,6 +720,12 @@ static int CardLoadDo(int client, int devid, int calmem, char *chip)
 	// try to find the appropriate HAL dll and load it.
 	//
 	dllname=0;
+	printf("xag %s DeviceIdUserInput = 0x%04x\n",__func__,DeviceIdUserInput);
+	if(devid = -1){
+		devid = AR9300_DEVID_AR9340;
+		DeviceIdUserInput=devid;
+		printf("xag get error id, we set to 0x%04x\n",AR9300_DEVID_AR9340);
+	}
 	if(chip==0 || Smatch(chip,""))
 	{
 		if (devid>0)	
@@ -773,9 +781,9 @@ static int CardLoadDo(int client, int devid, int calmem, char *chip)
 	if(error==0)
 	{	
 		char buffer[MBUFFER];
-    		SformatOutput(buffer,MBUFFER-1,"|set|IniVersion|%s|",DeviceIniVersion(devid));
+    	SformatOutput(buffer,MBUFFER-1,"|set|IniVersion|%s|",DeviceIniVersion(devid));
 		ErrorPrint(NartData,buffer);
-        	ChannelCalculate();
+        ChannelCalculate();
 		CalibrateClear();
 		_DeviceValid=1;
 	}
@@ -804,6 +812,8 @@ static void CardLoadDataSend(int client)
     else
     {
         devid=DeviceIdGet();
+		printf("xag %s DeviceIdGet() = %04x\n", __func__, devid);
+		//if(devid != AR9300_DEVID_AR9340)devid = AR9300_DEVID_AR9340;
     }
 	SformatOutput(buffer,MBUFFER-1,"|set|devid|%04x|",devid);
     ErrorPrint(NartData,buffer);
@@ -907,7 +917,7 @@ enum
 	LoadChip,
 };
 
-static int DeviceIdDefault= ChipUnknown;
+static int DeviceIdDefault = AR9300_DEVID_AR9340;
 //static int CardDevidDefault= ChipUnknown;
 
 
@@ -957,6 +967,8 @@ int CardLoad(int client)
 	address=TemplateSizeDefaultRead;
 	preference=TemplatePreferenceDefault;
 	chip=0;
+
+	printf("xag %s devid=0x%04x\n",__func__,devid);
 	//
 	// parse parameters and values
 	//
@@ -1069,10 +1081,12 @@ int CardLoad(int client)
             if(DeviceIdUserInput > 0)
             {
                 devid=DeviceIdUserInput;
+				printf("xag %s DeviceIdUserInput=0x%04x\n",__func__,devid);
             }
             else
             {
 	            devid=DeviceIdGet();
+				printf("xag %s DeviceIdGet()=0x%04x\n",__func__,devid);
             }
             //
 	        // return information to cart

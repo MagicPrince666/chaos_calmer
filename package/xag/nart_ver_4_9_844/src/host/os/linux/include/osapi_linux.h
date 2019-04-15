@@ -24,30 +24,30 @@
 
 #ifdef __KERNEL__
 
-#include <linux/version.h>
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,17)
-#include <linux/config.h>
-#elif LINUX_VERSION_CODE < KERNEL_VERSION(2,6,33)
-#include <linux/autoconf.h>
-#else
+//#include <linux/version.h>
+//#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,17)
+//#include <linux/config.h>
+//#elif LINUX_VERSION_CODE < KERNEL_VERSION(2,6,33)
+//#include <linux/autoconf.h>
+//#else
 #include <generated/autoconf.h>
-#endif
+//#endif
 #include <linux/types.h>
 #include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/skbuff.h>
 #include <linux/netdevice.h>
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)
-#include <linux/jiffies.h>
-#endif
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)
+//#include <linux/jiffies.h>
+//#endif
 #include <linux/timer.h>
 #include <linux/delay.h>
 #include <linux/wait.h>
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,26)
-#include <asm/semaphore.h>
-#else
+//#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,26)
+//#include <asm/semaphore.h>
+//#else
 #include <linux/semaphore.h>
-#endif
+//#endif
 #ifdef KERNEL_2_4
 #include <asm/arch/irq.h>
 #include <asm/irq.h>
@@ -588,8 +588,8 @@ typedef struct ieee80211_cb wbuf_context;
 #define A_MEMSET(addr, value, size)     memset((addr), (value), (size))
 #define A_MEMZERO(addr, len)            memset((addr), 0, (len))
 #define A_MEMCMP(addr1, addr2, len)     memcmp((addr1), (addr2), (len))
-#define A_MALLOC(size)                  malloc(size)
-#define A_FREE(addr)                    free(addr)
+//#define A_MALLOC(size)                  malloc(size)
+//#define A_FREE(addr)                    free(addr)
 
 
 #ifdef ANDROID

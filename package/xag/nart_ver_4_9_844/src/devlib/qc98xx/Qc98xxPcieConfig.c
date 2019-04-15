@@ -1331,7 +1331,7 @@ A_INT32 Qc98xxConfigSpaceCommitOtp_v2()
 
 A_BOOL Qc98xxGetSizeOffsetDataDone(int it, A_UINT32 *address, A_UINT8 *data)
 {
-    A_UINT32 value;
+    unsigned int value;
     A_UINT32 offset;
     A_BOOL offsetRead = FALSE;
     int i;

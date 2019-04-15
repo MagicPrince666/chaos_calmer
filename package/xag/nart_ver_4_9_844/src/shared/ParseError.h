@@ -1,3 +1,5 @@
+#ifndef _PARSEERROR_H_
+#define _PARSEERROR_H_
 
 #ifdef _WINDOWS
 	#ifdef PARSEDLL
@@ -118,3 +120,5 @@ enum
 #define ParseArrayIndexBound2FormatInput ParseArrayIndexBound2Format
 #define ParseArrayIndexBound3FormatInput ParseArrayIndexBound3Format
 #define ParseCenterFrequencyUsedFormat "Center frequency %d is already defined."
+
+#endif
