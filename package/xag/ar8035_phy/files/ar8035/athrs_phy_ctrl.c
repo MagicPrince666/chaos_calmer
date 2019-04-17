@@ -132,7 +132,7 @@ int athr_phy_ctrl(struct net_device *dev, struct ifreq *ifr, int cmd)
     athr_phy_ops_t *phy = mac->phy;
     struct eth_cfg_params *ethcfg;
     ethcfg = (struct eth_cfg_params *) ifr->ifr_data;
-    int t = 1;
+    //int t = 1;
 	
     assert(ethcfg);
     assert(phy);

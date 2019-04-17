@@ -489,11 +489,12 @@ athr_gmac_mii_setup(athr_gmac_t *mac)
             printk("WASP ----> F1e PHY\n");
 
         mgmt_cfg_val = 6;
-        if(mac->mac_unit == 0)
+        if(mac->mac_unit == 0){
+            athr_reg_rmw_clear(ATHR_GMAC_ETH_CFG, ATHR_GMAC_ETH_CFG_MII_GE0_SLAVE);
             athr_reg_wr(ATHR_GMAC_ETH_CFG, ATHR_GMAC_ETH_CFG_MII_GE0 | ATHR_GMAC_ETH_CFG_MII_GE0_MASTER);  // External RGMII Mode on GE0
             //athr_reg_wr(ATHR_GMAC_ETH_CFG, ATHR_GMAC_ETH_CFG_MII_GE0 | ATHR_GMAC_ETH_CFG_MII_GE0_SLAVE);  // External RGMII Mode on GE0
             //athr_reg_wr(ATHR_GMAC_ETH_CFG, ATHR_GMAC_ETH_CFG_RGMII_GE0);  // External RGMII Mode on GE0
-
+        }
         athr_gmac_reg_wr(mac, ATHR_GMAC_MII_MGMT_CFG, mgmt_cfg_val | (1 << 31));
         athr_gmac_reg_wr(mac, ATHR_GMAC_MII_MGMT_CFG, mgmt_cfg_val);
 
@@ -2214,8 +2215,14 @@ athr_gmac_tx_alloc(athr_gmac_t *mac)
     for(ac = 0;ac < mac->mac_noacs; ac++) {
 
        r  = &mac->mac_txring[ac];
-       if (athr_gmac_ring_alloc(r, mac->num_tx_desc))
-           return 1;
+#ifdef CONFIG_ATHR_DESC_SRAM
+        athr_gmac_ring_alloc(mac, r, mac->num_tx_desc, ATHR_TX);
+#else
+        athr_gmac_ring_alloc(r, mac->num_tx_desc);
+#endif
+        if(r->ring_desc == NULL){
+            return 1;
+        }
 
        athr_gmac_trc(r->ring_desc,"ring_desc");
 
@@ -2238,8 +2245,14 @@ athr_gmac_rx_alloc(athr_gmac_t *mac)
     athr_gmac_desc_t *ds;
     int i, next, tail = r->ring_tail;
     athr_gmac_buffer_t *bf;
-    if (athr_gmac_ring_alloc(r, mac->num_rx_desc))
+#ifdef CONFIG_ATHR_DESC_SRAM
+    athr_gmac_ring_alloc(mac, r, mac->num_rx_desc, ATHR_RX);
+#else
+    athr_gmac_ring_alloc(r, mac->num_rx_desc);
+#endif
+    if (r->ring_desc == NULL){
         return 1;
+    }
 
     athr_gmac_trc(r->ring_desc,"ring_desc");
 
@@ -2298,7 +2311,11 @@ athr_gmac_rx_free(athr_gmac_t *mac)
 }
 
 static int
-athr_gmac_ring_alloc(athr_gmac_ring_t *r, int count)
+#ifdef CONFIG_ATHR_DESC_SRAM
+athr_gmac_ring_alloc(athr_gmac_t *mac, athr_gmac_ring_t *r, int count, athr_desc_type flag)
+#else
+athr_gmac_ring_alloc(athr_gmac_ring_t *r, unsigned int count)
+#endif
 {
     int desc_alloc_size, buf_alloc_size;
 
@@ -2317,7 +2334,11 @@ athr_gmac_ring_alloc(athr_gmac_ring_t *r, int count)
         return 1;
     }
 
+#ifdef CONFIG_ATHR_DESC_SRAM
+    athr_gmac_desc_alloc(mac, r, count, flag);
+#else
     athr_gmac_desc_alloc(r,count);
+#endif
 
     if (! r->ring_desc)
     {
@@ -2344,13 +2365,6 @@ athr_gmac_ring_release(athr_gmac_t *mac, athr_gmac_ring_t  *r)
             athr_gmac_buffer_free(r->ring_buffer[i].buf_pkt);
 }
 
-static void
-athr_gmac_ring_free(athr_gmac_ring_t *r)
-{
-    dma_free_coherent(NULL, sizeof(athr_gmac_desc_t)*r->ring_nelem, r->ring_desc, r->ring_desc_dma);//error here
-    kfree(r->ring_buffer);
-    printk("%s Freeing at 0x%lx\n",__func__,(unsigned long) r->ring_buffer);
-}
 
 /*
  * Error timers
@@ -2769,6 +2783,9 @@ athr_gmac_cleanup(void)
     {
         athr_gmacs[i] = NULL;
     }
+
+    printk(MODULE_NAME ": set MII to slave\n");
+    athr_reg_wr(ATHR_GMAC_ETH_CFG, ATHR_GMAC_ETH_CFG_MII_GE0 | ATHR_GMAC_ETH_CFG_MII_GE0_SLAVE);
 
     printk(MODULE_NAME ": cleanup done\n");
 }

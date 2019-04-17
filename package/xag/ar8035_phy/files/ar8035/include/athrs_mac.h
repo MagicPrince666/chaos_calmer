@@ -375,6 +375,12 @@ typedef enum {
     ATHR_PHY_SPEED_1000T,
 }athr_phy_speed_t;
 
+typedef enum {
+    ATHR_RX = 0,
+    ATHR_TX,
+    ATHR_NONE,
+}athr_desc_type;
+
 /**
  * Added for customizing LED control operations
  */
@@ -674,30 +680,75 @@ typedef enum {
 
 #ifdef CONFIG_ATHR_DESC_SRAM
 
+typedef struct {
+    athr_desc_type flag;
+    athr_gmac_desc_t *ring_desc;
+    dma_addr_t ring_desc_dma;
+}_athr_elemt;
+
+typedef struct {
+    _athr_elemt desc[2];
+}_athr_sram_map;
+
 static inline void
-athr_gmac_desc_alloc(athr_gmac_ring_t *r,int count)
+athr_gmac_desc_alloc(athr_gmac_t *mac, athr_gmac_ring_t *r, int count, athr_desc_type flag)
 {
-     volatile uint8_t *s_ram = (volatile uint8_t *)ATHR_SRAM_START;
+      volatile uint8_t *s_ram = (volatile uint8_t *)ATHR_SRAM_START;
      static int sram_desc_cnt = 0;
+     static _athr_sram_map athr_sram_map[] = { 
+         {{{ATHR_NONE, NULL, 0}, {ATHR_NONE, NULL, 0}}},
+         {{{ATHR_NONE, NULL, 0}, {ATHR_NONE, NULL, 0}}}
+     };
+     _athr_elemt *athr_elemt;
 
      assert(!r->ring_desc);
+     athr_elemt = &athr_sram_map[mac->mac_unit].desc[flag];
+     if(athr_elemt->flag != ATHR_NONE){
+         r->ring_desc = athr_elemt->ring_desc;
+         r->ring_desc_dma = athr_elemt->ring_desc_dma;
+     }else{
+         r->ring_desc  = (athr_gmac_desc_t  *)(s_ram + sram_desc_cnt);
+         r->ring_desc_dma = ((dma_addr_t) (s_ram + sram_desc_cnt) & 0x1fffffff);
+         athr_elemt->ring_desc = r->ring_desc;
+         athr_elemt->ring_desc_dma = r->ring_desc_dma;
+         athr_elemt->flag = flag;
 
-     r->ring_desc  = (athr_gmac_desc_t  *)(s_ram + sram_desc_cnt);
-     r->ring_desc_dma = ((dma_addr_t) (s_ram + sram_desc_cnt) & 0x1fffffff);
-
-     sram_desc_cnt += (sizeof(athr_gmac_desc_t) * count);
+         sram_desc_cnt += (sizeof(athr_gmac_desc_t) * count);
+     }
+     //printk("sram_desc_cnt %d,mac Unit %d,%s r->ring_desc 0x%p\n", sram_desc_cnt, mac->mac_unit, flag==ATHR_RX?"Rx":"Tx", r->ring_desc);
      assert(r->ring_desc);
+}
+static inline void
+athr_gmac_ring_free(athr_gmac_ring_t *r)
+{
+    kfree(r->ring_buffer);
+    //printk("%s Freeing at 0x%x\n",__func__,(unsigned int) r->ring_buffer);
 }
 #else
 static inline void
 athr_gmac_desc_alloc(athr_gmac_ring_t *r,int count)
 {
-        r->ring_desc  =  (athr_gmac_desc_t *)dma_alloc_coherent(NULL,
-        sizeof(athr_gmac_buffer_t) * count,
-        &r->ring_desc_dma,
-        GFP_DMA);
+    printk("%s dma_alloc_coherent %d \n",__func__,sizeof(athr_gmac_desc_t) * count);
+    r->ring_desc  =  (athr_gmac_desc_t *)dma_alloc_coherent(NULL,
+    sizeof(athr_gmac_desc_t) * count,
+    &r->ring_desc_dma,
+    GFP_DMA);
+}
+static inline void
+athr_gmac_ring_free(athr_gmac_ring_t *r)
+{
+    printk("%s dma_free_coherent %d\n",__func__, sizeof(athr_gmac_desc_t)*r->ring_nelem);
 
-
+    if(r->ring_desc != NULL){
+        dma_free_coherent(NULL, sizeof(athr_gmac_desc_t)*r->ring_nelem, r->ring_desc,r->ring_desc_dma);
+    }
+    if(r->ring_buffer){
+        kfree(r->ring_buffer);
+    } 
+    r->ring_buffer = NULL;
+    r->ring_desc = NULL;
+    r->ring_nelem   = 0;
+    
 }
 #endif //CONFIG_ATHR_DESC_SRAM
 

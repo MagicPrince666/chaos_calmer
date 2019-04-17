@@ -39,7 +39,11 @@ static int  athr_gmac_tx_alloc(athr_gmac_t *mac);
 static int  athr_gmac_rx_alloc(athr_gmac_t *mac);
 static void athr_gmac_rx_free(athr_gmac_t *mac);
 static void athr_gmac_tx_free(athr_gmac_t *mac);
-static int  athr_gmac_ring_alloc(athr_gmac_ring_t *r, int count);
+#ifdef CONFIG_ATHR_DESC_SRAM
+static int  athr_gmac_ring_alloc(athr_gmac_t *mac, athr_gmac_ring_t *r, int count, athr_desc_type flag);
+#else
+static int  athr_gmac_ring_alloc(athr_gmac_ring_t *r, unsigned int count);
+#endif
 static int  athr_gmac_rx_replenish(athr_gmac_t *mac);
 static void athr_gmac_get_default_macaddr(athr_gmac_t *mac, u8 *mac_addr);
 static int  athr_gmac_tx_reap(athr_gmac_t *mac,int ac);
