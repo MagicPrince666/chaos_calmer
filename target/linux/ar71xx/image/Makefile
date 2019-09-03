@@ -1050,8 +1050,8 @@ wlr8100_mtdlayout=mtdparts=spi0.0:192k(u-boot)ro,64k(u-boot-env)ro,1408k(kernel)
 #wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,6464k(rootfs),1472k(kernel),7936k@0x30000(firmware),64k(art)ro
 wpj342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,7936k(firmware),64k(art)ro
 wpj342_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
-xag9342_mtdlayout_8M=mtdparts=spi0.0:192k(u-boot)ro,7936k(firmware),64k(art)
-xag9342_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)
+xag9342_mtdlayout_8M=mtdparts=spi0.0:128k(u-boot)ro,64k(u-boot-env)ro,7936k(firmware),64k(art)
+xag9342_mtdlayout_16M=mtdparts=spi0.0:128k(u-boot)ro,64k(u-boot-env)ro,16128k(firmware),64k(art)
 wpj344_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj531_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
 wpj558_mtdlayout_16M=mtdparts=spi0.0:192k(u-boot)ro,16128k(firmware),64k(art)ro
