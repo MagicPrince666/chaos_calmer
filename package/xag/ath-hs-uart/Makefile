@@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
 define KernelPackage/ath-hs-uart
   SUBMENU:=XAG_KERNELMODULES
   TITLE:=Atheros 934X High Speed Uart
-  DEPENDS:=
+  DEPENDS:=+@LUCI_LANG_zh-cn
   FILES:=$(PKG_BUILD_DIR)/ar934x_hs_uart.ko
   KCONFIG:=
   #AUTOLOAD:=$(call AutoProbe,ar934x_hs_uart)
