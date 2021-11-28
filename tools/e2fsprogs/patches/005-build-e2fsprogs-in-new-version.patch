@@ -1,0 +1,73 @@
+Index: e2fsprogs-1.42.8/lib/blkid/devname.c
+===================================================================
+--- e2fsprogs-1.42.8.orig/lib/blkid/devname.c
++++ e2fsprogs-1.42.8/lib/blkid/devname.c
+@@ -35,6 +35,8 @@
+ #endif
+ #if HAVE_SYS_MKDEV_H
+ #include <sys/mkdev.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #include <time.h>
+ 
+Index: e2fsprogs-1.42.8/lib/blkid/devno.c
+===================================================================
+--- e2fsprogs-1.42.8.orig/lib/blkid/devno.c
++++ e2fsprogs-1.42.8/lib/blkid/devno.c
+@@ -29,7 +29,9 @@
+ #include <errno.h>
+ #endif
+ #if HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ 
+ #include "blkidP.h"
+Index: e2fsprogs-1.42.8/lib/blkid/probe.c
+===================================================================
+--- e2fsprogs-1.42.8.orig/lib/blkid/probe.c
++++ e2fsprogs-1.42.8/lib/blkid/probe.c
+@@ -25,7 +25,9 @@
+ #include <sys/stat.h>
+ #endif
+ #ifdef HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #ifdef __linux__
+ #include <sys/utsname.h>
+Index: e2fsprogs-1.42.8/lib/blkid/save.c
+===================================================================
+--- e2fsprogs-1.42.8.orig/lib/blkid/save.c
++++ e2fsprogs-1.42.8/lib/blkid/save.c
+@@ -20,7 +20,9 @@
+ #include <sys/stat.h>
+ #endif
+ #ifdef HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ #ifdef HAVE_ERRNO_H
+ #include <errno.h>
+Index: e2fsprogs-1.42.8/lib/ext2fs/finddev.c
+===================================================================
+--- e2fsprogs-1.42.8.orig/lib/ext2fs/finddev.c
++++ e2fsprogs-1.42.8/lib/ext2fs/finddev.c
+@@ -29,7 +29,9 @@
+ #include <errno.h>
+ #endif
+ #if HAVE_SYS_MKDEV_H
+-#include <sys/mkdev.h>
++#include <sys/sysmacros.h>
++#elif HAVE_SYS_SYSMACROS_H
++#include <sys/sysmacros.h>
+ #endif
+ 
+ #include "ext2_fs.h"

@@ -1,0 +1,72 @@
+Index: mtd-utils-1.5.1/lib/libmtd.c
+===================================================================
+--- mtd-utils-1.5.1.orig/lib/libmtd.c
++++ mtd-utils-1.5.1/lib/libmtd.c
+@@ -32,6 +32,7 @@
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <inttypes.h>
++#include <sys/sysmacros.h>
+ 
+ #include <mtd/mtd-user.h>
+ #include <libmtd.h>
+Index: mtd-utils-1.5.1/lib/libmtd_legacy.c
+===================================================================
+--- mtd-utils-1.5.1.orig/lib/libmtd_legacy.c
++++ mtd-utils-1.5.1/lib/libmtd_legacy.c
+@@ -32,6 +32,7 @@
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <mtd/mtd-user.h>
++#include <sys/sysmacros.h>
+ 
+ #include <libmtd.h>
+ #include "libmtd_int.h"
+Index: mtd-utils-1.5.1/mkfs.ubifs/devtable.c
+===================================================================
+--- mtd-utils-1.5.1.orig/mkfs.ubifs/devtable.c
++++ mtd-utils-1.5.1/mkfs.ubifs/devtable.c
+@@ -44,6 +44,7 @@
+  * for more information about what the device table is.
+  */
+ 
++#include <sys/sysmacros.h>
+ #include "mkfs.ubifs.h"
+ #include "hashtable/hashtable.h"
+ #include "hashtable/hashtable_itr.h"
+Index: mtd-utils-1.5.1/mkfs.ubifs/mkfs.ubifs.c
+===================================================================
+--- mtd-utils-1.5.1.orig/mkfs.ubifs/mkfs.ubifs.c
++++ mtd-utils-1.5.1/mkfs.ubifs/mkfs.ubifs.c
+@@ -22,6 +22,7 @@
+ 
+ #define _XOPEN_SOURCE 500 /* For realpath() */
+ 
++#include <sys/sysmacros.h>
+ #include "mkfs.ubifs.h"
+ #include <crc32.h>
+ #include "common.h"
+Index: mtd-utils-1.5.1/tests/ubi-tests/integ.c
+===================================================================
+--- mtd-utils-1.5.1.orig/tests/ubi-tests/integ.c
++++ mtd-utils-1.5.1/tests/ubi-tests/integ.c
+@@ -9,6 +9,7 @@
+ #include <stdint.h>
+ #include <string.h>
+ #include <errno.h>
++#include <sys/sysmacros.h>
+ 
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+Index: mtd-utils-1.5.1/ubi-utils/libubi.c
+===================================================================
+--- mtd-utils-1.5.1.orig/ubi-utils/libubi.c
++++ mtd-utils-1.5.1/ubi-utils/libubi.c
+@@ -24,6 +24,7 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++#include <sys/sysmacros.h>
+ #include <string.h>
+ #include <fcntl.h>
+ #include <dirent.h>

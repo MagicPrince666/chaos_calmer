@@ -1,0 +1,12 @@
+Index: mtd-utils-1.5.1/mkfs.jffs2.c
+===================================================================
+--- mtd-utils-1.5.1.orig/mkfs.jffs2.c
++++ mtd-utils-1.5.1/mkfs.jffs2.c
+@@ -51,6 +51,7 @@
+ 
+ #include <sys/types.h>
+ #include <stdio.h>
++#include <sys/sysmacros.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
+ #include <sys/mman.h>

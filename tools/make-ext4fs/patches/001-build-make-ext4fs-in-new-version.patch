@@ -1,0 +1,12 @@
+Index: make-ext4fs-2015-05-01/contents.c
+===================================================================
+--- make-ext4fs-2015-05-01.orig/contents.c
++++ make-ext4fs-2015-05-01/contents.c
+@@ -17,6 +17,7 @@
+ #include <sys/stat.h>
+ #include <string.h>
+ #include <stdio.h>
++#include <sys/sysmacros.h>
+ 
+ #include <private/android_filesystem_capability.h>
+ 
