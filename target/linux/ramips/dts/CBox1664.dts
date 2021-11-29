@@ -7,12 +7,12 @@
 	model = "CBox V3";
 
 	chosen {
-		bootargs = "console=ttyS0,115200";
+		bootargs = "console=ttyS0,115200  lpj=1904640 root=/dev/mtdblock5 rootfstype=squashfs,jffs2";
 	};
 
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x4000000>;
+		reg = <0x0 0x8000000>;
 	};
 
 	pinctrl {
@@ -136,16 +136,21 @@
 		status = "okay";
 		mediatek,cd-low;
 	};
-        gpio-keys-polled {
-                compatible = "gpio-keys-polled";
-                #address-cells = <1>;
-                #size-cells = <0>;
-                poll-interval = <20>;
-                wps {
-                        label = "reset";
-                        gpios = <&gpio1 6 1>;
-                        linux,code = <0x211>;
-                };
-        };
+
+	pcie@10140000 {
+		status = "okay";
+	};
+
+	gpio-keys-polled {
+			compatible = "gpio-keys-polled";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			poll-interval = <20>;
+			wps {
+					label = "reset";
+					gpios = <&gpio1 6 1>;
+					linux,code = <0x211>;
+			};
+	};
 
 };
