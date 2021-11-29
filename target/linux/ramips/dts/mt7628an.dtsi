@@ -330,6 +330,13 @@
 				ralink,function = "pcm";
 			};
 		};
+
+		pcie_pins: pcie {
+			pcie {
+				ralink,group = "pcie";
+				ralink,function = "pcie rst";
+			};
+		};
 	};
 
 	rstctrl: rstctrl {
@@ -413,6 +420,9 @@
 
 		resets = <&rstctrl 26>;
 		reset-names = "pcie0";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&pcie_pins>;
 
 		interrupt-parent = <&cpuintc>;
 		interrupts = <4>;
