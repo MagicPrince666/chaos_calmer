@@ -23,7 +23,7 @@
 			};
 			perst {
 				ralink,group = "perst";
-				ralink,function = "gpio";
+				ralink,function = "perst";
 			};
 			refclk {
 				ralink,group = "refclk";
