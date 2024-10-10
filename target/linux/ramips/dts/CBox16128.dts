@@ -3,7 +3,7 @@
 /include/ "mt7628an.dtsi"
 
 / {
-	compatible = "Cbox", "mediatek,mt7628an-soc";
+	compatible = "Cbox 128M", "mediatek,mt7628an-soc";
 	model = "CBox V3";
 
 	chosen {
@@ -12,7 +12,7 @@
 
 	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0x4000000>;
+		reg = <0x0 0x8000000>;
 	};
 
 	pinctrl {
